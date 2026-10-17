@@ -5,7 +5,7 @@ import { WEB, waitForApi } from "./support";
  * The SEO and answer-engine checks, run with JavaScript turned off, so what a crawler sees is what is tested.
  * Every public page type is added to this list when it is built; the checks are the same for all of them.
  */
-const pages = ["/ar", "/en", "/ar/categories", "/en/categories"];
+const pages = ["/ar", "/en", "/ar/categories", "/en/categories", "/ar/methodology", "/en/methodology"];
 
 test.beforeAll(async () => {
   await waitForApi();
@@ -46,6 +46,13 @@ for (const path of pages) {
     });
   });
 }
+
+test("the sign-in page says what to do when JavaScript is off", async ({ page }) => {
+  await page.goto(`${WEB}/en/sign-in`);
+  await expect(page.locator("h1")).toHaveCount(1);
+  await expect(page.locator("noscript")).toContainText("needs JavaScript");
+  expect(await page.locator("meta[name=robots]").getAttribute("content")).toContain("noindex");
+});
 
 test("robots.txt welcomes crawlers and points to the sitemap", async ({ request }) => {
   const text = await (await request.get(`${WEB}/robots.txt`)).text();

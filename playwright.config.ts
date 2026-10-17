@@ -6,6 +6,8 @@ import crypto from "node:crypto";
 const apiPort = 5181;
 const webPort = 3101;
 const key = () => crypto.randomBytes(32).toString("base64");
+// The hash key is shared with the tests (through the environment) so a test can set a known sign-in code; the API only sees it as its own setting.
+process.env.E2E_HASH_KEY ??= key();
 
 export default defineConfig({
   testDir: "./e2e",
@@ -35,7 +37,7 @@ export default defineConfig({
         Mongo__Database: "ratable_e2e",
         Identity__OtpSender: "console",
         Identity__PhoneEncryptionKey: key(),
-        Identity__PhoneHashKey: key(),
+        Identity__PhoneHashKey: process.env.E2E_HASH_KEY,
         Verification__StorageKey: key(),
         Verification__StoragePath: "App_Data/e2e-proofs",
         Moderation__BurstThreshold: "1000",

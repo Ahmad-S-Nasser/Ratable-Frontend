@@ -3,7 +3,7 @@
     "collect": {
       "startServerCommand": "npx next start -p 3200",
       "startServerReadyPattern": "Ready",
-      "url": ["http://localhost:3200/ar", "http://localhost:3200/en", "http://localhost:3200/ar/categories"],
+      "url": ["http://localhost:3200/ar", "http://localhost:3200/en", "http://localhost:3200/ar/categories", "http://localhost:3200/en/methodology"],
       "numberOfRuns": 1,
       "settings": {
         "formFactor": "mobile",

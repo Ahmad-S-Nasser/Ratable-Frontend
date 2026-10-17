@@ -31,6 +31,12 @@ Use `import { api } from "@/lib/api/client"`.
 - SEO and answer engines: `src/lib/seo/metadata.ts` (title, description, canonical, hreflang ar-EG, ar-SA, ar-AE, en and x-default, Open Graph, robots) and `src/lib/seo/jsonld.ts` (Organization with the Arabic alternate name, WebSite, BreadcrumbList, ItemList). `robots.txt` and `sitemap.xml` are generated. Set `NEXT_PUBLIC_SITE_URL` to the public origin.
 - Tests: `e2e/site.spec.ts` (shell, theme, language, phone width, axe contrast in both themes and languages, screenshots in `test-results/screens`) and `e2e/seo.spec.ts` (run with JavaScript off: one h1, title, description, canonical, hreflang, JSON-LD, robots, sitemap). `npm run lhci` checks the performance budget (the CI `lighthouse` job).
 
+### Account, proof and the installable app (P9b and P9c)
+- Pages: category, entity (answer-first summary, criteria table, filters, edit history, comments, FAQ), search, comparison, methodology, add a place, review form, sign-in with a phone code, account (profile, my reviews, Verified or Unverified), proof upload with the delete-or-keep choice. Server pages for everything public; client components only for forms.
+- Install: `app/manifest.ts`, icons in `public/icons` (made from the brand SVGs with `node scripts/make-icons.mjs`), a small service worker (`public/sw.js`) that stores only the offline page, and `public/offline.html`.
+- Errors: a real 404 page (both languages) and a retry page for failures.
+- Tests: `e2e/entity.spec.ts`, `more.spec.ts`, `account.spec.ts` (sign-in with a known code, anonymity leak checks, proof flow, installable files, axe in both themes and languages).
+
 ## Moderation and admin console
 Under `/{lang}/console` (Arabic and English, light by default with a dark switch, never indexed). It signs in with the phone code and needs the Moderator or Admin role; admin pages are hidden from moderators and refused by the API.
 - Moderator: overview of every queue, reviews and comments (text, why a person is looking, what the AI said, before/after for edits; publish, or hide with a reason the author sees), new places (duplicate candidates, approve, reject, merge), proofs (open the file, accept or reject), reports, disputes.
