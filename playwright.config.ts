@@ -46,7 +46,7 @@ export default defineConfig({
       url: `http://localhost:${webPort}/en/console`,
       timeout: 180_000,
       reuseExistingServer: false,
-      env: { API_URL: `http://localhost:${apiPort}` },
+      env: { API_URL: `http://localhost:${apiPort}`, API_REVALIDATE_SECONDS: "0" },
     },
   ],
 });

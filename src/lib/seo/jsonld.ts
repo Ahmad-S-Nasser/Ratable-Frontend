@@ -44,3 +44,55 @@ export const itemListJsonLd = (items: { name: string; path: string }[]): JsonLd 
 
 /** Serialises for a script tag. "<" is escaped so user-controlled text can never close the tag. */
 export const serializeJsonLd = (data: JsonLd | JsonLd[]) => JSON.stringify(data).replace(/</g, "\u003c");
+
+type EntityJsonLdInput = {
+  lang: Locale;
+  url: string;
+  schemaType: string;
+  name: string;
+  description: string;
+  address?: string | null;
+  city?: string | null;
+  country?: string | null;
+  sameAs: string[];
+  /** Only Verified reviews: the same numbers the page shows. */
+  rating: { value: number; count: number } | null;
+  reviews: { author: string | null; rating: number | null; text: string | null; date: string; language: string }[];
+};
+
+/**
+ * The entity page's schema.org block. AggregateRating is built only from Verified reviews and only when there are some, so it always
+ * matches what the page shows. An anonymous review carries the author name "Anonymous" and nothing else (rule 1).
+ */
+export const entityJsonLd = (i: EntityJsonLdInput): JsonLd => ({
+  "@context": "https://schema.org",
+  "@type": i.schemaType,
+  "@id": `${i.url}#entity`,
+  name: i.name,
+  url: i.url,
+  description: i.description,
+  inLanguage: i.lang,
+  ...(i.address || i.city || i.country
+    ? { address: { "@type": "PostalAddress", streetAddress: i.address ?? undefined, addressLocality: i.city ?? undefined, addressCountry: i.country ?? undefined } }
+    : {}),
+  ...(i.sameAs.length ? { sameAs: i.sameAs } : {}),
+  ...(i.rating ? { aggregateRating: { "@type": "AggregateRating", ratingValue: i.rating.value, reviewCount: i.rating.count, bestRating: 5, worstRating: 1 } } : {}),
+  ...(i.reviews.length
+    ? {
+        review: i.reviews.map((r) => ({
+          "@type": "Review",
+          author: { "@type": "Person", name: r.author ?? "Anonymous" },
+          datePublished: r.date,
+          inLanguage: r.language,
+          ...(r.text ? { reviewBody: r.text } : {}),
+          ...(r.rating !== null ? { reviewRating: { "@type": "Rating", ratingValue: r.rating, bestRating: 5, worstRating: 1 } } : {}),
+        })),
+      }
+    : {}),
+});
+
+export const faqJsonLd = (items: { question: string; answer: string }[]): JsonLd => ({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: items.map((q) => ({ "@type": "Question", name: q.question, acceptedAnswer: { "@type": "Answer", text: q.answer } })),
+});

@@ -265,6 +265,92 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/categories/{categoryId}/places": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    limit?: number;
+                    skip?: number;
+                    lang?: string;
+                };
+                header?: never;
+                path: {
+                    categoryId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["PlaceList"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/sitemap/places": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    skip?: number;
+                    limit?: number;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SitemapPlace"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/me/reviews": {
         parameters: {
             query?: never;
@@ -288,7 +374,9 @@ export interface paths {
                     headers: {
                         [name: string]: unknown;
                     };
-                    content?: never;
+                    content: {
+                        "application/json": components["schemas"]["OwnReview"][];
+                    };
                 };
             };
         };
@@ -1144,8 +1232,35 @@ export interface paths {
                 };
             };
             responses: {
-                /** @description OK */
-                200: {
+                /** @description Created */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["OwnReview"];
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorBody"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorBody"];
+                    };
+                };
+                /** @description Conflict */
+                409: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -1275,6 +1390,33 @@ export interface paths {
                     headers: {
                         [name: string]: unknown;
                     };
+                    content: {
+                        "application/json": components["schemas"]["OwnReview"];
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorBody"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorBody"];
+                    };
+                };
+                /** @description Conflict */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
                     content?: never;
                 };
             };
@@ -1333,7 +1475,27 @@ export interface paths {
                     headers: {
                         [name: string]: unknown;
                     };
-                    content?: never;
+                    content: {
+                        "application/json": components["schemas"]["OwnReview"];
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorBody"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorBody"];
+                    };
                 };
             };
         };
@@ -2230,6 +2392,43 @@ export interface components {
             /** Format: date-time */
             fileExpiresAt: null | string;
         };
+        OwnReview: {
+            id: string;
+            entityId: string;
+            status: string;
+            isAnonymous: boolean;
+            verified: boolean;
+            answers: components["schemas"]["AnswerDto"][];
+            /** Format: double */
+            overall: null | number;
+            text: null | string;
+            language: string;
+            /** Format: int32 */
+            revisionNumber: number;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+            underReview: boolean;
+            moderationReason: null | string;
+        };
+        PlaceCard: {
+            id: string;
+            name: components["schemas"]["LocalizedText"];
+            slugs: {
+                [key: string]: string;
+            };
+            city: null | string;
+            /** Format: double */
+            overall: null | number;
+            /** Format: int32 */
+            verifiedReviews: number;
+        };
+        PlaceList: {
+            places: components["schemas"]["PlaceCard"][];
+            /** Format: int32 */
+            total: number;
+        };
         PrescreenDto: {
             abuse: components["schemas"]["FlagDto"];
             personalData: components["schemas"]["FlagDto"];
@@ -2432,6 +2631,15 @@ export interface components {
         };
         SignedInWebResponse: {
             user: components["schemas"]["MeResponse"];
+        };
+        SitemapPlace: {
+            id: string;
+            categoryId: string;
+            slugs: {
+                [key: string]: string;
+            };
+            /** Format: date-time */
+            lastModified: string;
         };
         SpendPeriod: {
             /** Format: double */

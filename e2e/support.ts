@@ -57,6 +57,20 @@ export async function makePlace(reader: TestUser, admin: TestUser, nameEn: strin
   return id;
 }
 
+/** Makes a review public and Verified straight in the database (the proof and moderation flows have their own tests), so scores can be tested. */
+export async function publishVerified(reviewId: string) {
+  const client = new MongoClient(MONGO);
+  await client.connect();
+  try {
+    await client.db("ratable_e2e").collection("reviews").updateOne(
+      { _id: new ObjectId(reviewId) },
+      { $set: { status: "Published", "verification.level": "Verified", "verification.method": "receipt" } },
+    );
+  } finally {
+    await client.close();
+  }
+}
+
 export async function writeReview(user: TestUser, entityId: string, text: string, extra: Record<string, unknown> = {}): Promise<string> {
   const response = await user.api.post(`/api/entities/${entityId}/reviews`, { data: { answers: [{ criterionId: "security", value: 4 }], text, ...extra } });
   expect(response.status()).toBe(201);
