@@ -50,7 +50,8 @@ for (const path of pages) {
 test("the sign-in page says what to do when JavaScript is off", async ({ page }) => {
   await page.goto(`${WEB}/en/sign-in`);
   await expect(page.locator("h1")).toHaveCount(1);
-  await expect(page.locator("noscript")).toContainText("needs JavaScript");
+  // Playwright treats <noscript> text as hidden, so read it as raw text.
+  expect(await page.locator("noscript").first().textContent()).toContain("needs JavaScript");
   expect(await page.locator("meta[name=robots]").getAttribute("content")).toContain("noindex");
 });
 
