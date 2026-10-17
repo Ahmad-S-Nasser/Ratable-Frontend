@@ -45,6 +45,16 @@ export async function Footer({ lang }: { lang: Locale }) {
           <ul className="space-y-2 text-sm text-footer-muted">
             <li>{t.footer.verifiedOnly}</li>
             <li>{t.footer.noPaidRank}</li>
+            <li>
+              <Link href={`/${lang}/methodology`} className="inline-flex min-h-9 items-center font-medium text-footer-text underline">
+                {t.methodology}
+              </Link>
+            </li>
+            <li>
+              <Link href={`/${lang}/add`} className="inline-flex min-h-9 items-center hover:text-footer-text">
+                {t.addPlace}
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

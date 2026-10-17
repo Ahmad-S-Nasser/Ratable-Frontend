@@ -455,7 +455,9 @@
       "verifiedOnly": "Scores come from verified reviews only",
       "noPaidRank": "Nothing paid changes a rating or a rank",
       "rights": "© 2026 Ratable. All rights reserved."
-    }
+    },
+    "methodology": "How scores are calculated",
+    "addPlace": "Add a place"
   },
   "categoriesPage": {
     "title": "All categories on Ratable",
@@ -555,5 +557,113 @@
       "network": "Could not connect. Check your internet and try again.",
       "unknown": "Something went wrong. Please try again."
     }
+  },
+  "entityExtra": {
+    "filterLabel": "Filter reviews",
+    "all": "All",
+    "verifiedOnly": "Verified only",
+    "sortLabel": "Sort",
+    "newest": "Newest",
+    "highest": "Highest rated",
+    "lowest": "Lowest rated",
+    "historyShow": "Edit history",
+    "historyVersion": "Version {n}",
+    "historyReplaced": "Replaced on {date}",
+    "compareWith": "Compare with another place"
+  },
+  "comments": {
+    "heading": "Comments",
+    "none": "No comments yet.",
+    "label": "Write a comment",
+    "placeholder": "Add your comment on this review",
+    "submit": "Send comment",
+    "anonymous": "Anonymous comment",
+    "sent": "Your comment was received and will appear after review.",
+    "signIn": "Sign in to comment",
+    "reply": "Reply",
+    "errors": {
+      "invalid_text": "The comment is not valid or is too long.",
+      "rate_limited": "Too many comments right now. Try later.",
+      "review_not_found": "This review does not exist.",
+      "network": "Could not connect. Try again.",
+      "unknown": "Something went wrong. Try again."
+    }
+  },
+  "add": {
+    "title": "Add a place",
+    "description": "Add a place or product that is not on Ratable yet. Our team checks it before it appears.",
+    "heading": "Add a place",
+    "intro": "Cannot find it? Add it here. We check it before it appears and make sure it is not a duplicate.",
+    "category": "Category",
+    "nameAr": "Name in Arabic",
+    "nameEn": "Name in English",
+    "nameHint": "Write at least one name.",
+    "city": "City or area",
+    "address": "Address (optional)",
+    "location": "Location",
+    "locationHint": "We use your location for this request only and do not store it on your account.",
+    "useLocation": "Use my current location",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "submit": "Submit place",
+    "saving": "Sending…",
+    "doneHeading": "Your request was received",
+    "doneText": "We will check the place before it appears.",
+    "signInNeeded": "Sign in to add a place.",
+    "signIn": "Sign in",
+    "loading": "Loading…",
+    "errors": {
+      "invalid_category": "Choose a category.",
+      "invalid_name": "Write a valid name.",
+      "invalid_location": "Set the location (latitude and longitude).",
+      "invalid_field": "One of the details is not valid.",
+      "rate_limited": "You reached the daily limit. Try tomorrow.",
+      "network": "Could not connect. Try again.",
+      "unknown": "Something went wrong. Try again.",
+      "geolocation": "We could not get your location. Type the coordinates by hand."
+    }
+  },
+  "compare": {
+    "title": "{a} vs {b}",
+    "description": "Compare {a} and {b} by their verified scores on every criterion.",
+    "heading": "Comparison",
+    "criterion": "Criterion",
+    "overall": "Overall score",
+    "reviews": "Verified reviews",
+    "noScore": "No score",
+    "choose": "Choose two places to compare from a place page.",
+    "invalid": "The comparison is not possible. Check that both places are in the same category."
+  },
+  "methodology": {
+    "title": "How scores are calculated",
+    "description": "How Ratable calculates scores: verified reviews only, a minimum per criterion, and no influence from payment.",
+    "heading": "How scores are calculated",
+    "intro": "A Ratable score is simple and public. These are the rules.",
+    "items": [
+      {
+        "title": "Verified reviews only",
+        "text": "Only reviews from people who proved their visit or purchase count. An unverified review is shown with a clear label and never changes the score."
+      },
+      {
+        "title": "Every review weighs the same",
+        "text": "The overall score is the average of the verified reviews' scores. One review's score is the average of the criteria its author answered."
+      },
+      {
+        "title": "A minimum per criterion",
+        "text": "A criterion's score appears only after at least 5 verified answers, so it never rests on one opinion."
+      },
+      {
+        "title": "One review per account",
+        "text": "Each account has one review per place. Every edit is saved in a dated history, and a deleted review is hidden while its history is kept."
+      },
+      {
+        "title": "No paid influence",
+        "text": "Nothing a business pays for changes a score, a ranking or removes a review."
+      },
+      {
+        "title": "Protected identity",
+        "text": "If a reviewer chooses to be anonymous, their name never appears anywhere."
+      }
+    ]
   }
 }

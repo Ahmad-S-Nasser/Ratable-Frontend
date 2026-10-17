@@ -2,7 +2,7 @@ import "server-only";
 import createClient from "openapi-fetch";
 import type { paths } from "./schema";
 import { unwrap, type ApiResult } from "./http";
-import type { Category, SitemapPlace, PlaceList, PublicEntity, PublicReview, ScoreResponse } from "./types";
+import type { PublicComment, ReviewHistory, Category, SitemapPlace, PlaceList, PublicEntity, PublicReview, ScoreResponse } from "./types";
 
 /** Public pages are rendered on the server, so they read the API directly. Responses are reused for five minutes (API_REVALIDATE_SECONDS changes that; the browser tests use 0). */
 const revalidate = Number(process.env.API_REVALIDATE_SECONDS ?? 300);
@@ -22,8 +22,17 @@ export const getEntity = (id: string) => unwrap<PublicEntity>(serverApi.GET("/ap
 
 export const getScore = (entityId: string) => unwrap<ScoreResponse>(serverApi.GET("/api/entities/{entityId}/score", { params: { path: { entityId } } }));
 
-export const getReviews = (entityId: string, limit = 20, skip = 0) =>
-  unwrap<PublicReview[]>(serverApi.GET("/api/entities/{entityId}/reviews", { params: { path: { entityId }, query: { limit, skip } } }));
+export const getReviews = (entityId: string, opts: { limit?: number; skip?: number; sort?: string; verified?: boolean } = {}) =>
+  unwrap<PublicReview[]>(
+    serverApi.GET("/api/entities/{entityId}/reviews", {
+      params: { path: { entityId }, query: { limit: opts.limit ?? 20, skip: opts.skip ?? 0, sort: opts.sort, verified: opts.verified } },
+    }),
+  );
+
+export const getHistory = (id: string) => unwrap<ReviewHistory>(serverApi.GET("/api/reviews/{id}/history", { params: { path: { id } } }));
+
+export const getComments = (reviewId: string) =>
+  unwrap<PublicComment[]>(serverApi.GET("/api/reviews/{reviewId}/comments", { params: { path: { reviewId } } }));
 
 export const searchEntities = (q: string, category?: string) =>
   unwrap<PublicEntity[]>(serverApi.GET("/api/entities/search", { params: { query: { q, category, limit: 20 } } }));

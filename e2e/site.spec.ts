@@ -6,7 +6,7 @@ test.beforeAll(async () => {
   await waitForApi();
 });
 
-const publicPages = ["", "/categories"];
+const publicPages = ["", "/categories", "/methodology"];
 const languages = ["ar", "en"] as const;
 
 /** Waits for fonts, network and transitions, so the contrast check reads the final colours (same care as the console tests). */
@@ -26,7 +26,7 @@ test.describe("public shell", () => {
       await expect(page.locator("a[href='#main']")).toHaveCount(1);
 
       const footer = page.locator("footer");
-      await expect(footer.getByRole("link")).toHaveCount(6 + 1);
+      await expect(footer.getByRole("link")).toHaveCount(6 + 1 + 2); // every category, All categories, methodology and add a place
       await expect(footer.locator(`a[href='/${lang}/categories']`)).toBeVisible();
     });
   }

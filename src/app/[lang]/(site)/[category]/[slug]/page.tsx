@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
 import { JsonLdScript } from "@/components/site/JsonLdScript";
 import { ReviewCardView } from "@/components/site/ReviewCardView";
+import { ReviewComments, ReviewHistory } from "@/components/site/ReviewExtras";
+import { ReviewFilters, type ReviewFilter } from "@/components/site/ReviewFilters";
 import { buttonClass } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { ScoreTile } from "@/components/ui/ScoreTile";
@@ -10,7 +12,7 @@ import { Stars } from "@/components/ui/Stars";
 import { isLocale, type Locale } from "@/i18n/config";
 import { fmt, formatDate, formatNumber, formatScore } from "@/i18n/format";
 import { getDictionary } from "@/i18n/get-dictionary";
-import { getCategory, getEntity, getReviews, getScore } from "@/lib/api/server";
+import { getCategory, getEntity, getPlaces, getReviews, getScore } from "@/lib/api/server";
 import type { Category, PublicEntity, ScoreResponse } from "@/lib/api/types";
 import { absoluteUrl } from "@/lib/site";
 import { breadcrumbJsonLd, entityJsonLd, faqJsonLd } from "@/lib/seo/jsonld";
@@ -44,7 +46,13 @@ function buildSummary(lang: Locale, dict: Dict, name: string, entity: PublicEnti
 }
 
 /** Loads what the page needs and sends an old or wrong address to the current one (301). */
-async function load(lang: Locale, categoryId: string, param: string) {
+function readFilter(search: Record<string, string | string[] | undefined>): ReviewFilter {
+  const one = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v);
+  const sort = one(search.sort);
+  return { sort: sort === "highest" || sort === "lowest" ? sort : "newest", verified: one(search.verified) === "1" };
+}
+
+async function load(lang: Locale, categoryId: string, param: string, filter: ReviewFilter) {
   const id = entityIdFromParam(param);
   if (!id) notFound();
   const [entity, category] = await Promise.all([getEntity(id), getCategory(categoryId)]);
@@ -52,7 +60,7 @@ async function load(lang: Locale, categoryId: string, param: string) {
   // The category and the slug in the address must be the current ones; otherwise there is one canonical address (a merged place lands here too).
   const current = entityPath(lang, entity.data.categoryId, entity.data);
   if (decodeURIComponent(`/${lang}/${categoryId}/${param}`) !== decodeURIComponent(current)) permanentRedirect(current);
-  const [score, reviews] = await Promise.all([getScore(id), getReviews(id)]);
+  const [score, reviews] = await Promise.all([getScore(id), getReviews(id, { sort: filter.sort, verified: filter.verified })]);
   return { entity: entity.data, category: category.data, score: score.ok ? score.data : null, reviews: reviews.ok ? reviews.data : null };
 }
 
@@ -77,11 +85,15 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/[category]
   });
 }
 
-export default async function EntityPage({ params }: PageProps<"/[lang]/[category]/[slug]">) {
+export default async function EntityPage({ params, searchParams }: PageProps<"/[lang]/[category]/[slug]">) {
   const { lang, category: categoryId, slug } = await params;
   if (!isLocale(lang)) notFound();
   const dict = await getDictionary(lang);
-  const { entity, category, score, reviews } = await load(lang, categoryId, slug);
+  const filter = readFilter(await searchParams);
+  const { entity, category, score, reviews } = await load(lang, categoryId, slug, filter);
+  const others = await getPlaces(entity.categoryId, lang, 20, 0);
+  const x = dict.entityExtra;
+  const basePath = entityPath(lang, entity.categoryId, entity);
   const e = dict.entity;
   const name = entity.name[lang] ?? entity.name.ar ?? "";
   const categoryName = category.name[lang] ?? category.name.ar ?? categoryId;
@@ -223,6 +235,7 @@ export default async function EntityPage({ params }: PageProps<"/[lang]/[categor
         <h2 id="reviews" className="font-heading text-xl font-semibold">
           {e.reviews}
         </h2>
+        <ReviewFilters base={basePath} current={filter} labels={x} />
         {reviews === null ? (
           <p className="text-muted">{e.unavailable}</p>
         ) : reviews.length === 0 ? (
@@ -231,12 +244,39 @@ export default async function EntityPage({ params }: PageProps<"/[lang]/[categor
           <ul className="space-y-4">
             {reviews.map((r) => (
               <li key={r.id}>
-                <ReviewCardView review={r} lang={lang} labels={{ ...e }} />
+                <div className="space-y-3">
+                  <ReviewCardView review={r} lang={lang} labels={{ ...e }} />
+                  <div className="space-y-3 px-2">
+                    <ReviewHistory review={r} lang={lang} labels={x} outOf={e.outOf} />
+                    <ReviewComments review={r} lang={lang} labels={dict.comments} anonymousName={e.anonymousName} returnPath={basePath} />
+                  </div>
+                </div>
               </li>
             ))}
           </ul>
         )}
       </section>
+
+      {others.ok && others.data.places.some((p) => p.id !== entity.id) ? (
+        <form action={`/${lang}/compare`} className="flex flex-wrap items-center gap-2">
+          <input type="hidden" name="a" value={entity.id} />
+          <label htmlFor="compare-b" className="text-sm font-medium">
+            {x.compareWith}
+          </label>
+          <select id="compare-b" name="b" className="min-h-11 rounded-full border border-border bg-surface px-4 text-sm">
+            {others.data.places
+              .filter((p) => p.id !== entity.id)
+              .map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.name[lang] ?? p.name.ar}
+                </option>
+              ))}
+          </select>
+          <button type="submit" className={buttonClass("secondary")}>
+            {dict.compare.heading}
+          </button>
+        </form>
+      ) : null}
 
       {entity.address || entity.city ? (
         <section aria-labelledby="details" className="space-y-2">
