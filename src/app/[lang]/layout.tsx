@@ -30,6 +30,8 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
     <html
       lang={lang}
       dir={direction(lang)}
+      // The console sets data-theme on this element before React starts, so the server HTML and the client differ on purpose.
+      suppressHydrationWarning
       className={`${readex.variable} ${plexArabic.variable} ${roboto.variable}`}
     >
       <body>{children}</body>

@@ -1,9 +1,14 @@
 @import "tailwindcss";
 
-/* Semantic tokens from docs/design/tokens.json. Components use these names, never colour literals. */
+/*
+  Semantic tokens from docs/design/tokens.json. Components use these names, never colour literals.
+  Light is the default. Dark follows the device unless the page pins a theme with data-theme="light" or "dark"
+  (the console is light-first with a manual switch).
+*/
 :root {
   --background: #faf8f4;
   --surface: #ffffff;
+  --surface-2: #f3f0e9;
   --foreground: #15171a;
   --muted: #5c6168;
   --border: #e4e0d8;
@@ -13,24 +18,53 @@
   --verified: #5b3df5;
   --tint: #ece8ff;
   --star: #f5b301;
+  --negative: #b3261e;
+  --negative-bg: #fdecea;
+  --positive-bg: #eef9cf;
+  --warning-bg: #fff4d6;
+  --warning-text: #7a5800;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --background: #0f1114;
     --surface: #181b20;
+    --surface-2: #22262c;
     --foreground: #f4f2ec;
     --muted: #a9aeb6;
     --border: #2a2f36;
     --link: #7faaff;
     --verified: #c4b9ff;
     --tint: #2b2460;
+    --negative: #ff8a80;
+    --negative-bg: #3a1c1a;
+    --positive-bg: #2a3410;
+    --warning-bg: #3a2f10;
+    --warning-text: #f5c94a;
   }
+}
+
+:root[data-theme="dark"] {
+  --background: #0f1114;
+  --surface: #181b20;
+  --surface-2: #22262c;
+  --foreground: #f4f2ec;
+  --muted: #a9aeb6;
+  --border: #2a2f36;
+  --link: #7faaff;
+  --verified: #c4b9ff;
+  --tint: #2b2460;
+  --negative: #ff8a80;
+  --negative-bg: #3a1c1a;
+  --positive-bg: #2a3410;
+  --warning-bg: #3a2f10;
+  --warning-text: #f5c94a;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
   --color-border: var(--border);
@@ -40,6 +74,11 @@
   --color-verified: var(--verified);
   --color-tint: var(--tint);
   --color-star: var(--star);
+  --color-negative: var(--negative);
+  --color-negative-bg: var(--negative-bg);
+  --color-positive-bg: var(--positive-bg);
+  --color-warning-bg: var(--warning-bg);
+  --color-warning-text: var(--warning-text);
   --text-h1: 28px;
   --radius-card: 18px;
   --font-heading: var(--font-readex);
@@ -52,4 +91,10 @@ html[lang="en"] { --font-heading: var(--font-roboto); }
 body {
   background: var(--background);
   color: var(--foreground);
+}
+
+/* Visible keyboard focus everywhere (WCAG 2.4.7). */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--verified);
+  outline-offset: 2px;
 }
