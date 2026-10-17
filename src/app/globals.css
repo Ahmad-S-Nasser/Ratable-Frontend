@@ -23,6 +23,13 @@
   --positive-bg: #eef9cf;
   --warning-bg: #fff4d6;
   --warning-text: #7a5800;
+  --logo-light: block;
+  --logo-dark: none;
+  /* The footer is ink in both themes (the desktop design has an ink footer). */
+  --footer-bg: #15171a;
+  --footer-text: #f4f2ec;
+  --footer-muted: #b6bbc2;
+  --footer-line: #2a2f36;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -41,6 +48,8 @@
     --positive-bg: #2a3410;
     --warning-bg: #3a2f10;
     --warning-text: #f5c94a;
+    --logo-light: none;
+    --logo-dark: block;
   }
 }
 
@@ -59,6 +68,8 @@
   --positive-bg: #2a3410;
   --warning-bg: #3a2f10;
   --warning-text: #f5c94a;
+  --logo-light: none;
+  --logo-dark: block;
 }
 
 @theme inline {
@@ -79,6 +90,11 @@
   --color-positive-bg: var(--positive-bg);
   --color-warning-bg: var(--warning-bg);
   --color-warning-text: var(--warning-text);
+  --color-footer: var(--footer-bg);
+  --color-footer-text: var(--footer-text);
+  --color-footer-muted: var(--footer-muted);
+  --color-footer-line: var(--footer-line);
+  --text-display: 40px;
   --text-h1: 28px;
   --radius-card: 18px;
   --font-heading: var(--font-readex);
@@ -97,4 +113,12 @@ body {
 :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
   outline: 2px solid var(--verified);
   outline-offset: 2px;
+}
+
+/* The logo is ink on light and lime on dark (rule 15); both are in the markup and the theme tokens pick one. */
+.logo-on-light { display: var(--logo-light); }
+.logo-on-dark { display: var(--logo-dark); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }

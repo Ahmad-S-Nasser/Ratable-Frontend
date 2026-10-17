@@ -2,9 +2,46 @@
   "brand": "Ratable",
   "home": {
     "title": "Ratable: real reviews from people who visited",
-    "description": "Verified reviews in Egypt and the Gulf.",
-    "heading": "Real reviews from people who tried it",
-    "tagline": "Scores use verified reviews only."
+    "description": "A verified review platform for Egypt and the Gulf. See the real experience before you try it.",
+    "heading": "See the real experience before you try it",
+    "tagline": "Scores use verified reviews only.",
+    "search": {
+      "label": "Search a place or product",
+      "placeholder": "Search a compound, hotel or restaurant",
+      "submit": "Search"
+    },
+    "categoriesHeading": "Browse by category",
+    "categoriesEmpty": "Categories are not available right now. Please try again shortly.",
+    "trust": {
+      "heading": "Why trust the score?",
+      "verified": {
+        "title": "Verified only",
+        "text": "A score is built from reviewers who proved their visit or purchase."
+      },
+      "anonymous": {
+        "title": "Your identity is protected",
+        "text": "If you review anonymously, your name never appears anywhere."
+      },
+      "fair": {
+        "title": "No paid influence",
+        "text": "Nothing a business pays for changes a score, a rank or removes a review."
+      }
+    },
+    "how": {
+      "heading": "How it works",
+      "step1": {
+        "title": "Search",
+        "text": "Pick the place or product you are looking for."
+      },
+      "step2": {
+        "title": "Read",
+        "text": "See the score, the details and the verified reviews."
+      },
+      "step3": {
+        "title": "Share",
+        "text": "Been there? Review it and help others choose well."
+      }
+    }
   },
   "language": {
     "ar": "العربية",
@@ -395,5 +432,34 @@
       "status": "Status",
       "phoneNote": "A phone number is never shown here."
     }
+  },
+  "site": {
+    "skip": "Skip to content",
+    "home": "Home",
+    "mainNav": "Main navigation",
+    "categories": "Categories",
+    "allCategories": "All categories",
+    "theme": {
+      "label": "Theme",
+      "system": "Device",
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "language": {
+      "label": "Language"
+    },
+    "footer": {
+      "about": "Ratable is a review platform for Egypt and the Gulf. Scores use verified reviews only.",
+      "explore": "Explore",
+      "company": "Ratable",
+      "verifiedOnly": "Scores come from verified reviews only",
+      "noPaidRank": "Nothing paid changes a rating or a rank",
+      "rights": "© 2026 Ratable. All rights reserved."
+    }
+  },
+  "categoriesPage": {
+    "title": "All categories on Ratable",
+    "description": "Browse categories: compounds, schools, hotels, cars, appliances and restaurants, with verified scores.",
+    "heading": "All categories"
   }
 }

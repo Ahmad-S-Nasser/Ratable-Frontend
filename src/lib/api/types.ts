@@ -19,3 +19,9 @@ export type AdminUserPage = S["AdminUserPage"];
 export type AdminUser = S["AdminUser"];
 export type SpendResponse = S["SpendResponse"];
 export type LookupResponse = S["LookupResponse"];
+
+export type Category = S["CategoryDto"];
+export type PublicEntity = S["PublicEntity"];
+export type PublicReview = S["PublicReview"];
+export type ScoreResponse = S["ScoreResponse"];
+export type PublicComment = S["PublicComment"];

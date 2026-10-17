@@ -17,3 +17,18 @@ jobs:
       - run: npm run lint
       - run: npm run typecheck
       - run: npm run build
+
+  # The performance budget (LCP under 2.5 s, CLS under 0.1, blocking time under 200 ms as the lab stand-in for INP), plus accessibility and SEO scores.
+  # Runs without the API: the pages then show their empty states, which is the lightest case, so run it again against a seeded API before launch.
+  lighthouse:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm run lhci

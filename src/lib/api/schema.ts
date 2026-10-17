@@ -745,7 +745,18 @@ export interface paths {
                     headers: {
                         [name: string]: unknown;
                     };
-                    content?: never;
+                    content: {
+                        "application/json": components["schemas"]["PublicEntity"][];
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorBody"];
+                    };
                 };
             };
         };
@@ -777,6 +788,22 @@ export interface paths {
             responses: {
                 /** @description OK */
                 200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["PublicEntity"];
+                    };
+                };
+                /** @description Moved Permanently */
+                301: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Not Found */
+                404: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -1004,7 +1031,9 @@ export interface paths {
                     headers: {
                         [name: string]: unknown;
                     };
-                    content?: never;
+                    content: {
+                        "application/json": components["schemas"]["CategoryDto"][];
+                    };
                 };
             };
         };
@@ -1036,6 +1065,15 @@ export interface paths {
             responses: {
                 /** @description OK */
                 200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["CategoryDto"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -1074,6 +1112,15 @@ export interface paths {
             responses: {
                 /** @description OK */
                 200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["PublicReview"][];
+                    };
+                };
+                /** @description Not Found */
+                404: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -1135,6 +1182,15 @@ export interface paths {
                     headers: {
                         [name: string]: unknown;
                     };
+                    content: {
+                        "application/json": components["schemas"]["ScoreResponse"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
                     content?: never;
                 };
             };
@@ -1167,6 +1223,15 @@ export interface paths {
             responses: {
                 /** @description OK */
                 200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ReviewHistory"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -1299,6 +1364,15 @@ export interface paths {
             responses: {
                 /** @description OK */
                 200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["PublicComment"][];
+                    };
+                };
+                /** @description Not Found */
+                404: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -1946,6 +2020,12 @@ export interface components {
         AnonymityBody: {
             isAnonymous: null | boolean;
         };
+        AnswerDto: {
+            criterionId: string;
+            /** Format: int32 */
+            score: number;
+            optionValue: null | string;
+        };
         AnswerInput: {
             criterionId: null | string;
             value: components["schemas"]["JsonElement"];
@@ -1994,12 +2074,37 @@ export interface components {
             /** Format: int64 */
             total: number;
         };
+        CategoryDto: {
+            id: string;
+            name: components["schemas"]["LocalizedText"];
+            icon: string;
+            schemaOrgType: string;
+            anonymousByDefault: boolean;
+            verdictEnabled: boolean;
+            collectionsEnabled: boolean;
+            criteria: components["schemas"]["CriterionDto"][];
+            entityFields: components["schemas"]["FieldDto"][];
+            acceptedProofTypes: string[];
+        };
         CommentInput: {
             text: null | string;
             parentId: null | string;
             isAnonymous: null | boolean;
         };
         ContentKind: number;
+        CriterionDto: {
+            id: string;
+            label: components["schemas"]["LocalizedText"];
+            answerType: string;
+            options: components["schemas"]["OptionDto"][];
+        };
+        CriterionScoreDto: {
+            criterionId: string;
+            /** Format: int32 */
+            answers: number;
+            /** Format: double */
+            score: null | number;
+        };
         DisputeBody: {
             reason: null | string;
         };
@@ -2014,12 +2119,22 @@ export interface components {
         EditCommentBody: {
             text: null | string;
         };
+        ErrorBody: {
+            error: string;
+            detail?: null | string;
+        };
         FeatureSpendDto: {
             feature: string;
             /** Format: double */
             costUsd: number;
             /** Format: int32 */
             calls: number;
+        };
+        FieldDto: {
+            key: string;
+            label: components["schemas"]["LocalizedText"];
+            type: string;
+            options: components["schemas"]["OptionDto"][];
         };
         FlagDto: {
             flagged: boolean;
@@ -2075,6 +2190,10 @@ export interface components {
             /** Format: date-time */
             updatedAt: string;
         };
+        OptionDto: {
+            value: string;
+            label: components["schemas"]["LocalizedText"];
+        };
         OtpRequestBody: {
             phone: null | string;
         };
@@ -2122,6 +2241,79 @@ export interface components {
         ProfileBody: {
             displayName: null | string;
             avatarUrl: null | string;
+        };
+        PublicAuthor: {
+            name: string;
+            avatarUrl: null | string;
+        };
+        PublicComment: {
+            id: string;
+            anonymous: boolean;
+            author: null | components["schemas"]["PublicAuthor"];
+            text: string;
+            /** Format: date-time */
+            createdAt: string;
+            edited: boolean;
+            /** Format: date-time */
+            editedOn: null | string;
+            replies: components["schemas"]["PublicComment"][];
+        };
+        PublicEntity: {
+            id: string;
+            categoryId: string;
+            name: components["schemas"]["LocalizedText"];
+            alternateNames: string[];
+            slugs: {
+                [key: string]: string;
+            };
+            /** Format: double */
+            longitude: null | number;
+            /** Format: double */
+            latitude: null | number;
+            address: null | string;
+            city: null | string;
+            country: null | string;
+            externalIds: {
+                [key: string]: string;
+            };
+            sameAs: string[];
+            fields: {
+                [key: string]: string;
+            };
+            summaryText: null | components["schemas"]["LocalizedText"];
+            /** Format: date-time */
+            updatedAt: string;
+        };
+        PublicReview: {
+            id: string;
+            anonymous: boolean;
+            author: null | components["schemas"]["PublicAuthor"];
+            answers: components["schemas"]["AnswerDto"][];
+            /** Format: double */
+            overall: null | number;
+            text: null | string;
+            language: string;
+            verified: boolean;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            editedOn: null | string;
+            /** Format: int32 */
+            revisionNumber: number;
+            underReview: boolean;
+        };
+        PublicRevision: {
+            /** Format: int32 */
+            revisionNumber: number;
+            answers: components["schemas"]["AnswerDto"][];
+            /** Format: double */
+            overall: null | number;
+            text: null | string;
+            language: string;
+            /** Format: date-time */
+            writtenAt: string;
+            /** Format: date-time */
+            replacedAt: string;
         };
         QueueCandidate: {
             entityId: string;
@@ -2214,6 +2406,10 @@ export interface components {
             action: null | string;
             reason: null | string;
         };
+        ReviewHistory: {
+            current: components["schemas"]["PublicReview"];
+            earlierVersions: components["schemas"]["PublicRevision"][];
+        };
         ReviewInput: {
             answers: null | components["schemas"]["AnswerInput"][];
             text: null | string;
@@ -2222,6 +2418,17 @@ export interface components {
         };
         RolesBody: {
             roles: null | string[];
+        };
+        ScoreResponse: {
+            /** Format: double */
+            overall: null | number;
+            /** Format: int32 */
+            verifiedReviews: number;
+            /** Format: int32 */
+            publishedReviews: number;
+            /** Format: int32 */
+            minAnswersForCriterion: number;
+            criteria: components["schemas"]["CriterionScoreDto"][];
         };
         SignedInWebResponse: {
             user: components["schemas"]["MeResponse"];
