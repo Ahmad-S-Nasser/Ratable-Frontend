@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+/* Semantic tokens from docs/design/tokens.json. Components use these names, never colour literals. */
+:root {
+  --background: #faf8f4;
+  --surface: #ffffff;
+  --foreground: #15171a;
+  --muted: #5c6168;
+  --border: #e4e0d8;
+  --link: #1858d8;
+  --accent: #c8f542;
+  --accent-text: #15171a;
+  --verified: #5b3df5;
+  --tint: #ece8ff;
+  --star: #f5b301;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0f1114;
+    --surface: #181b20;
+    --foreground: #f4f2ec;
+    --muted: #a9aeb6;
+    --border: #2a2f36;
+    --link: #7faaff;
+    --verified: #c4b9ff;
+    --tint: #2b2460;
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-link: var(--link);
+  --color-accent: var(--accent);
+  --color-accent-text: var(--accent-text);
+  --color-verified: var(--verified);
+  --color-tint: var(--tint);
+  --color-star: var(--star);
+  --text-h1: 28px;
+  --radius-card: 18px;
+  --font-heading: var(--font-readex);
+}
+
+html[lang="ar"] body { font-family: var(--font-plex-arabic), sans-serif; }
+html[lang="en"] body { font-family: var(--font-roboto), sans-serif; }
+html[lang="en"] { --font-heading: var(--font-roboto); }
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
