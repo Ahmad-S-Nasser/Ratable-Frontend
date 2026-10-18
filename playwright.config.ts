@@ -19,6 +19,8 @@ export default defineConfig({
   reporter: [["list"]],
   use: {
     baseURL: `http://localhost:${webPort}`,
+    // Every test starts as a returning visitor, so the first-run onboarding does not redirect them (the onboarding tests make their own fresh context).
+    storageState: { cookies: [], origins: [{ origin: `http://localhost:${webPort}`, localStorage: [{ name: "ratable-onboarded", value: "1" }] }] },
     channel: process.env.E2E_BROWSER ?? "msedge",
     screenshot: "only-on-failure",
     trace: "retain-on-failure",

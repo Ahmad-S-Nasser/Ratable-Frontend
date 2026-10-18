@@ -8,6 +8,7 @@ import { getDictionary } from "@/i18n/get-dictionary";
 import { getFeed } from "@/lib/api/server";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { entityPath } from "@/lib/urls";
+import { pick } from "@/lib/pick";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/feed">): Promise<Metadata> {
   const { lang } = await params;
@@ -42,7 +43,7 @@ export default async function FeedPage({ params }: PageProps<"/[lang]/feed">) {
       <h1 className="sr-only">{t.heading}</h1>
       <ul className="h-[calc(100dvh-5rem)] snap-y snap-mandatory overflow-y-auto overscroll-contain" aria-label={t.heading}>
         {feed.data.map((item) => {
-          const name = item.entityName[lang] ?? item.entityName.ar ?? "";
+          const name = pick(item.entityName, lang);
           const href = entityPath(lang, item.categoryId, { id: item.entityId, slugs: item.entitySlugs });
           return (
             <li key={item.media.id} className="relative h-full snap-start snap-always p-2">

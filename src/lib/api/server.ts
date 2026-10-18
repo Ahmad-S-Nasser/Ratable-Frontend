@@ -2,7 +2,7 @@ import "server-only";
 import createClient from "openapi-fetch";
 import type { paths } from "./schema";
 import { unwrap, type ApiResult } from "./http";
-import type { FeedItem, PublicComment, ReviewHistory, Category, SitemapPlace, PlaceList, PublicEntity, PublicReview, ScoreResponse } from "./types";
+import type { AreaDto, RewardsConfigView, ListSummary, ListView, FeedItem, PublicComment, ReviewHistory, Category, SitemapPlace, PlaceList, PublicEntity, PublicReview, ScoreResponse } from "./types";
 
 /** Public pages are rendered on the server, so they read the API directly. Responses are reused for five minutes (API_REVALIDATE_SECONDS changes that; the browser tests use 0). */
 const revalidate = Number(process.env.API_REVALIDATE_SECONDS ?? 300);
@@ -41,3 +41,11 @@ export const getSitemapPlaces = (skip = 0, limit = 1000) =>
   unwrap<SitemapPlace[]>(serverApi.GET("/api/sitemap/places", { params: { query: { skip, limit } } }));
 
 export const getFeed = (limit = 10, skip = 0) => unwrap<FeedItem[]>(serverApi.GET("/api/media/feed", { params: { query: { limit, skip } } }));
+
+export const getLists = () => unwrap<ListSummary[]>(serverApi.GET("/api/collections"));
+
+export const getList = (id: string, lang: string) => unwrap<ListView>(serverApi.GET("/api/collections/{id}", { params: { path: { id }, query: { lang } } }));
+
+export const getAreas = () => unwrap<AreaDto[]>(serverApi.GET("/api/areas", { params: { query: {} } }));
+
+export const getRewardsConfig = () => unwrap<RewardsConfigView>(serverApi.GET("/api/rewards/config"));

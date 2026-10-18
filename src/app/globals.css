@@ -2,29 +2,31 @@
 
 /*
   Semantic tokens from docs/design/tokens.json. Components use these names, never colour literals.
-  Light is the default. Dark follows the device unless the page pins a theme with data-theme="light" or "dark"
-  (the console is light-first with a manual switch).
+  Consumer pages are dark-first: with no stored choice and a device that does not say it wants light, the page is dark.
+  A device that asks for light gets light; the visitor can pin light or dark with data-theme (the switch on the account page and in the header).
+  The console is light-first and sets data-theme="light" itself.
 */
 :root {
-  --background: #faf8f4;
-  --surface: #ffffff;
-  --surface-2: #f3f0e9;
-  --foreground: #15171a;
-  --muted: #5c6168;
-  --border: #e4e0d8;
-  --link: #1858d8;
+  /* dark (the default) */
+  --background: #0f1114;
+  --surface: #181b20;
+  --surface-2: #22262c;
+  --foreground: #f4f2ec;
+  --muted: #a9aeb6;
+  --border: #2a2f36;
+  --link: #7faaff;
   --accent: #c8f542;
   --accent-text: #15171a;
-  --verified: #5b3df5;
-  --tint: #ece8ff;
+  --verified: #c4b9ff;
+  --tint: #2b2460;
   --star: #f5b301;
-  --negative: #b3261e;
-  --negative-bg: #fdecea;
-  --positive-bg: #eef9cf;
-  --warning-bg: #fff4d6;
-  --warning-text: #7a5800;
-  --logo-light: block;
-  --logo-dark: none;
+  --negative: #ff8a80;
+  --negative-bg: #3a1c1a;
+  --positive-bg: #2a3410;
+  --warning-bg: #3a2f10;
+  --warning-text: #f5c94a;
+  --logo-light: none;
+  --logo-dark: block;
   /* The dark scrim over photos and video, and the colour of controls on it (the one place a dark overlay is allowed). */
   --scrim: rgb(0 0 0 / 0.62);
   --on-scrim: #ffffff;
@@ -35,25 +37,44 @@
   --footer-line: #2a2f36;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --background: #0f1114;
-    --surface: #181b20;
-    --surface-2: #22262c;
-    --foreground: #f4f2ec;
-    --muted: #a9aeb6;
-    --border: #2a2f36;
-    --link: #7faaff;
-    --verified: #c4b9ff;
-    --tint: #2b2460;
-    --negative: #ff8a80;
-    --negative-bg: #3a1c1a;
-    --positive-bg: #2a3410;
-    --warning-bg: #3a2f10;
-    --warning-text: #f5c94a;
-    --logo-light: none;
-    --logo-dark: block;
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --background: #faf8f4;
+    --surface: #ffffff;
+    --surface-2: #f3f0e9;
+    --foreground: #15171a;
+    --muted: #5c6168;
+    --border: #e4e0d8;
+    --link: #1858d8;
+    --verified: #5b3df5;
+    --tint: #ece8ff;
+    --negative: #b3261e;
+    --negative-bg: #fdecea;
+    --positive-bg: #eef9cf;
+    --warning-bg: #fff4d6;
+    --warning-text: #7a5800;
+    --logo-light: block;
+    --logo-dark: none;
   }
+}
+
+:root[data-theme="light"] {
+  --background: #faf8f4;
+  --surface: #ffffff;
+  --surface-2: #f3f0e9;
+  --foreground: #15171a;
+  --muted: #5c6168;
+  --border: #e4e0d8;
+  --link: #1858d8;
+  --verified: #5b3df5;
+  --tint: #ece8ff;
+  --negative: #b3261e;
+  --negative-bg: #fdecea;
+  --positive-bg: #eef9cf;
+  --warning-bg: #fff4d6;
+  --warning-text: #7a5800;
+  --logo-light: block;
+  --logo-dark: none;
 }
 
 :root[data-theme="dark"] {

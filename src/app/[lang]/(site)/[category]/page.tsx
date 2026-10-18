@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { JsonLdScript } from "@/components/site/JsonLdScript";
-import { PlaceCardView } from "@/components/site/PlaceCardView";
+import { PlaceList } from "@/components/site/PlaceList";
+import { cardLabels } from "@/lib/labels";
 import { buttonClass } from "@/components/ui/Button";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
@@ -11,6 +12,7 @@ import { getCategory, getPlaces } from "@/lib/api/server";
 import { breadcrumbJsonLd, itemListJsonLd } from "@/lib/seo/jsonld";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { entityPath } from "@/lib/urls";
+import { pick } from "@/lib/pick";
 
 const PAGE_SIZE = 20;
 
@@ -25,7 +27,7 @@ export async function generateMetadata({ params, searchParams }: PageProps<"/[la
   const [category, t] = await Promise.all([getCategory(categoryId), getDictionary(lang)]);
   if (!category.ok) return {};
   const places = await getPlaces(categoryId, lang, PAGE_SIZE, 0);
-  const name = category.data.name[lang] ?? category.data.name.ar ?? categoryId;
+  const name = pick(category.data.name, lang, categoryId);
   const total = places.ok ? places.data.total : 0;
   const page = pageNumber((await searchParams).page);
   // Later pages and empty lists are thin: they are not indexed, and the canonical is always the base page.
@@ -46,7 +48,7 @@ export default async function CategoryPage({ params, searchParams }: PageProps<"
 
   const page = pageNumber((await searchParams).page);
   const places = await getPlaces(categoryId, lang, PAGE_SIZE, (page - 1) * PAGE_SIZE);
-  const name = category.data.name[lang] ?? category.data.name.ar ?? categoryId;
+  const name = pick(category.data.name, lang, categoryId);
   const t = dict.category;
   const list = places.ok ? places.data.places : [];
   const total = places.ok ? places.data.total : 0;
@@ -61,7 +63,7 @@ export default async function CategoryPage({ params, searchParams }: PageProps<"
             { name: dict.site.categories, path: `/${lang}/categories` },
             { name, path: `/${lang}/${categoryId}` },
           ]),
-          itemListJsonLd(list.map((p) => ({ name: p.name[lang] ?? p.name.ar ?? "", path: entityPath(lang, categoryId, p) }))),
+          itemListJsonLd(list.map((p) => ({ name: pick(p.name, lang), path: entityPath(lang, categoryId, p) }))),
         ]}
       />
       <nav aria-label={dict.entity.breadcrumb} className="text-sm text-muted">
@@ -88,13 +90,14 @@ export default async function CategoryPage({ params, searchParams }: PageProps<"
       ) : list.length === 0 ? (
         <p className="text-muted">{t.empty}</p>
       ) : (
-        <ol className="grid gap-4 md:grid-cols-2">
-          {list.map((p) => (
-            <li key={p.id}>
-              <PlaceCardView place={p} lang={lang} categoryId={categoryId} labels={{ reviewsCount: t.reviewsCount, unrated: t.unrated, outOf: dict.entity.outOf }} />
-            </li>
-          ))}
-        </ol>
+        <PlaceList
+          places={list}
+          lang={lang}
+          categoryId={categoryId}
+          labels={cardLabels(dict, category.data, lang)}
+          distanceUrl={`/api/categories/${categoryId}/places?limit=${PAGE_SIZE}&skip=${(page - 1) * PAGE_SIZE}&lang=${lang}`}
+          near={dict.nearMe}
+        />
       )}
 
       {page > 1 || hasNext ? (

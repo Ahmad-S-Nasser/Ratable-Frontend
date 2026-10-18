@@ -76,3 +76,20 @@ export const PhotoIcon = (p: SVGProps<SVGSVGElement>) => (
     <path d="m21 16-5-5-8 8" />
   </Icon>
 );
+
+export const StarIcon = (p: SVGProps<SVGSVGElement>) => (
+  <Icon {...p}>
+    <path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8 6.6 19.7l1.1-6.1L3.2 9.4l6.1-.8L12 3Z" />
+  </Icon>
+);
+export const PinIcon = (p: SVGProps<SVGSVGElement>) => (
+  <Icon {...p}>
+    <path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11Z" />
+    <circle cx="12" cy="10" r="2.5" />
+  </Icon>
+);
+export const ThumbsUpIcon = (p: SVGProps<SVGSVGElement>) => (
+  <Icon {...p}>
+    <path d="M7 11v9H4v-9h3Zm0 0 4-8a2 2 0 0 1 2 2v4h5.2a2 2 0 0 1 2 2.3l-1 6A2 2 0 0 1 17.2 20H7" />
+  </Icon>
+);

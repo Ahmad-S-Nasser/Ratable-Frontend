@@ -8,6 +8,7 @@ import { getDictionary } from "@/i18n/get-dictionary";
 import { getCategory, getEntity } from "@/lib/api/server";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { entityIdFromParam, entityPath } from "@/lib/urls";
+import { pick } from "@/lib/pick";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/[category]/[slug]/review">): Promise<Metadata> {
   const { lang, slug } = await params;
@@ -16,7 +17,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/[category]
   const entity = id ? await getEntity(id) : null;
   if (!entity?.ok) return {};
   const t = (await getDictionary(lang)).review;
-  const name = entity.data.name[lang] ?? entity.data.name.ar ?? "";
+  const name = pick(entity.data.name, lang);
   // A form is never offered to search engines.
   return buildMetadata({
     lang,
@@ -35,7 +36,7 @@ export default async function ReviewPage({ params }: PageProps<"/[lang]/[categor
   const [entity, category, dict] = await Promise.all([getEntity(id), getCategory(categoryId), getDictionary(lang)]);
   if (!entity.ok || !category.ok || entity.data.categoryId !== categoryId) notFound();
 
-  const name = entity.data.name[lang] ?? entity.data.name.ar ?? "";
+  const name = pick(entity.data.name, lang);
   const path = entityPath(lang, categoryId, entity.data);
   const t = dict.review;
 
@@ -50,7 +51,7 @@ export default async function ReviewPage({ params }: PageProps<"/[lang]/[categor
           {entity.data.city ? ` · ${entity.data.city}` : ""}
         </p>
       </div>
-      <ReviewForm lang={lang} entityId={entity.data.id} entityPath={path} category={category.data} dict={{ ...t, media: dict.media }} />
+      <ReviewForm lang={lang} entityId={entity.data.id} entityPath={path} category={category.data} dict={{ ...t, media: dict.media, verdict: dict.verdict, rewards: { afterPosting: dict.level.afterPosting, rankUp: dict.level.rankUp, how: dict.level.howItWorks, level: dict.level.title } }} />
     </div>
   );
 }

@@ -278,6 +278,8 @@ export interface paths {
                     limit?: number;
                     skip?: number;
                     lang?: string;
+                    lat?: number;
+                    lng?: number;
                 };
                 header?: never;
                 path: {
@@ -1250,6 +1252,366 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content?: never;
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/me/rewards": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["RewardsView"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/me/rewards/seen": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["SeenBody"];
+                };
+            };
+            responses: {
+                /** @description No Content */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorBody"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/rewards/config": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["RewardsConfigView"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/contributions/{id}/reverse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["ReverseBody"];
+                };
+            };
+            responses: {
+                /** @description No Content */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorBody"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorBody"];
+                    };
+                };
+                /** @description Conflict */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorBody"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/places": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    lat?: number;
+                    lng?: number;
+                    radiusKm?: number;
+                    area?: string;
+                    category?: string;
+                    lang?: string;
+                    limit?: number;
+                    ratedOnly?: boolean;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NearbyList"];
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorBody"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/reviews/{id}/helpful": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["HelpfulState"];
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorBody"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["HelpfulState"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/me/helpful": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    reviewIds?: string;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": string[];
+                    };
                 };
             };
         };
@@ -2960,6 +3322,279 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/collections": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ListSummary"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/collections/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    lang?: string;
+                    lat?: number;
+                    lng?: number;
+                };
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ListView"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/areas": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    q?: string;
+                    country?: string;
+                    limit?: number;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["AreaDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/areas/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["AreaDto"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/geocode": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    text?: string;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["AreaDto"];
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorBody"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/reverse-geocode": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    lat?: number;
+                    lng?: number;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["AreaDto"];
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorBody"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -2995,6 +3630,18 @@ export interface components {
             criterionId: null | string;
             value: components["schemas"]["JsonElement"];
         };
+        AreaDto: {
+            id: string;
+            name: components["schemas"]["LocalizedText"];
+            country: string;
+            kind: string;
+            /** Format: double */
+            latitude: number;
+            /** Format: double */
+            longitude: number;
+            /** Format: double */
+            radiusKm: number;
+        };
         AuditEntryDto: {
             id: string;
             actor: string;
@@ -3014,6 +3661,24 @@ export interface components {
             page: number;
             /** Format: int32 */
             pageSize: number;
+        };
+        BadgeDefinition: {
+            id?: string;
+            title?: components["schemas"]["LocalizedText"];
+            description?: components["schemas"]["LocalizedText"];
+            action?: string;
+            /** Format: int32 */
+            threshold?: number;
+        };
+        BadgeView: {
+            id: string;
+            title: components["schemas"]["LocalizedText"];
+            description: components["schemas"]["LocalizedText"];
+            /** Format: int32 */
+            progress: number;
+            /** Format: int32 */
+            threshold: number;
+            earned: boolean;
         };
         CaseDto: {
             id: string;
@@ -3098,6 +3763,15 @@ export interface components {
         ErrorBody: {
             error: string;
         };
+        EventView: {
+            id: string;
+            action: string;
+            /** Format: int32 */
+            points: number;
+            reason: string;
+            /** Format: date-time */
+            createdAt: string;
+        };
         FeatureSpendDto: {
             feature: string;
             /** Format: double */
@@ -3127,7 +3801,38 @@ export interface components {
             /** Format: double */
             confidence: number;
         };
+        HelpfulState: {
+            reviewId: string;
+            voted: boolean;
+            /** Format: int32 */
+            count: number;
+        };
         JsonElement: unknown;
+        ListSummary: {
+            id: string;
+            slug: {
+                [key: string]: string;
+            };
+            title: components["schemas"]["LocalizedText"];
+            categoryId: string;
+            area: null | components["schemas"]["LocalizedText"];
+        };
+        ListView: {
+            id: string;
+            slug: {
+                [key: string]: string;
+            };
+            title: components["schemas"]["LocalizedText"];
+            categoryId: string;
+            area: null | components["schemas"]["LocalizedText"];
+            /** Format: int32 */
+            minReviews: number;
+            /** Format: int32 */
+            limit: number;
+            /** Format: date-time */
+            updatedAt: null | string;
+            places: components["schemas"]["PlaceCard"][];
+        };
         LocalizedText: {
             ar?: string;
             en?: string;
@@ -3155,6 +3860,22 @@ export interface components {
         MergeBody: {
             intoEntityId: null | string;
         };
+        MissionDefinition: {
+            id?: string;
+            title?: components["schemas"]["LocalizedText"];
+            action?: string;
+            /** Format: int32 */
+            target?: number;
+        };
+        MissionView: {
+            id: string;
+            title: components["schemas"]["LocalizedText"];
+            /** Format: int32 */
+            progress: number;
+            /** Format: int32 */
+            target: number;
+            done: boolean;
+        };
         ModerationContentView: {
             id: string;
             kind: components["schemas"]["ContentKind"];
@@ -3175,6 +3896,18 @@ export interface components {
             createdAt: string;
             /** Format: date-time */
             updatedAt: string;
+        };
+        NearbyArea: {
+            id: string;
+            name: components["schemas"]["LocalizedText"];
+        };
+        NearbyList: {
+            places: components["schemas"]["PlaceCard"][];
+            /** Format: int32 */
+            total: number;
+            /** Format: int32 */
+            radiusKm: number;
+            area: null | components["schemas"]["NearbyArea"];
         };
         OptionDto: {
             value: string;
@@ -3270,6 +4003,7 @@ export interface components {
             updatedAt: string;
             underReview: boolean;
             moderationReason: null | string;
+            verdict?: null | string;
         };
         PlaceCard: {
             id: string;
@@ -3284,6 +4018,12 @@ export interface components {
             verifiedReviews: number;
             /** Format: date-time */
             lastModified: string;
+            verdict?: null | components["schemas"]["VerdictDto"];
+            priceBand?: null | string;
+            /** Format: double */
+            distanceMeters?: null | number;
+            topCriteria?: null | string[];
+            categoryId?: null | string;
         };
         PlaceList: {
             places: components["schemas"]["PlaceCard"][];
@@ -3301,6 +4041,8 @@ export interface components {
         ProfileBody: {
             displayName: null | string;
             avatarUrl: null | string;
+            interests?: null | string[];
+            areaId?: null | string;
         };
         PublicAuthor: {
             name: string;
@@ -3376,6 +4118,11 @@ export interface components {
             revisionNumber: number;
             underReview: boolean;
             media: components["schemas"]["PublicMediaItem"][];
+            /**
+             * Format: int32
+             * @default 0
+             */
+            helpfulCount: number;
         };
         PublicRevision: {
             /** Format: int32 */
@@ -3475,6 +4222,22 @@ export interface components {
             /** Format: date-time */
             createdAt: string;
         };
+        RankDefinition: {
+            id?: string;
+            /** Format: int32 */
+            minPoints?: number;
+            title?: components["schemas"]["LocalizedText"];
+        };
+        RankUp: {
+            from: components["schemas"]["RankView"];
+            to: components["schemas"]["RankView"];
+        };
+        RankView: {
+            id: string;
+            /** Format: int32 */
+            minPoints: number;
+            title: components["schemas"]["LocalizedText"];
+        };
         ReasonBody: {
             reason: null | string;
         };
@@ -3517,6 +4280,9 @@ export interface components {
             action: null | string;
             reason: null | string;
         };
+        ReverseBody: {
+            reason: null | string;
+        };
         ReviewHistory: {
             current: components["schemas"]["PublicReview"];
             earlierVersions: components["schemas"]["PublicRevision"][];
@@ -3526,6 +4292,34 @@ export interface components {
             text: null | string;
             language: null | string;
             isAnonymous: null | boolean;
+            verdict?: null | string;
+        };
+        RewardsConfigView: {
+            points: {
+                [key: string]: number;
+            };
+            dailyCaps: {
+                [key: string]: number;
+            };
+            /** Format: int32 */
+            minWrittenLength: number;
+            ranks: components["schemas"]["RankDefinition"][];
+            badges: components["schemas"]["BadgeDefinition"][];
+            missions: components["schemas"]["MissionDefinition"][];
+        };
+        RewardsView: {
+            /** Format: int32 */
+            points: number;
+            rank: components["schemas"]["RankView"];
+            nextRank: null | components["schemas"]["RankView"];
+            /** Format: int32 */
+            pointsToNext: number;
+            badges: components["schemas"]["BadgeView"][];
+            missions: components["schemas"]["MissionView"][];
+            /** Format: int32 */
+            streakWeeks: number;
+            recent: components["schemas"]["EventView"][];
+            rankUp: null | components["schemas"]["RankUp"];
         };
         RolesBody: {
             roles: null | string[];
@@ -3540,6 +4334,10 @@ export interface components {
             /** Format: int32 */
             minAnswersForCriterion: number;
             criteria: components["schemas"]["CriterionScoreDto"][];
+            verdict?: null | components["schemas"]["VerdictDto"];
+        };
+        SeenBody: {
+            rankId: null | string;
         };
         SignedInWebResponse: {
             user: components["schemas"]["MeResponse"];
@@ -3619,6 +4417,13 @@ export interface components {
             /** Format: int64 */
             declaredBytes: number;
             error?: null | string;
+        };
+        VerdictDto: {
+            kind: string;
+            /** Format: int32 */
+            sharePercent: number;
+            /** Format: int32 */
+            votes: number;
         };
     };
     responses: never;

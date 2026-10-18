@@ -4,6 +4,7 @@ import { VerifiedBadge } from "@/components/ui/VerifiedBadge";
 import type { Locale } from "@/i18n/config";
 import { fmt, formatDate, formatScore } from "@/i18n/format";
 import type { PublicReview } from "@/lib/api/types";
+import { pick } from "@/lib/pick";
 
 type MediaLabels = { play: string; pause: string; mute: string; unmute: string; videoLabel: string; captions: string };
 type Labels = { verified: string; unverifiedNote: string; anonymousName: string; edited: string; outOf: string };
@@ -20,7 +21,7 @@ export function ReviewCardView({ review, lang, labels, media }: { review: Public
   return (
     <article id={`r-${review.id}`} className="space-y-3 rounded-card border border-border bg-surface p-5">
       <header className="flex items-center gap-3">
-        <span aria-hidden="true" className="inline-flex size-10 shrink-0 items-center justify-center rounded-full bg-surface-2 font-semibold text-muted">
+        <span aria-hidden="true" className={`inline-flex size-10 shrink-0 items-center justify-center rounded-full bg-surface-2 font-semibold text-muted ${review.verified ? "ring-2 ring-verified ring-offset-2 ring-offset-surface" : ""}`}>
           {initial}
         </span>
         <div className="min-w-0 flex-1">
@@ -52,11 +53,11 @@ export function ReviewCardView({ review, lang, labels, media }: { review: Public
             height={v.height}
             labels={{ play: media.play, pause: media.pause, mute: media.mute, unmute: media.unmute, label: fmt(media.videoLabel, { duration: Math.round(v.durationSeconds ?? 0) }) }}
           />
-          {v.captions?.[lang] || v.captions?.ar || v.captions?.en ? (
+          {pick(v.captions, lang) ? (
             <details className="text-sm">
               <summary className="cursor-pointer font-medium text-link">{media.captions}</summary>
               <p lang={lang} dir="auto" className="mt-1 leading-6 text-muted">
-                {v.captions?.[lang] ?? v.captions?.ar ?? v.captions?.en}
+                {pick(v.captions, lang)}
               </p>
             </details>
           ) : null}

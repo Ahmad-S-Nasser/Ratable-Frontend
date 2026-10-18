@@ -11,6 +11,7 @@ import { getCategory, getPlaces } from "@/lib/api/server";
 import { breadcrumbJsonLd, itemListJsonLd } from "@/lib/seo/jsonld";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { entityPath } from "@/lib/urls";
+import { pick } from "@/lib/pick";
 
 const TOP = 10;
 
@@ -27,7 +28,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/[category]
   if (!isLocale(lang)) return {};
   const [guide, dict] = await Promise.all([loadGuide(lang, categoryId), getDictionary(lang)]);
   if (!guide) return {};
-  const name = guide.category.name[lang] ?? guide.category.name.ar ?? categoryId;
+  const name = pick(guide.category.name, lang, categoryId);
   return buildMetadata({
     lang,
     path: `/${categoryId}/best`,
@@ -43,8 +44,8 @@ export default async function BestOfPage({ params }: PageProps<"/[lang]/[categor
   const [guide, dict] = await Promise.all([loadGuide(lang, categoryId), getDictionary(lang)]);
   if (!guide) notFound();
   const g = dict.guide;
-  const name = guide.category.name[lang] ?? guide.category.name.ar ?? categoryId;
-  const placeName = (p: { name: { ar?: string; en?: string } }) => p.name[lang] ?? p.name.ar ?? p.name.en ?? "";
+  const name = pick(guide.category.name, lang, categoryId);
+  const placeName = (p: { name: { ar?: string; en?: string } }) => pick(p.name, lang);
 
   return (
     <div className="mx-auto max-w-[1120px] space-y-6 px-4 py-10">

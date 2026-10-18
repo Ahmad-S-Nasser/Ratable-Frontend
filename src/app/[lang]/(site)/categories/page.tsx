@@ -8,6 +8,7 @@ import { getDictionary } from "@/i18n/get-dictionary";
 import { getCategories } from "@/lib/api/server";
 import { breadcrumbJsonLd, itemListJsonLd } from "@/lib/seo/jsonld";
 import { buildMetadata } from "@/lib/seo/metadata";
+import { pick } from "@/lib/pick";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/categories">): Promise<Metadata> {
   const { lang } = await params;
@@ -24,7 +25,7 @@ export default async function CategoriesPage({ params }: PageProps<"/[lang]/cate
   const dict = await getDictionary(lang);
   const categories = await getCategories();
   const list = categories.ok ? categories.data : [];
-  const named = list.map((c) => ({ name: c.name[lang] ?? c.name.ar ?? c.id, path: `/${lang}/${c.id}`, id: c.id }));
+  const named = list.map((c) => ({ name: pick(c.name, lang, c.id), path: `/${lang}/${c.id}`, id: c.id }));
 
   return (
     <div className="mx-auto max-w-[1120px] space-y-6 px-4 py-10">

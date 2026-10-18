@@ -1014,5 +1014,201 @@
     "play": "Play",
     "videoOf": "Video about {name}",
     "more": "More"
+  },
+  "verdict": {
+    "worth": "Worth it",
+    "not_worth": "Not worth it",
+    "hidden_gem": "Hidden gem",
+    "share": "{pct}% of {votes} verified reviewers",
+    "formLabel": "Your verdict on the place (optional)",
+    "formHint": "It does not change your score or the place's score.",
+    "none": "No verdict"
+  },
+  "lists": {
+    "title": "Curated lists",
+    "description": "Lists of the best places, ranked by the score from verified reviews only, with no payment involved.",
+    "heading": "Curated lists",
+    "intro": "Every list is ranked by the score from verified reviews only.",
+    "empty": "There are no lists right now.",
+    "emptyList": "No place meets this list's rules yet.",
+    "nobodyPays": "Nobody pays to appear in this list or to rank higher.",
+    "updated": "Last updated: {date}.",
+    "rule": "Places appear with at least {min} verified reviews, in the category \"{category}\"{area}.",
+    "inArea": " in {area}",
+    "price": "Price: {band}",
+    "distance": "{km} km",
+    "tableLabel": "List ranking",
+    "seeMethod": "How scores are calculated",
+    "allLists": "All lists"
+  },
+  "nearMe": {
+    "button": "Distance from me",
+    "hint": "We use your location now only to work out distances, and we do not store it.",
+    "denied": "We could not get your location. You can carry on without it.",
+    "failed": "The distances could not be worked out right now."
+  },
+  "cards": {
+    "comments": "{count} comments",
+    "noComments": "No comments"
+  },
+  "themeAccount": {
+    "heading": "Appearance",
+    "intro": "By default it follows your device. Choose light or dark if you prefer."
+  },
+  "onboarding": {
+    "title": "Welcome to Ratable",
+    "description": "A few quick steps so Ratable fits your interests and your city.",
+    "splashTagline": "Real reviews from people who tried",
+    "skip": "Skip",
+    "next": "Next",
+    "start": "Start",
+    "progress": "Step {n} of {total}",
+    "steps": [
+      {
+        "title": "Real people",
+        "text": "Every score is built from reviewers who proved their visit or purchase, not from ads."
+      },
+      {
+        "title": "A clear verdict",
+        "text": "Choose \"Worth it\", \"Not worth it\" or \"Hidden gem\", and see what most verified reviewers think."
+      },
+      {
+        "title": "Points and badges",
+        "text": "You earn points for effort and usefulness: a written review, a photo, a video, a verified visit. Points never change a score."
+      },
+      {
+        "title": "Pick your interests and city",
+        "text": "Choose at least 3 interests and your city so we show you what fits."
+      }
+    ],
+    "interests": "Your interests",
+    "interestsNeed": "Choose at least {n}",
+    "city": "Your city",
+    "cityPlaceholder": "Choose your city",
+    "saved": "Your choices were saved.",
+    "errors": {
+      "network": "Could not save. Carry on without it or try later.",
+      "unknown": "Something went wrong. Try later."
+    }
+  },
+  "level": {
+    "title": "My level and points",
+    "heading": "My level and points",
+    "points": "{n} points",
+    "rank": "Rank",
+    "toNext": "{n} points to reach {rank}",
+    "topRank": "You reached the top rank.",
+    "badges": "Badges",
+    "badgeEarned": "Earned",
+    "badgeProgress": "{have} of {need}",
+    "missions": "This week's missions",
+    "missionDone": "Done",
+    "streak": "Weekly streak",
+    "streakText": "{n} weeks in a row",
+    "streakNone": "Start your streak with a review or a photo this week.",
+    "recent": "Recent points",
+    "noEvents": "No points yet. Write a review or add a photo to start.",
+    "howItWorks": "How points work",
+    "signInNeeded": "Sign in to see your level.",
+    "signIn": "Sign in",
+    "loading": "Loading…",
+    "reasons": {
+      "written_review": "Written review",
+      "photo": "Photo",
+      "video": "Video",
+      "verified_visit": "Verified visit",
+      "first_review": "First review of a place",
+      "helpful_vote": "Your review was helpful",
+      "review_hidden": "Cancelled: the review is hidden",
+      "review_deleted": "Cancelled: the review was deleted",
+      "media_removed": "Cancelled: the file was removed",
+      "proof_rejected": "Cancelled: the proof was not accepted",
+      "vote_removed": "Cancelled: the vote was withdrawn",
+      "admin_reversal": "Cancelled by a reviewer's decision"
+    },
+    "rankUp": {
+      "heading": "Rank up!",
+      "text": "You reached {rank}.",
+      "close": "Great"
+    },
+    "afterPosting": {
+      "heading": "Your review was received",
+      "text": "You earn your points when it is published after the check:",
+      "written": "Written review: +{n}",
+      "photo": "Photo: +{n}",
+      "video": "Video: +{n}",
+      "verified": "Proof of the visit: +{n}",
+      "note": "Points reward effort, not whether the opinion is positive or negative, and they never change a score.",
+      "yourLevel": "Your level now: {rank} ({points} points)"
+    }
+  },
+  "pointsPage": {
+    "title": "How points work",
+    "description": "How many points each contribution earns, the ranks and badges, and what points never do.",
+    "heading": "How points work",
+    "intro": "Points reward effort and usefulness. These are the rules.",
+    "earn": "How you earn",
+    "actions": {
+      "written_review": "A published written review",
+      "photo": "A published photo",
+      "video": "A published video",
+      "verified_visit": "A verified visit",
+      "first_review": "The first review of a place",
+      "helpful_vote": "Each time someone finds your review helpful"
+    },
+    "perDay": "up to {n} points a day",
+    "minWords": "A review counts as \"written\" from {n} characters.",
+    "ranks": "Ranks",
+    "fromPoints": "from {n} points",
+    "badges": "Badges",
+    "rules": "What points never do",
+    "rulesItems": [
+      "Points never change how much your review counts in any score or verdict.",
+      "No points are given for being positive or negative.",
+      "Duplicate, paid or hidden reviews lose their points.",
+      "Every point is recorded with a reason and a reference, so it can be checked and reversed.",
+      "The streak counts weeks, not days."
+    ]
+  },
+  "nearby": {
+    "title": "Near you",
+    "heading": "Near you",
+    "description": "Rated places near you or near an area you choose, ranked by verified score and then by distance.",
+    "chooseArea": "Choose an area",
+    "areaPicker": "Choose an area",
+    "areaSearch": "Search for a city or an area",
+    "areaNone": "No matching areas.",
+    "close": "Close",
+    "radius": "Distance",
+    "km": "{n} km",
+    "category": "Category",
+    "allCategories": "All categories",
+    "useLocation": "Use my location",
+    "permissionHeading": "We need your location for a moment",
+    "permissionText": "We use your location only now, to show places near you. We do not store it or link it to your account, and you can choose an area instead.",
+    "permissionAllow": "Allow location",
+    "permissionDenied": "We could not get your location. Choose an area instead.",
+    "loading": "Searching…",
+    "empty": "No rated places within {km} km. Try a bigger distance or another area.",
+    "results": "{count} places within {km} km",
+    "from": "From {area}",
+    "fromDevice": "From your location",
+    "view": "View",
+    "viewList": "List",
+    "viewMap": "Map",
+    "mapNote": "A simple diagram: each dot is a place and the rings are distances; where a dot sits around the circle does not show direction. A Google map will be added later.",
+    "mapLabel": "Map of nearby places",
+    "errors": {
+      "invalid_radius": "Choose a distance from the list.",
+      "location_required": "Choose an area or allow your location.",
+      "network": "Could not search right now.",
+      "unknown": "Something went wrong."
+    }
+  },
+  "helpful": {
+    "button": "Helpful",
+    "pressed": "Marked helpful",
+    "signIn": "Sign in to mark this helpful",
+    "count": "{count} found this helpful"
   }
 }

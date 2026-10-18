@@ -10,6 +10,7 @@ import { getDictionary } from "@/i18n/get-dictionary";
 import { searchEntities } from "@/lib/api/server";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { entityPath } from "@/lib/urls";
+import { pick } from "@/lib/pick";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/search">): Promise<Metadata> {
   const { lang } = await params;
@@ -56,7 +57,7 @@ export default async function SearchPage({ params, searchParams }: PageProps<"/[
               <li key={p.id}>
                 <Card>
                   <Link href={entityPath(lang, p.categoryId, p)} className="font-heading text-lg font-semibold hover:underline">
-                    {p.name[lang] ?? p.name.ar ?? p.name.en}
+                    {pick(p.name, lang)}
                   </Link>
                   <p className="text-sm text-muted">{[p.city, p.address].filter(Boolean).join(" · ")}</p>
                 </Card>

@@ -6,7 +6,7 @@ import { CommentForm } from "./CommentForm";
 
 type HistoryLabels = { historyShow: string; historyVersion: string; historyReplaced: string };
 type CommentLabels = {
-  heading: string; none: string; label: string; placeholder: string; submit: string; anonymous: string; sent: string; signIn: string; reply: string;
+  count: string; heading: string; none: string; label: string; placeholder: string; submit: string; anonymous: string; sent: string; signIn: string; reply: string;
   errors: Record<string, string>;
 };
 
@@ -64,8 +64,12 @@ export async function ReviewComments({
 }: { review: PublicReview; lang: Locale; labels: CommentLabels; anonymousName: string; returnPath: string }) {
   const comments = await getComments(review.id);
   const list = comments.ok ? comments.data : [];
+  const count = list.reduce((n, c) => n + 1 + c.replies.length, 0);
   return (
     <section aria-label={labels.heading} className="space-y-3 border-t border-border pt-3">
+      <p className="text-sm font-medium text-muted" data-testid="comment-count">
+        {labels.count.replace("{count}", String(count))}
+      </p>
       {list.length > 0 ? (
         <ul className="space-y-3">
           {list.map((c) => (

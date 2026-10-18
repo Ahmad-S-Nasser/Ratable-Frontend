@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { FirstRunRedirect } from "@/components/site/FirstRunRedirect";
 import { JsonLdScript } from "@/components/site/JsonLdScript";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -11,6 +12,7 @@ import { getDictionary } from "@/i18n/get-dictionary";
 import { getCategories } from "@/lib/api/server";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo/jsonld";
 import { buildMetadata } from "@/lib/seo/metadata";
+import { pick } from "@/lib/pick";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]">): Promise<Metadata> {
   const { lang } = await params;
@@ -36,6 +38,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
 
   return (
     <div className="mx-auto max-w-[1120px] space-y-14 px-4 py-10">
+      <FirstRunRedirect lang={lang} />
       <JsonLdScript data={[organizationJsonLd(), websiteJsonLd(lang)]} />
 
       <section className="space-y-5 py-4 text-center sm:py-10">
@@ -67,7 +70,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
           <ul className="flex flex-wrap gap-2">
             {list.map((c) => (
               <li key={c.id}>
-                <Chip href={`/${lang}/${c.id}`}>{c.name[lang] ?? c.name.ar}</Chip>
+                <Chip href={`/${lang}/${c.id}`}>{pick(c.name, lang)}</Chip>
               </li>
             ))}
           </ul>
@@ -106,7 +109,10 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
             </li>
           ))}
         </ol>
-        <p className="text-sm">
+        <p className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+          <Link href={`/${lang}/nearby`} className="font-medium text-link underline">
+            {dict.nearby.heading}
+          </Link>
           <Link href={`/${lang}/categories`} className="font-medium text-link underline">
             {dict.site.allCategories}
           </Link>

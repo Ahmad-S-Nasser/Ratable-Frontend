@@ -13,17 +13,19 @@ type Input = {
   noindex?: boolean;
   image?: string;
   type?: "website" | "article";
+  /** The path in each language when it differs (a place's slug is in the page's language). The hreflang links then point at the real address, not at one that redirects. */
+  alternatePaths?: Partial<Record<Locale, string>>;
 };
 
 /**
  * The one place page metadata is built: unique title and description, canonical (always the base page, never a filtered or sorted one),
  * hreflang for every language, Open Graph and the robots directive.
  */
-export function buildMetadata({ lang, path, title, description, noindex = false, image, type = "website" }: Input): Metadata {
+export function buildMetadata({ lang, path, title, description, noindex = false, image, type = "website", alternatePaths }: Input): Metadata {
   const url = absoluteUrl(`/${lang}${path}`);
   const languages: Record<string, string> = {};
-  for (const target of hreflangTargets) languages[target.hreflang] = absoluteUrl(`/${target.lang}${path}`);
-  languages["x-default"] = absoluteUrl(`/ar${path}`);
+  for (const target of hreflangTargets) languages[target.hreflang] = absoluteUrl(`/${target.lang}${alternatePaths?.[target.lang] ?? path}`);
+  languages["x-default"] = absoluteUrl(`/ar${alternatePaths?.ar ?? path}`);
 
   return {
     title,

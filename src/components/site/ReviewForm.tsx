@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState, type ComponentProps } from "react";
 import { Button, buttonClass } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { AfterPosting } from "@/components/site/AfterPosting";
 import { MediaManager } from "@/components/site/MediaManager";
 import { Switch } from "@/components/ui/Switch";
 import { TapRating } from "@/components/ui/TapRating";
@@ -12,6 +13,7 @@ import { fmt } from "@/i18n/format";
 import { api } from "@/lib/api/client";
 import { unwrap } from "@/lib/api/http";
 import type { Category, OwnReview } from "@/lib/api/types";
+import { pick } from "@/lib/pick";
 
 type Dict = {
   heading: string; editHeading: string; signInNeeded: string; signIn: string; loading: string; criteria: string; star: string;
@@ -19,6 +21,8 @@ type Dict = {
   saving: string; moderationNote: string; editNote: string; doneHeading: string; doneText: string; back: string; needAnswer: string;
   errors: Record<string, string>;
   media: MediaDict;
+  rewards: { afterPosting: React.ComponentProps<typeof AfterPosting>["dict"]; rankUp: { heading: string; text: string; close: string }; how: string; level: string };
+  verdict: { worth: string; not_worth: string; hidden_gem: string; formLabel: string; formHint: string; none: string };
 };
 
 type MediaDict = ComponentProps<typeof MediaManager>["dict"] & { pick: string; pickHint: string; heading: string };
@@ -35,6 +39,7 @@ export function ReviewForm({ lang, entityId, entityPath, category, dict }: { lan
   const [answers, setAnswers] = useState<Record<string, Answer>>({});
   const [text, setText] = useState("");
   const [anonymous, setAnonymous] = useState(category.anonymousByDefault);
+  const [verdict, setVerdict] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [files, setFiles] = useState<File[]>([]);
   const [savedId, setSavedId] = useState<string | null>(null);
@@ -55,6 +60,7 @@ export function ReviewForm({ lang, entityId, entityPath, category, dict }: { lan
         setAnswers(Object.fromEntries(review.answers.map((a) => [a.criterionId, a.optionValue ?? a.score])));
         setText(review.text ?? "");
         setAnonymous(review.isAnonymous);
+        setVerdict(review.verdict ?? "");
       }
       setState("ready");
     })();
@@ -75,6 +81,7 @@ export function ReviewForm({ lang, entityId, entityPath, category, dict }: { lan
       text: text.trim() || null,
       language: null,
       isAnonymous: anonymous,
+      verdict: category.verdictEnabled && verdict ? verdict : null,
     };
     const result = existing
       ? await unwrap<OwnReview>(api.PUT("/api/reviews/{id}", { params: { path: { id: existing.id } }, body }))
@@ -111,6 +118,16 @@ export function ReviewForm({ lang, entityId, entityPath, category, dict }: { lan
             {dict.back}
           </Link>
         </Card>
+        <AfterPosting
+          lang={lang}
+          hasText={text.trim().length >= 20}
+          photos={files.filter((f) => !f.type.startsWith("video/")).length}
+          videos={files.filter((f) => f.type.startsWith("video/")).length}
+          dict={dict.rewards.afterPosting}
+          rankUp={dict.rewards.rankUp}
+          how={dict.rewards.how}
+          level={dict.rewards.level}
+        />
         <section aria-labelledby="media-heading" className="space-y-3">
           <h2 id="media-heading" className="font-heading text-lg font-semibold">
             {dict.media.heading}
@@ -125,7 +142,7 @@ export function ReviewForm({ lang, entityId, entityPath, category, dict }: { lan
       <Card className="space-y-6">
         <h2 className="font-heading text-lg font-semibold">{dict.criteria}</h2>
         {category.criteria.map((c) => {
-          const label = c.label[lang] ?? c.label.ar ?? c.id;
+          const label = pick(c.label, lang, c.id);
           if (c.answerType === "Rating5") {
             return (
               <TapRating
@@ -152,7 +169,7 @@ export function ReviewForm({ lang, entityId, entityPath, category, dict }: { lan
                       className="peer sr-only"
                     />
                     <span className="inline-flex min-h-11 items-center rounded-full border border-border bg-surface px-4 text-sm font-medium peer-checked:border-verified peer-checked:bg-tint peer-checked:text-verified peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-verified">
-                      {o.label[lang] ?? o.label.ar ?? o.value}
+                      {pick(o.label, lang, o.value)}
                     </span>
                   </label>
                 ))}
@@ -181,6 +198,25 @@ export function ReviewForm({ lang, entityId, entityPath, category, dict }: { lan
           className="w-full rounded-xl border border-border bg-background p-3 leading-7 placeholder:text-muted"
         />
       </Card>
+
+      {category.verdictEnabled ? (
+        <Card>
+          <fieldset className="space-y-2">
+            <legend className="font-heading text-lg font-semibold">{dict.verdict.formLabel}</legend>
+            <p className="text-sm text-muted">{dict.verdict.formHint}</p>
+            <div className="flex flex-wrap gap-2">
+              {(["", "worth", "not_worth", "hidden_gem"] as const).map((v) => (
+                <label key={v || "none"} className="cursor-pointer">
+                  <input type="radio" name="verdict" value={v} checked={verdict === v} onChange={() => setVerdict(v)} className="peer sr-only" />
+                  <span className="inline-flex min-h-11 items-center rounded-full border border-border bg-surface px-4 text-sm font-medium peer-checked:border-verified peer-checked:bg-tint peer-checked:text-verified peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-verified">
+                    {v === "" ? dict.verdict.none : dict.verdict[v]}
+                  </span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+        </Card>
+      ) : null}
 
       <Card className="space-y-2">
         <h2 className="font-heading text-lg font-semibold">{dict.media.heading}</h2>

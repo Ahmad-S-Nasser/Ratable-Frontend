@@ -1,8 +1,9 @@
 import { locales, type Locale } from "@/i18n/config";
-import { getCategories, getSitemapPlaces } from "@/lib/api/server";
+import { getCategories, getLists, getSitemapPlaces } from "@/lib/api/server";
 import type { SitemapPlace } from "@/lib/api/types";
 import { absoluteUrl, hreflangTargets } from "@/lib/site";
 import { entityPath } from "@/lib/urls";
+import { pick } from "@/lib/pick";
 
 /**
  * Sitemaps are generated from the database, split by language and category, with a real lastmod from the last change to a place or its
@@ -34,11 +35,12 @@ export async function sitemapParts(): Promise<SitemapPart[]> {
 
 const escape = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-const alternates = (path: string) =>
-  hreflangTargets.map((t) => `<xhtml:link rel="alternate" hreflang="${t.hreflang}" href="${escape(absoluteUrl(`/${t.lang}${path}`))}"/>`).join("");
+/** The address in each language. When the address differs by language (a slug), it is passed per language so hreflang points at the real page. */
+const alternates = (pathFor: (lang: Locale) => string) =>
+  hreflangTargets.map((t) => `<xhtml:link rel="alternate" hreflang="${t.hreflang}" href="${escape(absoluteUrl(`/${t.lang}${pathFor(t.lang)}`))}"/>`).join("");
 
-const urlEntry = (loc: string, path: string, lastmod?: string) =>
-  `<url><loc>${escape(loc)}</loc>${lastmod ? `<lastmod>${new Date(lastmod).toISOString()}</lastmod>` : ""}${alternates(path)}</url>`;
+const urlEntry = (loc: string, pathFor: (lang: Locale) => string, lastmod?: string) =>
+  `<url><loc>${escape(loc)}</loc>${lastmod ? `<lastmod>${new Date(lastmod).toISOString()}</lastmod>` : ""}${alternates(pathFor)}</url>`;
 
 const wrap = (body: string) =>
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">${body}</urlset>`;
@@ -58,15 +60,21 @@ export async function partXml(name: string): Promise<string | null> {
   const ids = categories.ok ? categories.data.map((c) => c.id) : [];
 
   if (part.kind === "static") {
-    const paths = ["", "/categories", "/feed", "/methodology", "/methodology/verification", "/methodology/moderation", ...ids.flatMap((id) => [`/${id}`, `/${id}/best`])];
-    return wrap(paths.map((p) => urlEntry(absoluteUrl(`/${part.lang}${p}`), p)).join(""));
+    const paths = ["", "/categories", "/feed", "/lists", "/points", "/methodology", "/methodology/verification", "/methodology/moderation", ...ids.flatMap((id) => [`/${id}`, `/${id}/best`])];
+    const lists = await getLists();
+    const entries = paths.map((p) => urlEntry(absoluteUrl(`/${part.lang}${p}`), () => p));
+    for (const l of lists.ok ? lists.data : []) {
+      const at = (lang: Locale) => `/lists/${l.id}-${pick(l.slug, lang)}`;
+      entries.push(urlEntry(absoluteUrl(`/${part.lang}${at(part.lang)}`), at));
+    }
+    return wrap(entries.join(""));
   }
   const places = (await allPlaces()).filter((p) => p.categoryId === part.categoryId);
   return wrap(
     places
       .map((p) => {
         const path = entityPath(part.lang, p.categoryId, p);
-        return urlEntry(absoluteUrl(path), path.slice(part.lang.length + 1), p.lastModified);
+        return urlEntry(absoluteUrl(path), (lang) => entityPath(lang, p.categoryId, p).slice(lang.length + 1), p.lastModified);
       })
       .join(""),
   );

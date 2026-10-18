@@ -5,6 +5,7 @@ import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { getCategories } from "@/lib/api/server";
 import { buildMetadata } from "@/lib/seo/metadata";
+import { pick } from "@/lib/pick";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/add">): Promise<Metadata> {
   const { lang } = await params;
@@ -21,7 +22,7 @@ export default async function AddPage({ params, searchParams }: PageProps<"/[lan
   const categories = await getCategories();
   const raw = (await searchParams).category;
   const wanted = Array.isArray(raw) ? raw[0] : raw;
-  const list = categories.ok ? categories.data.map((c) => ({ id: c.id, name: c.name[lang] ?? c.name.ar ?? c.id })) : [];
+  const list = categories.ok ? categories.data.map((c) => ({ id: c.id, name: pick(c.name, lang, c.id) })) : [];
 
   return (
     <div className="mx-auto max-w-2xl space-y-6 px-4 py-10">

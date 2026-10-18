@@ -3,6 +3,7 @@ import { API, WEB, createUser, makePlace, publishVerified, uid, waitForApi } fro
 import { aiCrawlerName, searchCrawlers, trainingCrawlers } from "../src/lib/crawlers";
 import { safeNext } from "../src/lib/safe-next";
 import { entityIdFromParam } from "../src/lib/urls";
+import { pick } from "../src/lib/pick";
 
 test.describe("pure helpers", () => {
   test("AI crawlers are recognised by name, ordinary browsers are not", () => {
@@ -20,6 +21,14 @@ test.describe("pure helpers", () => {
     expect(safeNext("/ar\\evil", "en")).toBe("/en");
     expect(safeNext("/other", "en")).toBe("/en");
     expect(safeNext(undefined, "ar")).toBe("/ar");
+  });
+
+  test("a name stored in one language only still shows in the other (an empty string is not a name)", () => {
+    expect(pick({ ar: "", en: "Palm Hills" }, "ar")).toBe("Palm Hills");
+    expect(pick({ ar: "بالم هيلز", en: "" }, "en")).toBe("بالم هيلز");
+    expect(pick({ ar: "  ", en: "Name" }, "ar")).toBe("Name");
+    expect(pick({ ar: "", en: "" }, "ar", "fallback")).toBe("fallback");
+    expect(pick(undefined, "en")).toBe("");
   });
 
   test("the id is read from the address and nothing else is trusted", () => {

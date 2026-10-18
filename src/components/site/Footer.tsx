@@ -2,13 +2,15 @@ import Link from "next/link";
 import type { Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { getCategories } from "@/lib/api/server";
+import { pick } from "@/lib/pick";
 
 /**
  * The footer lists every category, from the API, and links to "All categories". It is ink in both themes
  * (the desktop design has an ink footer), so it has its own footer tokens.
  */
 export async function Footer({ lang }: { lang: Locale }) {
-  const t = (await getDictionary(lang)).site;
+  const dict = await getDictionary(lang);
+  const t = dict.site;
   const categories = await getCategories();
   const list = categories.ok ? categories.data : [];
 
@@ -29,10 +31,20 @@ export async function Footer({ lang }: { lang: Locale }) {
             {list.map((c) => (
               <li key={c.id}>
                 <Link href={`/${lang}/${c.id}`} className="inline-flex min-h-9 items-center hover:text-footer-text">
-                  {c.name[lang] ?? c.name.ar}
+                  {pick(c.name, lang)}
                 </Link>
               </li>
             ))}
+            <li>
+              <Link href={`/${lang}/nearby`} className="inline-flex min-h-9 items-center hover:text-footer-text">
+                {dict.nearby.heading}
+              </Link>
+            </li>
+            <li>
+              <Link href={`/${lang}/lists`} className="inline-flex min-h-9 items-center hover:text-footer-text">
+                {dict.lists.heading}
+              </Link>
+            </li>
             <li>
               <Link href={`/${lang}/categories`} className="inline-flex min-h-9 items-center font-medium text-footer-text underline">
                 {t.allCategories}
@@ -48,6 +60,11 @@ export async function Footer({ lang }: { lang: Locale }) {
             <li>
               <Link href={`/${lang}/methodology`} className="inline-flex min-h-9 items-center font-medium text-footer-text underline">
                 {t.methodology}
+              </Link>
+            </li>
+            <li>
+              <Link href={`/${lang}/points`} className="inline-flex min-h-9 items-center hover:text-footer-text">
+                {dict.pointsPage.heading}
               </Link>
             </li>
             <li>

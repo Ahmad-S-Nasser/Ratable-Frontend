@@ -9,6 +9,7 @@ import { fmt, formatDate } from "@/i18n/format";
 import { api } from "@/lib/api/client";
 import { unwrap } from "@/lib/api/http";
 import type { Category, OwnProof, OwnReview, PublicEntity } from "@/lib/api/types";
+import { pick } from "@/lib/pick";
 
 type Dict = {
   forPlace: string; type: string; types: Record<string, string>; file: string; declaration: string; retention: string; retentionDelete: string;
@@ -125,7 +126,7 @@ export function ProofForm({ lang, reviewId, dict }: { lang: Locale; reviewId: st
     );
 
   const { entity, category, review } = state.data;
-  const placeName = entity.name[lang] ?? entity.name.ar ?? "";
+  const placeName = pick(entity.name, lang);
   const canUpload = !review.verified && !proofs.some((p) => p.status === "UnderReview");
 
   return (

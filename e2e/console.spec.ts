@@ -310,7 +310,7 @@ test.describe("administration", () => {
     await signInBrowser(page, admin);
     await open(page, "/ai");
     await expect(page.getByRole("heading", { name: "AI spend" })).toBeVisible();
-    await expect(page.getByText("Daily cap")).toBeVisible();
+    await expect(page.getByText("Daily cap", { exact: true })).toBeVisible();
   });
 });
 

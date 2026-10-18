@@ -7,6 +7,7 @@ import { getDictionary } from "@/i18n/get-dictionary";
 import { getCategory, getEntity, getScore } from "@/lib/api/server";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { entityIdFromParam, entityPath } from "@/lib/urls";
+import { pick } from "@/lib/pick";
 
 const idOf = (v: string | string[] | undefined) => entityIdFromParam((Array.isArray(v) ? v[0] : v) ?? "");
 
@@ -16,7 +17,7 @@ async function loadSide(id: string | null) {
   return entity.ok && score.ok ? { entity: entity.data, score: score.data } : null;
 }
 
-const nameOf = (e: { name: { ar?: string; en?: string } }, lang: Locale) => e.name[lang] ?? e.name.ar ?? e.name.en ?? "";
+const nameOf = (e: { name: { ar?: string; en?: string } }, lang: Locale) => pick(e.name, lang);
 
 export async function generateMetadata({ params, searchParams }: PageProps<"/[lang]/compare">): Promise<Metadata> {
   const { lang } = await params;
@@ -109,7 +110,7 @@ export default async function ComparePage({ params, searchParams }: PageProps<"/
               return (
                 <tr key={c.id} className="border-b border-border">
                   <th scope="row" className="py-3 pe-4 text-start font-medium">
-                    {c.label[lang] ?? c.label.ar}
+                    {pick(c.label, lang)}
                   </th>
                   <td className={`py-3 ${winner === "a" ? "font-semibold text-verified" : ""}`}>{cell(a, c.id)}</td>
                   <td className={`py-3 ${winner === "b" ? "font-semibold text-verified" : ""}`}>{cell(b, c.id)}</td>

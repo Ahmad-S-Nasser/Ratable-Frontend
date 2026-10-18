@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
 import { JsonLdScript } from "@/components/site/JsonLdScript";
+import { HelpfulButton, HelpfulProvider } from "@/components/site/HelpfulButton";
 import { ReviewCardView } from "@/components/site/ReviewCardView";
 import { ReviewComments, ReviewHistory } from "@/components/site/ReviewExtras";
 import { ReviewFilters, type ReviewFilter } from "@/components/site/ReviewFilters";
@@ -10,6 +11,7 @@ import { Card } from "@/components/ui/Card";
 import { ScoreTile } from "@/components/ui/ScoreTile";
 import { PhotoIcon } from "@/components/ui/Icons";
 import { Stars } from "@/components/ui/Stars";
+import { VerdictSticker, isVerdictKind } from "@/components/ui/VerdictSticker";
 import { isLocale, type Locale } from "@/i18n/config";
 import { fmt, formatDate, formatNumber, formatScore } from "@/i18n/format";
 import { getDictionary } from "@/i18n/get-dictionary";
@@ -20,12 +22,13 @@ import { breadcrumbJsonLd, entityJsonLd, faqJsonLd, videoJsonLd } from "@/lib/se
 import { buildMetadata } from "@/lib/seo/metadata";
 import { strengthsAndWeaknesses } from "@/lib/summary";
 import { entityIdFromParam, entityPath } from "@/lib/urls";
+import { pick } from "@/lib/pick";
 
 type Dict = Awaited<ReturnType<typeof getDictionary>>;
 
 const criterionName = (category: Category, id: string, lang: Locale) => {
   const c = category.criteria.find((x) => x.id === id);
-  return c?.label[lang] ?? c?.label.ar ?? id;
+  return pick(c?.label, lang, id);
 };
 
 /** The short factual summary every entity page opens with (answer-first): score, verified count, strengths, weaknesses, date, source. */
@@ -80,14 +83,15 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/[category]
   const [entity, category, dict] = await Promise.all([getEntity(id), getCategory(categoryId), getDictionary(lang)]);
   if (!entity.ok || !category.ok) return {};
   const [score] = await Promise.all([getScore(id)]);
-  const name = entity.data.name[lang] ?? entity.data.name.ar ?? "";
+  const name = pick(entity.data.name, lang);
   const summary = buildSummary(lang, dict, name, entity.data, score.ok ? score.data : null, category.data);
   const path = entityPath(lang, entity.data.categoryId, entity.data).slice(lang.length + 1);
   return buildMetadata({
     lang,
     path,
+    alternatePaths: { ar: entityPath("ar", entity.data.categoryId, entity.data).slice(3), en: entityPath("en", entity.data.categoryId, entity.data).slice(3) },
     title: fmt(dict.entity.pageTitle, { name }),
-    description: fmt(dict.entity.pageDescription, { name, category: category.data.name[lang] ?? "", summary }),
+    description: fmt(dict.entity.pageDescription, { name, category: pick(category.data.name, lang), summary }),
     // A place nobody has verified yet is a thin page: it can be read and linked but is not offered to search.
     noindex: !score.ok || score.data.verifiedReviews === 0,
   });
@@ -107,8 +111,8 @@ export default async function EntityPage({ params, searchParams }: PageProps<"/[
   const photoCount = allMedia.filter((m) => m.kind === "Photo").length;
   const basePath = entityPath(lang, entity.categoryId, entity);
   const e = dict.entity;
-  const name = entity.name[lang] ?? entity.name.ar ?? "";
-  const categoryName = category.name[lang] ?? category.name.ar ?? categoryId;
+  const name = pick(entity.name, lang);
+  const categoryName = pick(category.name, lang, categoryId);
   const summary = buildSummary(lang, dict, name, entity, score, category);
   const hasScore = score !== null && score.overall !== null;
   const url = absoluteUrl(entityPath(lang, entity.categoryId, entity));
@@ -121,7 +125,7 @@ export default async function EntityPage({ params, searchParams }: PageProps<"/[
     },
     ...category.criteria.map((c) => {
       const s = score?.criteria.find((x) => x.criterionId === c.id);
-      const label = c.label[lang] ?? c.label.ar ?? c.id;
+      const label = pick(c.label, lang, c.id);
       return {
         question: fmt(e.faqQuestion, { criterion: label, name }),
         answer:
@@ -168,7 +172,7 @@ export default async function EntityPage({ params, searchParams }: PageProps<"/[
               durationSeconds: v.durationSeconds,
               thumbnailUrl: v.posterUrl,
               playlistUrl: v.playlistUrl,
-              transcript: v.captions?.[lang] ?? v.captions?.ar ?? v.captions?.en ?? null,
+              transcript: pick(v.captions, lang) || null,
               lang,
             }),
           ),
@@ -202,7 +206,13 @@ export default async function EntityPage({ params, searchParams }: PageProps<"/[
           ) : null}
         </div>
         {hasScore ? (
-          <div className="flex items-center gap-2 text-sm text-muted">
+          <div className="flex flex-wrap items-center gap-2 text-sm text-muted">
+            {score.verdict && isVerdictKind(score.verdict.kind) ? (
+              <span className="inline-flex flex-col items-start gap-1">
+                <VerdictSticker verdict={score.verdict.kind} label={dict.verdict[score.verdict.kind]} />
+                <span className="text-xs">{fmt(dict.verdict.share, { pct: formatNumber(lang, score.verdict.sharePercent), votes: formatNumber(lang, score.verdict.votes) })}</span>
+              </span>
+            ) : null}
             <ScoreTile text={formatScore(lang, score.overall as number)} label={`${formatScore(lang, score.overall as number)} ${e.outOf}`} />
             <span>{e.outOf}</span>
           </div>
@@ -243,7 +253,7 @@ export default async function EntityPage({ params, searchParams }: PageProps<"/[
               return (
                 <tr key={c.id} className="border-b border-border">
                   <th scope="row" className="py-3 pe-4 text-start font-medium">
-                    {c.label[lang] ?? c.label.ar}
+                    {pick(c.label, lang)}
                   </th>
                   <td className="py-3 text-end">
                     {s && s.score !== null ? (
@@ -295,19 +305,22 @@ export default async function EntityPage({ params, searchParams }: PageProps<"/[
         ) : reviews.length === 0 ? (
           <p className="text-muted">{e.noReviews}</p>
         ) : (
+          <HelpfulProvider reviewIds={reviews.map((r) => r.id)} initial={Object.fromEntries(reviews.map((r) => [r.id, r.helpfulCount]))}>
           <ul className="space-y-4">
             {reviews.map((r) => (
               <li key={r.id}>
                 <div className="space-y-3">
                   <ReviewCardView review={r} lang={lang} labels={{ ...e }} media={mediaLabels} />
                   <div className="space-y-3 px-2">
+                    <HelpfulButton lang={lang} reviewId={r.id} signInNext={basePath} labels={dict.helpful} />
                     <ReviewHistory review={r} lang={lang} labels={x} outOf={e.outOf} />
-                    <ReviewComments review={r} lang={lang} labels={dict.comments} anonymousName={e.anonymousName} returnPath={basePath} />
+                    <ReviewComments review={r} lang={lang} labels={{ ...dict.comments, count: dict.cards.comments }} anonymousName={e.anonymousName} returnPath={basePath} />
                   </div>
                 </div>
               </li>
             ))}
           </ul>
+          </HelpfulProvider>
         )}
       </section>
 
@@ -322,7 +335,7 @@ export default async function EntityPage({ params, searchParams }: PageProps<"/[
               .filter((p) => p.id !== entity.id)
               .map((p) => (
                 <option key={p.id} value={p.id}>
-                  {p.name[lang] ?? p.name.ar}
+                  {pick(p.name, lang)}
                 </option>
               ))}
           </select>

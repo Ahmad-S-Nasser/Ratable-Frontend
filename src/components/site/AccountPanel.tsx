@@ -5,18 +5,22 @@ import { useEffect, useState } from "react";
 import { Button, buttonClass } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { VerifiedBadge } from "@/components/ui/VerifiedBadge";
+import { ThemeSwitch } from "@/components/site/HeaderControls";
 import type { Locale } from "@/i18n/config";
 import { fmt, formatDate } from "@/i18n/format";
 import { api } from "@/lib/api/client";
 import { unwrap } from "@/lib/api/http";
 import type { Me, OwnReview, PublicEntity } from "@/lib/api/types";
 import { entityPath } from "@/lib/urls";
+import { pick } from "@/lib/pick";
 
 type Dict = {
   loading: string; signInNeeded: string; signIn: string; profile: string; displayName: string; displayNameHelp: string; save: string; saved: string;
   phoneVerified: string; phoneNotVerified: string; signOut: string; myReviews: string; noReviews: string; statusPendingModeration: string;
   statusPublished: string; addMedia: string; statusHidden: string; statusDeleted: string; verified: string; unverified: string; editReview: string; addProof: string;
   reason: string; errors: Record<string, string>;
+  level: string;
+  theme: { heading: string; intro: string; label: string; system: string; light: string; dark: string };
 };
 
 type Row = { review: OwnReview; entity: PublicEntity | null };
@@ -117,6 +121,16 @@ export function AccountPanel({ lang, dict }: { lang: Locale; dict: Dict }) {
         </Button>
       </Card>
 
+      <Link href={`/${lang}/me/level`} className={buttonClass("secondary")}>
+        {dict.level}
+      </Link>
+
+      <Card className="space-y-3">
+        <h2 className="font-heading text-lg font-semibold">{dict.theme.heading}</h2>
+        <p className="text-sm text-muted">{dict.theme.intro}</p>
+        <ThemeSwitch labels={dict.theme} />
+      </Card>
+
       <section aria-labelledby="my-reviews" className="space-y-4">
         <h2 id="my-reviews" className="font-heading text-xl font-semibold">
           {dict.myReviews}
@@ -126,7 +140,7 @@ export function AccountPanel({ lang, dict }: { lang: Locale; dict: Dict }) {
         ) : (
           <ul className="space-y-4">
             {rows.map(({ review, entity }) => {
-              const placeName = entity ? (entity.name[lang] ?? entity.name.ar ?? "") : "";
+              const placeName = entity ? (pick(entity.name, lang)) : "";
               const path = entity ? entityPath(lang, entity.categoryId, entity) : null;
               return (
                 <li key={review.id}>
