@@ -66,7 +66,8 @@
       "signOut": "Sign out",
       "menu": "Menu",
       "media": "Photos and video",
-      "claims": "Place claims"
+      "claims": "Place claims",
+      "import": "Import places"
     },
     "common": {
       "loading": "Loading…",
@@ -370,7 +371,8 @@
         "proof_viewed": "Proof file opened",
         "anonymous_author_lookup": "Anonymous author looked up",
         "user_suspended": "Account suspended",
-        "user_unsuspended": "Account restored"
+        "user_unsuspended": "Account restored",
+        "entities_seed_import": "Places imported"
       }
     },
     "users": {
@@ -508,6 +510,61 @@
         "tax_card": "Tax card",
         "license": "Operating licence",
         "other": "Other official document"
+      }
+    },
+    "import": {
+      "heading": "Import places",
+      "intro": "Load places from a CSV or JSON file. Check it first: the check writes nothing and shows exactly what the import will do.",
+      "sampleCsv": "Sample CSV",
+      "sampleJson": "Sample JSON",
+      "file": "Open a file",
+      "text": "Or paste the file here",
+      "textHelp": "One header row for CSV, an array of objects for JSON. The columns are described in docs/seed-import.md.",
+      "batch": "Batch name (optional)",
+      "batchHelp": "Marks the places this run creates, so they can be found later.",
+      "check": "Check (writes nothing)",
+      "run": "Import",
+      "runHelp": "Import is available after a check of this exact text.",
+      "reportDry": "Check result: nothing was written",
+      "reportDone": "Import finished",
+      "created": "Created",
+      "merged": "Merged",
+      "review": "For a moderator",
+      "skipped": "Skipped",
+      "batchName": "Batch",
+      "line": "Row",
+      "outcome": "Result",
+      "name": "Name",
+      "detail": "Detail",
+      "filled": "blanks filled",
+      "unchanged": "no change",
+      "firstRows": "Showing the first {n} rows.",
+      "outcomes": {
+        "created": "Created",
+        "merged": "Merged into an existing place",
+        "review": "Waits for a moderator",
+        "skipped": "Skipped"
+      },
+      "reasons": {
+        "invalid_category": "Unknown or inactive category",
+        "invalid_name": "A name is missing or too long",
+        "invalid_location": "Latitude or longitude is missing or wrong",
+        "invalid_field": "Unknown or wrong field",
+        "same_place": "Same place",
+        "same_key": "Same Google place or external id",
+        "similar_place": "Looks like an existing place",
+        "match_missing": "The matched place is gone"
+      },
+      "errors": {
+        "empty_file": "The file is empty.",
+        "invalid_json": "The JSON could not be read.",
+        "json_must_be_an_array": "JSON must be an array of places.",
+        "json_items_must_be_objects": "Every JSON item must be an object.",
+        "unclosed_quote": "A quote in the CSV is not closed.",
+        "too_many_rows": "Too many rows in one file.",
+        "file_too_large": "The file is too large.",
+        "unknown": "Something went wrong. Try again.",
+        "network": "Cannot reach the server. Check the connection and try again."
       }
     }
   },
@@ -1574,7 +1631,135 @@
         "newHere": "New to Ratable for business?",
         "signUpLink": "Create a business account"
       }
+    },
+    "dashboardContact": {
+      "heading": "Contact plan",
+      "requests": {
+        "heading": "Contact requests",
+        "locked": "{n} people sent you a request. The contact plan lets you read and answer them.",
+        "empty": "No requests yet.",
+        "reply": "Reply",
+        "placeholder": "Write your answer",
+        "send": "Send the answer",
+        "sending": "Sending…",
+        "cancel": "Cancel",
+        "sharedWhatsApp": "WhatsApp (shared by the reader)",
+        "reader": "A reader",
+        "status": {
+          "Open": "Waiting",
+          "Replied": "Answered",
+          "Closed": "Closed"
+        },
+        "closes": "Closes {date}",
+        "errors": {
+          "plan_required": "Your plan does not include replying.",
+          "invalid_text": "Write an answer.",
+          "closed": "This request is closed.",
+          "not_found": "This request was not found.",
+          "unknown": "Something went wrong. Try again.",
+          "network": "Cannot reach the server. Check the connection and try again."
+        }
+      },
+      "stats": {
+        "heading": "Last days at a glance",
+        "views7": "Page views, last 7 days",
+        "taps": "Times your contact was shown, last 30 days",
+        "requests": "Requests, last 30 days",
+        "open": "Requests waiting for you",
+        "trend": "Score by month"
+      },
+      "editor": {
+        "heading": "Your contact details",
+        "intro": "Saved details are shown on your page only while your plan includes contact.",
+        "phone": "Phone",
+        "whatsapp": "WhatsApp number",
+        "links": "Links (one per line)",
+        "save": "Save",
+        "saving": "Saving…",
+        "saved": "Saved.",
+        "errors": {
+          "invalid_phone": "Enter a phone number with digits only, for example +20 100 123 4567.",
+          "invalid_link": "Links must start with http:// or https:// (up to 5).",
+          "not_owner": "You do not run this place.",
+          "unknown": "Something went wrong. Try again.",
+          "network": "Cannot reach the server. Check the connection and try again."
+        }
+      },
+      "nudges": {
+        "dismiss": "Dismiss",
+        "plans": "See the plans",
+        "top3": "You are number {rank} in this category in {area}. Your rank comes only from verified reviews. The contact plan lets people reach you.",
+        "views": "{n} people viewed your page in the last 7 days. The contact plan lets them reach you.",
+        "waiting": "{n} people asked to contact you. The contact plan lets you read and answer them.",
+        "closed": "{n} requests closed without an answer in the last 30 days. The contact plan lets you read and answer them."
+      }
     }
   },
-  "businessNav": "For business"
+  "businessNav": "For business",
+  "contact": {
+    "heading": "Contact",
+    "none": "No contact details yet.",
+    "show": "Show contact",
+    "showing": "Loading…",
+    "phone": "Phone",
+    "whatsapp": "WhatsApp",
+    "links": "Links",
+    "rateLimited": "Too many tries. Try again in a while.",
+    "locked": {
+      "heading": "Contact details are hidden",
+      "text": "Contact details are shown only on profiles with the contact plan. Send a request and the provider can answer you here. The score and the reviews are not affected."
+    },
+    "request": {
+      "heading": "Request contact",
+      "signInNeeded": "Sign in to send a request.",
+      "signIn": "Sign in",
+      "whatLabel": "What do you need?",
+      "whatHelp": "A short description, for example: a leaking kitchen tap.",
+      "whenLabel": "When? (optional)",
+      "whenPlaceholder": "For example: this week",
+      "reachLabel": "How should the provider reach you?",
+      "viaRatable": "Through Ratable: the answer appears in My requests",
+      "shareWhatsApp": "On WhatsApp: share my number with this provider only",
+      "shareNote": "Your number is never shown on the page and goes only to this provider.",
+      "submit": "Send the request",
+      "sending": "Sending…",
+      "sentHeading": "Your request was sent",
+      "sentText": "The request stays open for 7 days. If nobody answers, we suggest other providers nearby.",
+      "seeRequests": "See my requests",
+      "errors": {
+        "invalid_text": "Describe what you need in a few words (3 to 300 characters).",
+        "phone_required": "Your account has no phone number to share. Choose Through Ratable.",
+        "already_open": "You already have an open request for this provider.",
+        "own_place": "You run this place.",
+        "not_locked": "This provider shows their contact details. Use Show contact.",
+        "too_many_today": "You reached today's limit of requests. Try again tomorrow.",
+        "provider_busy": "This provider received many requests today. Try again tomorrow.",
+        "not_found": "We could not find this provider.",
+        "unknown": "Something went wrong. Try again.",
+        "network": "Cannot reach the server. Check the connection and try again."
+      }
+    },
+    "mine": {
+      "title": "My requests",
+      "description": "Requests you sent to providers.",
+      "heading": "My requests",
+      "intro": "Requests close after 7 days. Your WhatsApp number is shared only with the provider you chose, and only if you chose to share it.",
+      "empty": "You have not sent a request yet.",
+      "signInNeeded": "Sign in to see your requests.",
+      "signIn": "Sign in",
+      "status": {
+        "Open": "Waiting for an answer",
+        "Replied": "Answered",
+        "Closed": "Closed without an answer"
+      },
+      "closes": "Closes {date}",
+      "sharedWhatsApp": "WhatsApp number shared with this provider",
+      "viaRatable": "Through Ratable",
+      "reply": "The provider answered",
+      "alternativesHeading": "Other providers near you",
+      "alternativesText": "The best-rated providers of the same kind nearby, by verified score and then distance.",
+      "score": "Score {score}",
+      "viewProvider": "View the provider"
+    }
+  }
 }

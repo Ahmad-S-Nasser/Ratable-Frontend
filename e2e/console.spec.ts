@@ -328,11 +328,11 @@ test.describe("language, theme and layout", () => {
     await expect(page.locator("html")).toHaveAttribute("dir", "ltr");
 
     await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
-    await page.getByRole("button", { name: "Theme" }).click();
+    await page.getByRole("button", { name: /^(Dark|Light)$/ }).click();
     await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
     await page.reload();
     await expect(page.locator("html")).toHaveAttribute("data-theme", "dark"); // remembered
-    await page.getByRole("button", { name: "Theme" }).click();
+    await page.getByRole("button", { name: /^(Dark|Light)$/ }).click();
   });
 
   test("on a phone the page does not scroll sideways and the menu opens", async ({ page }) => {

@@ -26,7 +26,7 @@ test.describe("public shell", () => {
       await expect(page.locator("a[href='#main']")).toHaveCount(1);
 
       const footer = page.locator("footer");
-      await expect(footer.getByRole("link")).toHaveCount(6 + 3 + 3 + 1); // every category, Nearby, Lists, All categories, methodology, points, add a place and For business
+      await expect(footer.getByRole("link")).toHaveCount(7 + 3 + 3 + 1); // every category, Nearby, Lists, All categories, methodology, points, add a place and For business
       await expect(footer.locator(`a[href='/${lang}/categories']`)).toBeVisible();
     });
   }

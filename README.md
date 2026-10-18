@@ -66,3 +66,9 @@ Upload step in the review form (and `/{lang}/me/media/{reviewId}`): pieces with 
 - A reply from the owner shows under the review with an owner label. An anonymous reviewer is never named on the dashboard.
 - Console: `/console/claims` for moderators (opens the document in memory, approve or refuse with a reason).
 - E2E: `e2e/p10.spec.ts` (claim flow, approval in the console, reply and public display, access rules, contrast in both themes and languages).
+
+### Contact plan and Request contact (P10a)
+- The place page shows the contact block the server decided on: details for a place that does not gate contact (readable without JavaScript), Show contact for a subscribed place, or a locked panel with Request contact. A tiny beacon counts page views.
+- `/{lang}/me/requests`: the reader's requests, the provider's answer, and other providers nearby when a request closed unanswered.
+- Dashboard (places in a gated category): requests (count only without the plan), brief stats (with the plan), upgrade messages (without it) and the contact details editor.
+- E2E: `e2e/p10a.spec.ts`. The e2e API writes mail to `Ratable-Backend/src/Api/App_Data/e2e-mail`.

@@ -39,7 +39,7 @@ export async function createUser(roles: string[], displayName?: string, phoneVer
 /** The API seeds the categories a moment after it starts listening. */
 export async function waitForApi() {
   const anon = await pwRequest.newContext({ baseURL: API });
-  await expect.poll(async () => ((await (await anon.get("/api/categories")).json()) as unknown[]).length, { timeout: 60_000 }).toBe(6);
+  await expect.poll(async () => ((await (await anon.get("/api/categories")).json()) as unknown[]).length, { timeout: 60_000 }).toBe(7);
   await anon.dispose();
 }
 
@@ -48,8 +48,8 @@ export async function signInBrowser(page: Page, user: TestUser) {
 }
 
 /** A public place: submitted by a reader, approved by an admin. */
-export async function makePlace(reader: TestUser, admin: TestUser, nameEn: string, nameAr = "", lon = 31.64, lat = 30.1): Promise<string> {
-  const created = await reader.api.post("/api/entities", { data: { nameEn, nameAr, categoryId: "compounds", longitude: lon, latitude: lat, city: "Cairo" } });
+export async function makePlace(reader: TestUser, admin: TestUser, nameEn: string, nameAr = "", lon = 31.64, lat = 30.1, categoryId = "compounds"): Promise<string> {
+  const created = await reader.api.post("/api/entities", { data: { nameEn, nameAr, categoryId, longitude: lon, latitude: lat, city: "Cairo" } });
   expect(created.status()).toBe(201);
   const id = ((await created.json()) as { id: string }).id;
   const approved = await admin.api.post(`/api/moderation/entities/${id}/approve`);
@@ -88,4 +88,24 @@ export async function makeOwner(user: TestUser, entityId: string) {
   } finally {
     await client.close();
   }
+}
+
+/** Stores contact details on a place straight in the database (the owner editor and the importer have their own tests). */
+export async function setContact(entityId: string, contact: { phone?: string; whatsApp?: string; links?: string[] }) {
+  const client = new MongoClient(MONGO);
+  await client.connect();
+  try {
+    await client.db("ratable_e2e").collection("entities").updateOne(
+      { _id: new ObjectId(entityId) },
+      { $set: { contact: { phone: contact.phone ?? null, whatsApp: contact.whatsApp ?? null, links: contact.links ?? [], source: "import", updatedAt: new Date() } } },
+    );
+  } finally {
+    await client.close();
+  }
+}
+
+/** An audited admin grant of a plan, the way a payment will activate it later. */
+export async function grantPlan(admin: TestUser, entityId: string, planId = "contact") {
+  const response = await admin.api.put(`/api/admin/entities/${entityId}/subscription`, { data: { planId } });
+  expect(response.status()).toBe(204);
 }

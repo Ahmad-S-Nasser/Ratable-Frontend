@@ -25,7 +25,7 @@ export default async function DashboardPage({ params }: PageProps<"/[lang]/busin
         <h1 className="font-heading text-[length:var(--text-h1)] font-semibold">{heading}</h1>
         <p className="text-muted">{intro}</p>
       </header>
-      <BusinessDashboard lang={lang} dict={rest as React.ComponentProps<typeof BusinessDashboard>["dict"]} />
+      <BusinessDashboard lang={lang} dict={rest as React.ComponentProps<typeof BusinessDashboard>["dict"]} contactDict={dict.business.dashboardContact as React.ComponentProps<typeof BusinessDashboard>["contactDict"]} />
     </div>
   );
 }

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
 import { JsonLdScript } from "@/components/site/JsonLdScript";
 import { HelpfulButton, HelpfulProvider } from "@/components/site/HelpfulButton";
+import { EntityContactBlock } from "@/components/site/EntityContactBlock";
 import { ReviewCardView } from "@/components/site/ReviewCardView";
 import { ReviewComments, ReviewHistory } from "@/components/site/ReviewExtras";
 import { ReviewFilters, type ReviewFilter } from "@/components/site/ReviewFilters";
@@ -240,6 +241,8 @@ export default async function EntityPage({ params, searchParams }: PageProps<"/[
           </Link>
         </p>
       </section>
+
+      <EntityContactBlock entity={entity} lang={lang} dict={dict.contact} returnPath={basePath} />
 
       <section aria-labelledby="criteria" className="space-y-3">
         <h2 id="criteria" className="font-heading text-xl font-semibold">

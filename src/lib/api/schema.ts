@@ -1053,6 +1053,166 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/entities/{entityId}/contact-requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    entityId: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["RequestInput"];
+                };
+            };
+            responses: {
+                /** @description Created */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["OwnRequest"];
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorBody"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorBody"];
+                    };
+                };
+                /** @description Conflict */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorBody"];
+                    };
+                };
+                /** @description Too Many Requests */
+                429: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorBody"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/me/contact-requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ReaderRequestView"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/entities/{entityId}/subscription": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    entityId: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["SubscriptionBody"];
+                };
+            };
+            responses: {
+                /** @description No Content */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorBody"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/reviews/{reviewId}/proof": {
         parameters: {
             query?: never;
@@ -2328,6 +2488,105 @@ export interface paths {
             responses: {
                 /** @description OK */
                 200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/entities/{id}/contact/reveal": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["PublicContact"];
+                    };
+                };
+                /** @description Forbidden */
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorBody"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorBody"];
+                    };
+                };
+                /** @description Too Many Requests */
+                429: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorBody"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/entities/{id}/views": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description No Content */
+                204: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -3963,6 +4222,355 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/business/places/{entityId}/contact": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    entityId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ContactDto"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    entityId: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["ContactBody"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ContactDto"];
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorBody"];
+                    };
+                };
+                /** @description Forbidden */
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorBody"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/business/places/{entityId}/contact-requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    entityId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ProviderRequests"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/business/places/{entityId}/contact-requests/{requestId}/reply": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    entityId: string;
+                    requestId: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["ReplyRequestBody"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["OwnRequest"];
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorBody"];
+                    };
+                };
+                /** @description Forbidden */
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorBody"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorBody"];
+                    };
+                };
+                /** @description Conflict */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorBody"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/business/places/{entityId}/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    entityId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["StatsResponse"];
+                    };
+                };
+                /** @description Forbidden */
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorBody"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/business/places/{entityId}/nudges": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    entityId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NudgesResponse"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/business/places/{entityId}/nudges/{trigger}/dismiss": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    entityId: string;
+                    trigger: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description No Content */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/moderation/proofs": {
         parameters: {
             query?: never;
@@ -4845,6 +5453,19 @@ export interface components {
             /** Format: int32 */
             pageSize: number;
         };
+        Alternative: {
+            id: string;
+            categoryId: string;
+            name: components["schemas"]["LocalizedText"];
+            slugs: {
+                [key: string]: string;
+            };
+            city: null | string;
+            /** Format: double */
+            score: null | number;
+            /** Format: double */
+            distanceMeters: null | number;
+        };
         AnonymityBody: {
             isAnonymous: null | boolean;
         };
@@ -4921,6 +5542,26 @@ export interface components {
             author: null | components["schemas"]["PublicAuthor"];
             underReview: boolean;
         };
+        BusinessStats: {
+            /** Format: int32 */
+            viewsLast7Days: number;
+            /** Format: int32 */
+            viewsLast30Days: number;
+            /** Format: int32 */
+            contactTapsLast30Days: number;
+            /** Format: int32 */
+            openRequests: number;
+            /** Format: int32 */
+            closedUnansweredLast30Days: number;
+            /** Format: int32 */
+            requestsLast30Days: number;
+            ratingTrend: components["schemas"]["MonthlyScore"][];
+            /** Format: int32 */
+            categoryRank: null | number;
+            /** Format: int32 */
+            rankedPlaces: null | number;
+            area: null | string;
+        };
         CaseDto: {
             id: string;
             kind: string;
@@ -4988,6 +5629,16 @@ export interface components {
         ConfirmVerifyBody: {
             code: null | string;
         };
+        ContactBody: {
+            phone: null | string;
+            whatsApp: null | string;
+            links: null | string[];
+        };
+        ContactDto: {
+            phone: null | string;
+            whatsApp: null | string;
+            links: string[];
+        };
         ContentKind: number;
         CoverBody: {
             choice: null | string;
@@ -5026,6 +5677,8 @@ export interface components {
             lastSeenAt: string;
             /** Format: int32 */
             repliesInModeration: number;
+            contactGated: boolean;
+            planShowsContact: boolean;
         };
         DashboardKpis: {
             /** Format: int32 */
@@ -5222,6 +5875,17 @@ export interface components {
             radiusKm: number;
             area: null | components["schemas"]["NearbyArea"];
         };
+        Nudge: {
+            trigger: string;
+            /** Format: int32 */
+            count: number;
+            /** Format: int32 */
+            rank: null | number;
+            area: null | string;
+        };
+        NudgesResponse: {
+            nudges: components["schemas"]["Nudge"][];
+        };
         OptionDto: {
             value: string;
             label: components["schemas"]["LocalizedText"];
@@ -5327,6 +5991,18 @@ export interface components {
             /** Format: date-time */
             fileExpiresAt: null | string;
         };
+        OwnRequest: {
+            id: string;
+            entityId: string;
+            what: string;
+            when: null | string;
+            shareWhatsApp: boolean;
+            status: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            expiresAt: string;
+        };
         OwnReview: {
             id: string;
             entityId: string;
@@ -5401,6 +6077,29 @@ export interface components {
             interests?: null | string[];
             areaId?: null | string;
         };
+        ProviderRequests: {
+            /** Format: int32 */
+            total: number;
+            /** Format: int32 */
+            open: number;
+            locked: boolean;
+            items: components["schemas"]["ProviderRequestView"][];
+        };
+        ProviderRequestView: {
+            id: string;
+            what: string;
+            when: null | string;
+            status: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            expiresAt: string;
+            readerName: null | string;
+            whatsApp: null | string;
+            replyText: null | string;
+            /** Format: date-time */
+            repliedAt: null | string;
+        };
         PublicAuthor: {
             name: string;
             avatarUrl: null | string;
@@ -5418,6 +6117,11 @@ export interface components {
             /** Format: date-time */
             editedOn: null | string;
             replies: components["schemas"]["PublicComment"][];
+        };
+        PublicContact: {
+            phone: null | string;
+            whatsApp: null | string;
+            links: string[];
         };
         PublicEntity: {
             id: string;
@@ -5444,6 +6148,11 @@ export interface components {
             summaryText: null | components["schemas"]["LocalizedText"];
             /** Format: date-time */
             updatedAt: string;
+            /** @default false */
+            contactLocked: boolean;
+            /** @default false */
+            contactAvailable: boolean;
+            contact?: null | components["schemas"]["PublicContact"];
         };
         PublicMediaItem: {
             id: string;
@@ -5598,6 +6307,23 @@ export interface components {
             minPoints: number;
             title: components["schemas"]["LocalizedText"];
         };
+        ReaderRequestView: {
+            id: string;
+            entityId: string;
+            categoryId: string;
+            what: string;
+            when: null | string;
+            shareWhatsApp: boolean;
+            status: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            expiresAt: string;
+            replyText: null | string;
+            /** Format: date-time */
+            repliedAt: null | string;
+            alternatives: components["schemas"]["Alternative"][];
+        };
         ReasonBody: {
             reason: null | string;
         };
@@ -5616,6 +6342,9 @@ export interface components {
             reason: null | string;
         };
         ReplyBody: {
+            text: null | string;
+        };
+        ReplyRequestBody: {
             text: null | string;
         };
         ReportBody: {
@@ -5638,6 +6367,11 @@ export interface components {
             /** Format: date-time */
             firstReportedAt: string;
             content: null | components["schemas"]["ModerationContentView"];
+        };
+        RequestInput: {
+            what: null | string;
+            when: null | string;
+            shareWhatsApp: null | boolean;
         };
         ResolveBody: {
             action: null | string;
@@ -5758,6 +6492,9 @@ export interface components {
             /** Format: date-time */
             expiresAt: string;
         };
+        StatsResponse: {
+            stats: components["schemas"]["BusinessStats"];
+        };
         SubmitEntityBody: {
             nameAr: null | string;
             nameEn: null | string;
@@ -5777,6 +6514,11 @@ export interface components {
         SubmittedResponse: {
             id: string;
             status: string;
+        };
+        SubscriptionBody: {
+            planId: null | string;
+            /** Format: date-time */
+            validUntil: null | string;
         };
         SuspendBody: {
             reason: null | string;

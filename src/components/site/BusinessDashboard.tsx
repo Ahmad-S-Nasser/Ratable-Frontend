@@ -9,6 +9,7 @@ import type { Locale } from "@/i18n/config";
 import { fmt, formatDate, formatNumber, formatScore } from "@/i18n/format";
 import { api } from "@/lib/api/client";
 import { unwrap } from "@/lib/api/http";
+import { DashboardContact, type ContactDict } from "@/components/site/DashboardContact";
 import type { BusinessReviewItem, Dashboard, DashboardPlace, OwnClaim } from "@/lib/api/types";
 import { entityPath } from "@/lib/urls";
 import { pick } from "@/lib/pick";
@@ -35,7 +36,7 @@ const input = "w-full rounded-xl border border-border bg-background px-3 py-2";
  * The free dashboard of a place. Every number is what the server worked out from the same verified reviews as the public score.
  * A reviewer is shown only as the API sent them: an anonymous review has no name here, and there is no id to show.
  */
-export function BusinessDashboard({ lang, dict }: { lang: Locale; dict: Dict }) {
+export function BusinessDashboard({ lang, dict, contactDict }: { lang: Locale; dict: Dict; contactDict: ContactDict }) {
   const [state, setState] = useState<State>({ name: "loading" });
   const [placeId, setPlaceId] = useState<string | null>(null);
 
@@ -111,12 +112,12 @@ export function BusinessDashboard({ lang, dict }: { lang: Locale; dict: Dict }) 
           </select>
         </div>
       ) : null}
-      {placeId ? <PlaceDashboard key={placeId} lang={lang} dict={dict} placeId={placeId} /> : null}
+      {placeId ? <PlaceDashboard key={placeId} lang={lang} dict={dict} contactDict={contactDict} placeId={placeId} /> : null}
     </div>
   );
 }
 
-function PlaceDashboard({ lang, dict, placeId }: { lang: Locale; dict: Dict; placeId: string }) {
+function PlaceDashboard({ lang, dict, contactDict, placeId }: { lang: Locale; dict: Dict; contactDict: ContactDict; placeId: string }) {
   const [data, setData] = useState<Dashboard | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [version, setVersion] = useState(0);
@@ -201,6 +202,8 @@ function PlaceDashboard({ lang, dict, placeId }: { lang: Locale; dict: Dict; pla
           )}
         </Card>
       </div>
+
+      {data.contactGated ? <DashboardContact lang={lang} dict={contactDict} placeId={placeId} planShowsContact={data.planShowsContact} /> : null}
 
       {data.repliesInModeration > 0 ? <p className="text-sm text-muted" data-testid="replies-pending">{fmt(dict.waiting.pending, { n: formatNumber(lang, data.repliesInModeration) })}</p> : null}
 

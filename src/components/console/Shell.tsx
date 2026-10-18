@@ -26,6 +26,7 @@ const ADMIN: NavItem[] = [
   { path: "/users", label: "nav.users", icon: "users", adminOnly: true },
   { path: "/ai", label: "nav.ai", icon: "spark", adminOnly: true },
   { path: "/lookup", label: "nav.lookup", icon: "eye", adminOnly: true },
+  { path: "/import", label: "nav.import", icon: "file", adminOnly: true },
 ];
 
 /** The frame of the console: it asks for sign-in first, refuses anyone who is not staff, and only then shows the navigation and the page. */
@@ -104,7 +105,6 @@ function Frame({ children }: { children: ReactNode }) {
                 type="button"
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
                 className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-full border border-border text-sm"
-                aria-label={t("common.theme")}
               >
                 <Icon name={theme === "dark" ? "sun" : "moon"} className="size-4" />
                 {theme === "dark" ? t("common.light") : t("common.dark")}

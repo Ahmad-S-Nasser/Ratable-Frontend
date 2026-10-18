@@ -74,13 +74,14 @@ test.describe("pricing and the page for business", () => {
     expect(ld.join("")).toContain("FAQPage");
   });
 
-  test("the prices follow the chosen currency", async ({ page }) => {
+  test("the pound price is the riyal price converted, and the dirham price is the same figure", async ({ page }) => {
     await page.goto(`${WEB}/en/business/pricing`);
-    await expect(page.getByTestId("price-insights")).toContainText("899");
+    await expect(page.getByTestId("price-insights")).toContainText("1,390");   // 99 riyals converted
+    await expect(page.getByTestId("price-insights")).toContainText("Egyptian pound");
     await page.getByRole("link", { name: "Saudi riyal" }).click();
     await expect(page).toHaveURL(/currency=SAR/);
     await expect(page.getByTestId("price-insights")).toContainText("99");
-    await expect(page.getByTestId("price-insights")).not.toContainText("899");
+    await expect(page.getByTestId("price-insights")).toContainText("Saudi riyal");
     await expect(page.getByTestId("price-contact")).toContainText("29");
   });
 

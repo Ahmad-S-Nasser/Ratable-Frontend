@@ -64,3 +64,14 @@ export type PlanDto = S["PlanDto"];
 export type PlansResponse = S["PlansResponse"];
 export type OwnerReplyInfo = S["OwnerReplyInfo"];
 export type OwnerReplyDto = S["OwnerReplyDto"];
+
+export type PublicContact = S["PublicContact"];
+export type ReaderRequestView = S["ReaderRequestView"];
+export type ProviderRequests = S["ProviderRequests"];
+export type ProviderRequestView = S["ProviderRequestView"];
+export type ContactDto = S["ContactDto"];
+export type BusinessStats = S["BusinessStats"];
+export type StatsResponse = S["StatsResponse"];
+export type NudgesResponse = S["NudgesResponse"];
+export type Nudge = S["Nudge"];
+export type Alternative = S["Alternative"];
