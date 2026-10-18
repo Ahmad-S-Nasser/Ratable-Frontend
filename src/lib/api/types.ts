@@ -54,3 +54,13 @@ export type HelpfulState = S["HelpfulState"];
 export type SignInProviders = S["SignInProviders"];
 export type StartVerifyResponse = S["StartVerifyResponse"];
 export type VerifyStatusResponse = S["VerifyStatusResponse"];
+
+export type Dashboard = S["Dashboard"];
+export type DashboardPlace = S["DashboardPlace"];
+export type BusinessReviewItem = S["BusinessReviewItem"];
+export type OwnClaim = S["OwnClaim"];
+export type ClaimForReview = S["ClaimForReview"];
+export type PlanDto = S["PlanDto"];
+export type PlansResponse = S["PlansResponse"];
+export type OwnerReplyInfo = S["OwnerReplyInfo"];
+export type OwnerReplyDto = S["OwnerReplyDto"];

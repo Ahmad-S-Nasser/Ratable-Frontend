@@ -8,7 +8,7 @@ import type { CaseDto } from "@/lib/api/types";
 import { useConsole } from "./context";
 import { Banner, Button, Card, Chip, EmptyState, Icon, PageHeader, ReasonForm, Spinner, useAction, useErrorText } from "./ui";
 
-type Kind = "" | "review" | "comment";
+type Kind = "" | "review" | "comment" | "ownerreply";
 const PAGE = 20;
 
 type Page = { kind: Kind; items: CaseDto[]; total: number; error: string | null };
@@ -23,7 +23,7 @@ export function ReviewQueue() {
   const params = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-  const kind: Kind = params.get("kind") === "review" ? "review" : params.get("kind") === "comment" ? "comment" : "";
+  const kind: Kind = ((k) => (k === "review" || k === "comment" || k === "ownerreply" ? k : ""))(params.get("kind"));
 
   const [page, setPage] = useState<Page | null>(null);
   const [tick, setTick] = useState(0);
@@ -68,7 +68,7 @@ export function ReviewQueue() {
     <>
       <PageHeader title={t("queue.heading")} intro={t("queue.intro")} />
       <div className="mb-5 flex flex-wrap items-center gap-2" role="tablist" aria-label={t("queue.heading")}>
-        {([["", "queue.filterAll"], ["review", "queue.filterReview"], ["comment", "queue.filterComment"]] as const).map(([value, label]) => (
+        {([["", "queue.filterAll"], ["review", "queue.filterReview"], ["comment", "queue.filterComment"], ["ownerreply", "queue.filterReply"]] as const).map(([value, label]) => (
           <button
             key={value}
             role="tab"
@@ -108,6 +108,7 @@ function CaseCard({ item, onDecided, onConflict }: { item: CaseDto; onDecided: (
   const action = useAction();
   const content = item.content;
   const isReview = item.kind === "Review";
+  const kindLabel = isReview ? t("queue.kindReview") : item.kind === "OwnerReply" ? t("queue.kindReply") : t("queue.kindComment");
 
   const publish = () =>
     action.run(
@@ -125,9 +126,9 @@ function CaseCard({ item, onDecided, onConflict }: { item: CaseDto; onDecided: (
 
   return (
     <Card className="space-y-4" >
-      <article data-testid="case" data-kind={item.kind} aria-label={isReview ? t("queue.kindReview") : t("queue.kindComment")} className="space-y-4">
+      <article data-testid="case" data-kind={item.kind} aria-label={kindLabel} className="space-y-4">
         <div className="flex flex-wrap items-center gap-2">
-          <Chip tone="verified">{isReview ? t("queue.kindReview") : t("queue.kindComment")}</Chip>
+          <Chip tone="verified">{kindLabel}</Chip>
           {item.revision > 1 ? <Chip tone="warning">{t("queue.edited")} · {t("queue.revision", { n: item.revision })}</Chip> : null}
           {content?.isAnonymous ? <Chip>{t("queue.isAnonymous")}</Chip> : null}
           {content?.underReview ? <Chip tone="warning">{t("queue.underReview")}</Chip> : null}

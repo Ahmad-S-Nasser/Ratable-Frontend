@@ -93,3 +93,8 @@ export const ThumbsUpIcon = (p: SVGProps<SVGSVGElement>) => (
     <path d="M7 11v9H4v-9h3Zm0 0 4-8a2 2 0 0 1 2 2v4h5.2a2 2 0 0 1 2 2.3l-1 6A2 2 0 0 1 17.2 20H7" />
   </Icon>
 );
+export const CheckIcon = (p: SVGProps<SVGSVGElement>) => (
+  <Icon {...p}>
+    <path d="m5 12 5 5L20 7" />
+  </Icon>
+);

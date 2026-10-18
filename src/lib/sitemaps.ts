@@ -60,7 +60,7 @@ export async function partXml(name: string): Promise<string | null> {
   const ids = categories.ok ? categories.data.map((c) => c.id) : [];
 
   if (part.kind === "static") {
-    const paths = ["", "/categories", "/feed", "/lists", "/points", "/methodology", "/methodology/verification", "/methodology/moderation", ...ids.flatMap((id) => [`/${id}`, `/${id}/best`])];
+    const paths = ["", "/categories", "/feed", "/lists", "/points", "/methodology", "/methodology/verification", "/methodology/moderation", "/business", "/business/pricing", ...ids.flatMap((id) => [`/${id}`, `/${id}/best`])];
     const lists = await getLists();
     const entries = paths.map((p) => urlEntry(absoluteUrl(`/${part.lang}${p}`), () => p));
     for (const l of lists.ok ? lists.data : []) {

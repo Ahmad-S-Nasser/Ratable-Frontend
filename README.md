@@ -60,3 +60,9 @@ Under `/{lang}/console` (Arabic and English, light by default with a dark switch
 
 ### Photos and video (P9e)
 Upload step in the review form (and `/{lang}/me/media/{reviewId}`): pieces with progress, resume after a break, background upload, cover choice, delete. Public: video strip and Video/Photos filters on the entity page, photo thumbnails and a photo counter, captions as text under each video, `VideoObject` JSON-LD with the transcript (only for approved videos, never with an author), and the full-screen feed at `/{lang}/feed` (scroll-snap, lazy player, hls.js loaded only where HLS is not native). Console: `/console/media` to watch, approve or reject. The API streams approved files only; a CDN can sit in front of `/api/media/*` (responses are cacheable).
+
+### Business side (P10)
+- Pages: `/{lang}/business` (what Ratable offers a business), `/business/pricing` (plans from `GET /api/plans`, FAQ with JSON-LD), `/business/claim?place={id}` (company email, role, document; asks for sign-in and a verified phone first), `/business/dashboard` (KPIs, score trend, comparison with the category, reviews waiting for a reply with an inline reply form). The claim and dashboard pages are noindex.
+- A reply from the owner shows under the review with an owner label. An anonymous reviewer is never named on the dashboard.
+- Console: `/console/claims` for moderators (opens the document in memory, approve or refuse with a reason).
+- E2E: `e2e/p10.spec.ts` (claim flow, approval in the console, reply and public display, access rules, contrast in both themes and languages).

@@ -2,7 +2,7 @@ import "server-only";
 import createClient from "openapi-fetch";
 import type { paths } from "./schema";
 import { unwrap, type ApiResult } from "./http";
-import type { AreaDto, RewardsConfigView, ListSummary, ListView, FeedItem, PublicComment, ReviewHistory, Category, SitemapPlace, PlaceList, PublicEntity, PublicReview, ScoreResponse } from "./types";
+import type { PlansResponse, AreaDto, RewardsConfigView, ListSummary, ListView, FeedItem, PublicComment, ReviewHistory, Category, SitemapPlace, PlaceList, PublicEntity, PublicReview, ScoreResponse } from "./types";
 
 /** Public pages are rendered on the server, so they read the API directly. Responses are reused for five minutes (API_REVALIDATE_SECONDS changes that; the browser tests use 0). */
 const revalidate = Number(process.env.API_REVALIDATE_SECONDS ?? 300);
@@ -49,3 +49,5 @@ export const getList = (id: string, lang: string) => unwrap<ListView>(serverApi.
 export const getAreas = () => unwrap<AreaDto[]>(serverApi.GET("/api/areas", { params: { query: {} } }));
 
 export const getRewardsConfig = () => unwrap<RewardsConfigView>(serverApi.GET("/api/rewards/config"));
+
+export const getPlans = () => unwrap<PlansResponse>(serverApi.GET("/api/plans"));

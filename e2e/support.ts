@@ -14,14 +14,14 @@ export type TestUser = { id: string; cookie: string; token: string; api: APIRequ
  * Creates an account and a session straight in the database (sign-in itself is covered elsewhere), and returns an API client that is signed in as it.
  * The session token is hashed exactly as the API hashes it, so the API accepts it.
  */
-export async function createUser(roles: string[], displayName?: string): Promise<TestUser> {
+export async function createUser(roles: string[], displayName?: string, phoneVerified = false): Promise<TestUser> {
   const client = new MongoClient(MONGO);
   await client.connect();
   try {
     const db = client.db("ratable_e2e");
     const id = new ObjectId();
     await db.collection("users").insertOne({
-      _id: id, roles: ["User", ...roles], profile: displayName ? { displayName } : {}, logins: [], phoneVerified: false, status: "Active", createdAt: new Date(),
+      _id: id, roles: ["User", ...roles], profile: displayName ? { displayName } : {}, logins: [], phoneVerified, status: "Active", createdAt: new Date(),
     });
     const token = crypto.randomBytes(32).toString("base64url");
     await db.collection("sessions").insertOne({
@@ -75,4 +75,17 @@ export async function writeReview(user: TestUser, entityId: string, text: string
   const response = await user.api.post(`/api/entities/${entityId}/reviews`, { data: { answers: [{ criterionId: "security", value: 4 }], text, ...extra } });
   expect(response.status()).toBe(201);
   return ((await response.json()) as { id: string }).id;
+}
+
+/** Makes an account the owner of a place straight in the database (the claim flow has its own test). */
+export async function makeOwner(user: TestUser, entityId: string) {
+  const client = new MongoClient(MONGO);
+  await client.connect();
+  try {
+    await client.db("ratable_e2e").collection("business_ownerships").insertOne({
+      _id: new ObjectId(), entityId: new ObjectId(entityId), userId: new ObjectId(user.id), claimId: new ObjectId(), approvedAt: new Date(), lastSeenAt: new Date(),
+    });
+  } finally {
+    await client.close();
+  }
 }

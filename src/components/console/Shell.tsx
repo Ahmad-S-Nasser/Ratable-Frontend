@@ -18,6 +18,7 @@ const MODERATION: NavItem[] = [
   { path: "/media", label: "nav.media", icon: "eye" },
   { path: "/reports", label: "nav.reports", icon: "flag" },
   { path: "/disputes", label: "nav.disputes", icon: "scale" },
+  { path: "/claims", label: "nav.claims", icon: "users" },
 ];
 
 const ADMIN: NavItem[] = [

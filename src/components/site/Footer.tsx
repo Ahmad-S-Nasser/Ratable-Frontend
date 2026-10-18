@@ -72,6 +72,11 @@ export async function Footer({ lang }: { lang: Locale }) {
                 {t.addPlace}
               </Link>
             </li>
+            <li>
+              <Link href={`/${lang}/business`} className="inline-flex min-h-9 items-center hover:text-footer-text">
+                {dict.business.nav}
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

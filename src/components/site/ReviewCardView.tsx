@@ -8,13 +8,14 @@ import type { PublicReview } from "@/lib/api/types";
 import { pick } from "@/lib/pick";
 
 type MediaLabels = { play: string; pause: string; mute: string; unmute: string; videoLabel: string; captions: string };
+type OwnerLabels = { label: string; edited: string };
 type Labels = { verified: string; unverifiedNote: string; anonymousName: string; edited: string; outOf: string; accountVerified: string };
 
 /**
  * One public review. The author is whatever the API sent (null for anonymous reviews): this component never has an id to show,
  * and an anonymous review gets the same neutral avatar and name for everyone (rule 1).
  */
-export function ReviewCardView({ review, lang, labels, media }: { review: PublicReview; lang: Locale; labels: Labels; media: MediaLabels }) {
+export function ReviewCardView({ review, lang, labels, media, owner }: { review: PublicReview; lang: Locale; labels: Labels; media: MediaLabels; owner?: OwnerLabels }) {
   const videos = review.media.filter((m) => m.kind === "Video" && m.playlistUrl);
   const photos = review.media.filter((m) => m.kind === "Photo" && m.imageUrl);
   const name = review.anonymous || !review.author ? labels.anonymousName : review.author.name;
@@ -80,6 +81,16 @@ export function ReviewCardView({ review, lang, labels, media }: { review: Public
             </li>
           ))}
         </ul>
+      ) : null}
+      {review.ownerReply && owner ? (
+        <div data-testid="owner-reply" className="space-y-1 rounded-2xl border border-border bg-surface-2 p-4">
+          <p className="flex flex-wrap items-center gap-2 text-sm">
+            <span className="inline-flex rounded-full border border-border bg-surface px-2 py-0.5 text-xs font-semibold">{owner.label}</span>
+            <time dateTime={review.ownerReply.createdAt} className="text-xs text-muted">{formatDate(lang, review.ownerReply.createdAt)}</time>
+            {review.ownerReply.editedAt ? <span className="text-xs text-muted">· {fmt(owner.edited, { date: formatDate(lang, review.ownerReply.editedAt) })}</span> : null}
+          </p>
+          <p dir="auto" className="whitespace-pre-line leading-7">{review.ownerReply.text}</p>
+        </div>
       ) : null}
     </article>
   );

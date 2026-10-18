@@ -42,6 +42,8 @@ export default defineConfig({
         Identity__PhoneHashKey: process.env.E2E_HASH_KEY,
         Verification__StorageKey: key(),
         Verification__StoragePath: "App_Data/e2e-proofs",
+        // Mail is written to files here instead of being sent, so the tests can read the company-email code.
+        Email__OutboxPath: "App_Data/e2e-mail",
         Moderation__BurstThreshold: "1000",
         Identity__WhatsAppNumber: "+201099999999",
         Identity__WhatsAppAppSecret: "e2e-whatsapp-secret",

@@ -65,7 +65,8 @@
       "lookup": "Author look-up",
       "signOut": "Sign out",
       "menu": "Menu",
-      "media": "Photos and video"
+      "media": "Photos and video",
+      "claims": "Place claims"
     },
     "common": {
       "loading": "Loading…",
@@ -149,7 +150,9 @@
         "proofs": "Proofs",
         "reports": "Reports",
         "disputes": "Disputes",
-        "media": "Photos and video"
+        "media": "Photos and video",
+        "claims": "Place claims",
+        "replies": "Owner replies"
       },
       "oldest": "Oldest waiting item",
       "nothingWaiting": "Nothing is waiting.",
@@ -221,7 +224,9 @@
         "copied_text": "The same text was posted before.",
         "review_burst": "Many reviews of this place arrived in a short time.",
         "shared_device_or_network": "Several accounts on one device or network reviewed this place."
-      }
+      },
+      "filterReply": "Owner replies",
+      "kindReply": "Owner reply"
     },
     "entities": {
       "heading": "New places",
@@ -475,6 +480,35 @@
       "mute": "Mute",
       "unmute": "Unmute",
       "video": "Video preview"
+    },
+    "claims": {
+      "heading": "Place claims",
+      "intro": "A business asks to run a place. Read the document, check the email, then approve or refuse. The file is deleted after you decide.",
+      "email": "Company email",
+      "role": "Role",
+      "website": "Website",
+      "note": "Note",
+      "documentType": "Document",
+      "freeEmail": "Free mail address",
+      "domainMatches": "The email domain appears on the place page",
+      "domainUnknown": "No match with the place page",
+      "viewFile": "Open the document",
+      "closeFile": "Close the document",
+      "fileGone": "The document is not available.",
+      "everyOpeningLogged": "Every time you open a document it is written to the audit log.",
+      "approve": "Approve and give ownership",
+      "reject": "Refuse",
+      "rejectTitle": "Refuse the claim and tell the claimant why",
+      "rejectConfirm": "Refuse the claim",
+      "approved": "Claim approved",
+      "rejected": "Claim refused",
+      "place": "Place id",
+      "documentTypes": {
+        "commercial_register": "Commercial register",
+        "tax_card": "Tax card",
+        "license": "Operating licence",
+        "other": "Other official document"
+      }
     }
   },
   "site": {
@@ -1271,5 +1305,276 @@
       "network": "Could not connect. Please try again.",
       "unknown": "Something went wrong. Please try again."
     }
-  }
+  },
+  "business": {
+    "nav": "For business",
+    "marketing": {
+      "title": "Ratable for business",
+      "description": "Claim your place on Ratable, answer reviews and see how people rate you. Payment buys tools, never a better score or ranking.",
+      "heading": "Run your reputation with confidence",
+      "intro": "Claim your page, reply to every review and see what your customers say. The score and the ranking come only from verified reviews, so nothing you pay for can change them.",
+      "ctaClaim": "Claim your place",
+      "ctaPricing": "See plans",
+      "points": [
+        {
+          "title": "Understand what customers say",
+          "text": "A free dashboard shows your score, how it moves over time and how you compare with other places in your category."
+        },
+        {
+          "title": "Reply to every review",
+          "text": "Your reply shows under the review with an owner label. You can edit or remove it. You cannot delete a review."
+        },
+        {
+          "title": "No paying for a better score",
+          "text": "Payment buys tools and analytics only. It never changes a score, a ranking, a verdict or a removal."
+        }
+      ],
+      "stepsHeading": "How it works",
+      "steps": [
+        {
+          "title": "Verify your phone",
+          "text": "A one-time message on WhatsApp. It takes a minute."
+        },
+        {
+          "title": "Claim your place",
+          "text": "Give a company email and upload a commercial register, tax card or licence."
+        },
+        {
+          "title": "We check it",
+          "text": "A person reads the document, then deletes the file. Only a one-way fingerprint is kept."
+        }
+      ]
+    },
+    "pricing": {
+      "title": "Plans for business",
+      "description": "Compare Ratable plans for businesses. The free plan lets you claim your page and reply to reviews. Paid plans add tools, never score or rank.",
+      "heading": "Plans for business",
+      "intro": "Pay for tools and analytics only. Your score and your rank are not affected by any plan.",
+      "plans": {
+        "free": {
+          "name": "Free",
+          "tagline": "Claim your page and reply to your customers.",
+          "cta": "Start free"
+        },
+        "insights": {
+          "name": "Insights",
+          "tagline": "Go deeper into what customers say, with reports.",
+          "cta": "Coming soon"
+        },
+        "contact": {
+          "name": "Contact",
+          "tagline": "Show your contact details and receive requests from readers.",
+          "cta": "Coming soon"
+        }
+      },
+      "features": {
+        "claim": "Claim your page",
+        "reply": "Reply to reviews",
+        "dashboard": "Basic dashboard",
+        "alerts": "New review alerts",
+        "insights": "Deeper analytics",
+        "reports": "Monthly report",
+        "contact": "Contact details on your page"
+      },
+      "pricePending": "Price to be announced",
+      "free": "Free",
+      "perMonth": "EGP / month",
+      "note": "Prices are shown before VAT. Payment is not open yet.",
+      "faqHeading": "Questions about payment",
+      "faq": [
+        {
+          "question": "Does a plan raise my ranking?",
+          "answer": "No. Your score comes only from verified reviews and your rank only from that score and distance. No plan can change either."
+        },
+        {
+          "question": "Can I remove a negative review?",
+          "answer": "No. You can reply, and you can dispute a review that breaks a rule. A moderator decides, and a plan does not matter."
+        },
+        {
+          "question": "How do I pay?",
+          "answer": "Online payment is not open yet. When it opens, payment will be on a secure hosted page and Ratable will never see or store your card details."
+        }
+      ],
+      "currencyLabel": "Currency",
+      "currencies": {
+        "EGP": "Egyptian pound",
+        "SAR": "Saudi riyal",
+        "AED": "UAE dirham"
+      },
+      "annual": "Pay for a year at once and save {n}%.",
+      "price": "{amount} {currency} / month",
+      "perMonthIn": "per month, in {currency}"
+    },
+    "claim": {
+      "title": "Claim your place",
+      "description": "Prove you run a place on Ratable.",
+      "heading": "Claim your place",
+      "intro": "Prove you run this place. A person checks it, usually within two working days.",
+      "signInNeeded": "Sign in to claim a place.",
+      "signIn": "Sign in",
+      "verifyNeeded": "Verify your phone first. It is needed before you can claim a place.",
+      "verifyLink": "Verify via WhatsApp",
+      "placeLabel": "The place",
+      "noPlace": "Choose the place you want to claim.",
+      "findPlace": "Find your place",
+      "notFound": "We could not find that place.",
+      "emailLabel": "Company email",
+      "emailHelp": "An address at your own domain, for example info@yourplace.com.",
+      "roleLabel": "You are the",
+      "roles": {
+        "owner": "Owner",
+        "manager": "Manager",
+        "representative": "Representative"
+      },
+      "websiteLabel": "Website (optional)",
+      "noteLabel": "Anything we should know (optional)",
+      "documentTypeLabel": "Document",
+      "documentTypes": {
+        "commercial_register": "Commercial register",
+        "tax_card": "Tax card",
+        "license": "Operating licence",
+        "other": "Other official document"
+      },
+      "fileLabel": "Upload the document",
+      "fileHelp": "PDF, JPG or PNG, up to 5 MB. It is kept private, read by one moderator and deleted after the decision.",
+      "privacy": "Owning the page does not let you delete a review or change a score.",
+      "submit": "Send for review",
+      "submitting": "Sending…",
+      "doneHeading": "We received your claim",
+      "doneText": "A moderator will check your document. You will see the result in your dashboard.",
+      "toDashboard": "Go to the dashboard",
+      "errors": {
+        "phone_not_verified": "Verify your phone before claiming a place.",
+        "invalid_email": "Enter a valid company email.",
+        "invalid_role": "Choose your role.",
+        "already_owned": "This place already has an owner. If this is a mistake, contact us.",
+        "already_owner": "You already run this place.",
+        "claim_open": "You already have a claim waiting for this place.",
+        "too_many_claims": "Too many claims. Try again tomorrow.",
+        "invalid_document": "Upload a PDF, JPG or PNG file.",
+        "invalid_document_type": "Choose the document type.",
+        "document_too_large": "The file is too large. The limit is 5 MB.",
+        "not_found": "We could not find that place.",
+        "wrong_state": "This claim is already decided.",
+        "unknown": "Something went wrong. Try again.",
+        "network": "Cannot reach the server. Check the connection and try again.",
+        "invalid_code": "That code is not right.",
+        "code_expired": "The code expired. Send a new one.",
+        "too_many_attempts": "Too many wrong tries. Send a new code.",
+        "too_soon": "Wait a minute before asking for another code.",
+        "email_unavailable": "We cannot send email right now. Try again later.",
+        "email_not_verified": "Confirm your company email first."
+      },
+      "search": {
+        "label": "Search for your place",
+        "placeholder": "Name of your place",
+        "button": "Search",
+        "empty": "No place matches. Check the spelling or add your place first.",
+        "choose": "Claim this place",
+        "addPlace": "Add your place"
+      },
+      "emailStep": {
+        "heading": "Confirm your company email",
+        "help": "We sent a 6-digit code from support@coon.one to {email}. It works once and expires in 10 minutes.",
+        "codeLabel": "Code",
+        "confirm": "Confirm",
+        "confirming": "Checking…",
+        "resend": "Send a new code",
+        "resent": "A new code was sent."
+      },
+      "next": "Continue"
+    },
+    "claimEntry": {
+      "prompt": "Do you run this place?",
+      "link": "Claim it"
+    },
+    "dashboard": {
+      "title": "Business dashboard",
+      "heading": "Overview",
+      "intro": "Your numbers come from the same verified reviews as your public score.",
+      "signInNeeded": "Sign in to see your dashboard.",
+      "signIn": "Sign in",
+      "noPlaces": "You do not run a place yet. Claim one to see its dashboard.",
+      "claimLink": "Claim a place",
+      "claimsHeading": "Your claims",
+      "claimStatus": {
+        "Draft": "Waiting for your document",
+        "Pending": "Waiting for a moderator",
+        "Approved": "Approved",
+        "Rejected": "Not approved"
+      },
+      "placePicker": "Place",
+      "viewPage": "View public page",
+      "kpis": {
+        "reviews": "Published reviews",
+        "verified": "Verified reviews",
+        "score": "Score",
+        "replyRate": "Reply rate",
+        "none": "—"
+      },
+      "trend": {
+        "heading": "Score over time",
+        "empty": "Not enough verified reviews yet.",
+        "reviews": "{n} verified"
+      },
+      "compare": {
+        "heading": "Compared with your category",
+        "you": "Your score",
+        "category": "Category average",
+        "noData": "Not enough scores in this category yet."
+      },
+      "alerts": {
+        "new": "{n} new reviews since your last visit",
+        "none": "No new reviews since your last visit.",
+        "markSeen": "Mark as seen"
+      },
+      "waiting": {
+        "heading": "Reviews waiting for your reply",
+        "empty": "You have replied to every review.",
+        "anonymous": "Anonymous reviewer",
+        "verified": "Verified",
+        "unverified": "Not verified",
+        "reply": "Reply",
+        "placeholder": "Write a polite, factual reply. Everyone will see it.",
+        "send": "Publish reply",
+        "sending": "Publishing…",
+        "cancel": "Cancel",
+        "help": "Your reply shows under the review with an owner label. Do not try to identify the reviewer.",
+        "under": "Under review by a moderator",
+        "sent": "Your reply was received. It shows publicly after a moderator has read it.",
+        "pending": "{n} replies are waiting for a moderator."
+      },
+      "errors": {
+        "invalid_text": "Write a reply between 2 and 1000 characters.",
+        "not_owner": "You do not run this place.",
+        "already_replied": "You already replied to this review.",
+        "not_found": "This review is no longer public.",
+        "unknown": "Something went wrong. Try again.",
+        "network": "Cannot reach the server. Check the connection and try again."
+      }
+    },
+    "ownerReply": {
+      "label": "Reply from the owner",
+      "edited": "Edited {date}"
+    },
+    "auth": {
+      "signUp": {
+        "title": "Create a business account",
+        "description": "Create a Ratable business account to claim your place.",
+        "heading": "Create a business account",
+        "intro": "Sign in with your phone, Google or Apple. Then verify your phone and claim your place.",
+        "haveAccount": "Already have an account?",
+        "signInLink": "Sign in to your business"
+      },
+      "signIn": {
+        "title": "Business sign in",
+        "description": "Sign in to your Ratable business dashboard.",
+        "heading": "Sign in to your business",
+        "intro": "Open your dashboard, reply to reviews and manage your places.",
+        "newHere": "New to Ratable for business?",
+        "signUpLink": "Create a business account"
+      }
+    }
+  },
+  "businessNav": "For business"
 }

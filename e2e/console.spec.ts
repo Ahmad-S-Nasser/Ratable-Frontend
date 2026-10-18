@@ -1,6 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, request as pwRequest, test, type Page } from "@playwright/test";
-import { API, WEB, createUser, makePlace, signInBrowser, uid, waitForApi, writeReview, type TestUser } from "./support";
+import { API, WEB, createUser, makeOwner, makePlace, signInBrowser, uid, waitForApi, writeReview, type TestUser } from "./support";
 
 let admin: TestUser;
 let moderator: TestUser;
@@ -243,6 +243,7 @@ test.describe("reports and disputes", () => {
     const business = await createUser(["BusinessOwner"], "Business " + uid());
     const place = await makePlace(author, admin, "Dispute Place " + uid());
     const text = "The management never answers " + uid();
+    await makeOwner(business, place);
     const review = await writeReview(author, place, text);
     await admin.api.post(`/api/moderation/cases/${await caseIdFor(review)}/publish`);
     expect((await business.api.post(`/api/reviews/${review}/disputes`, { data: { reason: "This review describes another compound entirely" } })).status()).toBe(201);

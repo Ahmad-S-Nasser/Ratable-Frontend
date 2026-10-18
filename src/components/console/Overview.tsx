@@ -15,8 +15,10 @@ const ROUTES: Record<string, string> = {
   media: "/media",
   reports: "/reports",
   disputes: "/disputes",
+  claims: "/claims",
+  replies: "/reviews?kind=ownerreply",
 };
-const ORDER = ["reviews", "comments", "entities", "proofs", "media", "reports", "disputes"];
+const ORDER = ["reviews", "comments", "entities", "proofs", "media", "reports", "disputes", "claims", "replies"];
 
 export function Overview() {
   const { t, date, number, href, isAdmin } = useConsole();

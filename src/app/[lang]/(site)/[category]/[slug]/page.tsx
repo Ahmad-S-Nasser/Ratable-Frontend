@@ -233,6 +233,12 @@ export default async function EntityPage({ params, searchParams }: PageProps<"/[
         <Link href={`${entityPath(lang, entity.categoryId, entity)}/review`} className={buttonClass("primary")}>
           {e.writeReview}
         </Link>
+        <p className="text-sm text-muted">
+          {dict.business.claimEntry.prompt}{" "}
+          <Link href={`/${lang}/business/claim?place=${entity.id}`} className="font-medium text-link underline">
+            {dict.business.claimEntry.link}
+          </Link>
+        </p>
       </section>
 
       <section aria-labelledby="criteria" className="space-y-3">
@@ -310,7 +316,7 @@ export default async function EntityPage({ params, searchParams }: PageProps<"/[
             {reviews.map((r) => (
               <li key={r.id}>
                 <div className="space-y-3">
-                  <ReviewCardView review={r} lang={lang} labels={{ ...e, accountVerified: dict.verifyPhone.verifiedMark }} media={mediaLabels} />
+                  <ReviewCardView review={r} lang={lang} labels={{ ...e, accountVerified: dict.verifyPhone.verifiedMark }} media={mediaLabels} owner={dict.business.ownerReply} />
                   <div className="space-y-3 px-2">
                     <HelpfulButton lang={lang} reviewId={r.id} signInNext={basePath} labels={dict.helpful} />
                     <ReviewHistory review={r} lang={lang} labels={x} outOf={e.outOf} />
