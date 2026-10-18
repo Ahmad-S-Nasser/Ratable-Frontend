@@ -64,7 +64,8 @@
       "ai": "AI spend",
       "lookup": "Author look-up",
       "signOut": "Sign out",
-      "menu": "Menu"
+      "menu": "Menu",
+      "media": "Photos and video"
     },
     "common": {
       "loading": "Loading…",
@@ -147,7 +148,8 @@
         "entities": "New places",
         "proofs": "Proofs",
         "reports": "Reports",
-        "disputes": "Disputes"
+        "disputes": "Disputes",
+        "media": "Photos and video"
       },
       "oldest": "Oldest waiting item",
       "nothingWaiting": "Nothing is waiting.",
@@ -431,6 +433,48 @@
       "created": "Account created",
       "status": "Status",
       "phoneNote": "A phone number is never shown here."
+    },
+    "media": {
+      "nav": "Photos and video",
+      "title": "Photos and video",
+      "intro": "Every photo and video appears only after you approve it. A video cannot be approved without the AI check.",
+      "empty": "Nothing is waiting.",
+      "analysis": "Automatic check",
+      "analysisStatus": {
+        "Completed": "Checked",
+        "Unavailable": "Not checked",
+        "None": "Not checked"
+      },
+      "faces": "Faces: {n}",
+      "children": "Children: {n}",
+      "plates": "Number plates: {n}",
+      "nudity": "Nudity",
+      "violence": "Violence",
+      "personalData": "Personal data on screen",
+      "abusive": "Abusive speech",
+      "personalSpeech": "Personal data in speech",
+      "quality": "Quality: {n}",
+      "blur": "Sensitive areas were blurred",
+      "voice": "The voice was changed",
+      "anonymousProtected": "Protected for an anonymous review",
+      "captions": "What is said",
+      "approve": "Approve",
+      "reject": "Reject",
+      "reason": "Reason for rejecting (the author sees it)",
+      "decided": "Decision saved.",
+      "errors": {
+        "analysis_required": "A video that the AI did not check cannot be approved.",
+        "not_protected_for_anonymous": "This video is not protected for an anonymous review.",
+        "faces_or_plates_visible": "Faces or number plates are visible in the picture.",
+        "reason_required": "Write a reason.",
+        "wrong_state": "A decision was already made.",
+        "media_not_found": "The file does not exist."
+      },
+      "play": "Play",
+      "pause": "Pause",
+      "mute": "Mute",
+      "unmute": "Unmute",
+      "video": "Video preview"
     }
   },
   "site": {
@@ -885,5 +929,90 @@
     "reviews": "Verified reviews",
     "bestOf": "Best {name}",
     "seeMethod": "How we calculate and verify"
+  },
+  "media": {
+    "title": "Photos and video for a review",
+    "heading": "Add photos or video",
+    "intro": "One video up to 60 seconds and 100 MB, and up to 4 photos. We check every file before it appears.",
+    "pick": "Choose files",
+    "pickHint": "From the camera or the gallery",
+    "anonymousNote": "Your review is anonymous: we blur every face and change the voice in a video, otherwise we refuse it. Photos must not show faces or number plates.",
+    "keepOpen": "Stay on this page until the upload finishes. If the connection drops you can retry and we continue where we stopped.",
+    "uploading": "Uploading {pct}%",
+    "retry": "Try again",
+    "delete": "Delete",
+    "kind": {
+      "Video": "Video",
+      "Photo": "Photo"
+    },
+    "status": {
+      "Uploading": "Uploading",
+      "Uploaded": "Uploaded, waiting to be processed",
+      "Processing": "Being checked and processed",
+      "PendingModeration": "Waiting for a person to check",
+      "Published": "Published",
+      "Rejected": "Rejected",
+      "Failed": "Could not be processed"
+    },
+    "reasons": {
+      "wrong_file_type": "The file type is not suitable.",
+      "invalid_image": "The picture is not valid.",
+      "too_large": "The file is larger than allowed.",
+      "too_long": "The video is longer than 60 seconds.",
+      "not_a_video": "The file has no video in it.",
+      "anonymous_video_not_protected": "We could not hide the faces for an anonymous review, so the video was refused. You can add photos instead.",
+      "children_cannot_be_protected": "Children appear and we could not hide their faces.",
+      "plates_cannot_be_protected": "Number plates appear and we could not hide them.",
+      "moderator": "A reviewer rejected it.",
+      "analysis_unavailable": "We could not check the video right now. Try again later.",
+      "processor_unavailable": "Video processing is not available right now. Try again later.",
+      "processing_failed": "Something went wrong while processing. Try uploading it again."
+    },
+    "cover": {
+      "heading": "Cover picture",
+      "auto": "Best frame (automatic)",
+      "first": "First frame",
+      "choose": "Choose yourself",
+      "frame": "Frame {n}",
+      "hint": "We pick the sharpest frame automatically, and use the first frame if we cannot."
+    },
+    "errors": {
+      "invalid_type": "This type of file is not supported.",
+      "invalid_size": "The file is empty.",
+      "too_large": "The file is larger than allowed.",
+      "limit_reached": "You reached the limit of this kind for this review.",
+      "rate_limited": "You uploaded many files today. Try tomorrow.",
+      "review_not_found": "This review is not in your account.",
+      "network": "The connection dropped. Try again.",
+      "wrong_file_type": "The file type is not suitable.",
+      "unknown": "Something went wrong. Try again."
+    },
+    "addTo": "Add photos or video",
+    "back": "Back to my account"
+  },
+  "videos": {
+    "heading": "Videos",
+    "photos": "Photos",
+    "photoCount": "{count} photos",
+    "videoLabel": "Video, {duration} seconds",
+    "filterLabel": "Kind of reviews",
+    "withVideo": "Video",
+    "withPhotos": "Photos",
+    "play": "Play",
+    "captions": "What is said"
+  },
+  "feed": {
+    "title": "Videos from people who tried",
+    "description": "Verified review videos of places in Egypt and the Gulf.",
+    "heading": "Videos",
+    "empty": "No videos have been published yet.",
+    "unavailable": "The videos could not be loaded right now.",
+    "visit": "Open the place page",
+    "mute": "Mute",
+    "unmute": "Unmute",
+    "pause": "Pause",
+    "play": "Play",
+    "videoOf": "Video about {name}",
+    "more": "More"
   }
 }

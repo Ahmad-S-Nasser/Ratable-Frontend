@@ -15,6 +15,7 @@ const MODERATION: NavItem[] = [
   { path: "/reviews", label: "nav.reviews", icon: "list" },
   { path: "/entities", label: "nav.entities", icon: "place" },
   { path: "/proofs", label: "nav.proofs", icon: "file" },
+  { path: "/media", label: "nav.media", icon: "eye" },
   { path: "/reports", label: "nav.reports", icon: "flag" },
   { path: "/disputes", label: "nav.disputes", icon: "scale" },
 ];

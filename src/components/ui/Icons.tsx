@@ -48,3 +48,31 @@ export const ScaleIcon = (p: SVGProps<SVGSVGElement>) => (
     <path d="M12 3v18M6 21h12M5 7h14M5 7l-3 7a3.5 3.5 0 0 0 6 0L5 7ZM19 7l-3 7a3.5 3.5 0 0 0 6 0l-3-7Z" />
   </Icon>
 );
+
+export const PlayIcon = (p: SVGProps<SVGSVGElement>) => (
+  <Icon {...p}>
+    <path d="M8 5v14l11-7L8 5Z" />
+  </Icon>
+);
+export const PauseIcon = (p: SVGProps<SVGSVGElement>) => (
+  <Icon {...p}>
+    <path d="M8 5v14M16 5v14" />
+  </Icon>
+);
+export const VolumeIcon = (p: SVGProps<SVGSVGElement>) => (
+  <Icon {...p}>
+    <path d="M4 10v4h4l5 4V6l-5 4H4ZM16.5 8.5a5 5 0 0 1 0 7" />
+  </Icon>
+);
+export const VolumeOffIcon = (p: SVGProps<SVGSVGElement>) => (
+  <Icon {...p}>
+    <path d="M4 10v4h4l5 4V6l-5 4H4ZM17 9l4 6M21 9l-4 6" />
+  </Icon>
+);
+export const PhotoIcon = (p: SVGProps<SVGSVGElement>) => (
+  <Icon {...p}>
+    <rect x="3" y="5" width="18" height="14" rx="2" />
+    <circle cx="9" cy="10" r="1.5" />
+    <path d="m21 16-5-5-8 8" />
+  </Icon>
+);

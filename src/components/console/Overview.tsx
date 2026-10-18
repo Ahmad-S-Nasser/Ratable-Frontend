@@ -12,10 +12,11 @@ const ROUTES: Record<string, string> = {
   comments: "/reviews?kind=comment",
   entities: "/entities",
   proofs: "/proofs",
+  media: "/media",
   reports: "/reports",
   disputes: "/disputes",
 };
-const ORDER = ["reviews", "comments", "entities", "proofs", "reports", "disputes"];
+const ORDER = ["reviews", "comments", "entities", "proofs", "media", "reports", "disputes"];
 
 export function Overview() {
   const { t, date, number, href, isAdmin } = useConsole();

@@ -96,3 +96,32 @@ export const faqJsonLd = (items: { question: string; answer: string }[]): JsonLd
   "@type": "FAQPage",
   mainEntity: items.map((q) => ({ "@type": "Question", name: q.question, acceptedAnswer: { "@type": "Answer", text: q.answer } })),
 });
+
+type VideoInput = {
+  name: string;
+  uploadDate: string;
+  durationSeconds: number | null;
+  thumbnailUrl: string | null;
+  playlistUrl: string | null;
+  transcript: string | null;
+  lang: Locale;
+};
+
+const isoDuration = (seconds: number) => `PT${Math.floor(seconds / 60)}M${Math.round(seconds % 60)}S`;
+
+/**
+ * A VideoObject for a video that is public and approved (the API only returns those), with its transcript. It never carries an author: the
+ * review it belongs to may be anonymous, and a video object does not need one.
+ */
+export const videoJsonLd = (v: VideoInput): JsonLd => ({
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  name: v.name,
+  description: v.transcript ?? v.name,
+  uploadDate: v.uploadDate,
+  inLanguage: v.lang,
+  ...(v.thumbnailUrl ? { thumbnailUrl: absoluteUrl(v.thumbnailUrl) } : {}),
+  ...(v.playlistUrl ? { contentUrl: absoluteUrl(v.playlistUrl) } : {}),
+  ...(v.durationSeconds ? { duration: isoDuration(v.durationSeconds) } : {}),
+  ...(v.transcript ? { transcript: v.transcript } : {}),
+});

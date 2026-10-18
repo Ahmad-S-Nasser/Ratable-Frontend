@@ -41,6 +41,9 @@ export default defineConfig({
         Verification__StorageKey: key(),
         Verification__StoragePath: "App_Data/e2e-proofs",
         Moderation__BurstThreshold: "1000",
+        Media__StoragePath: "App_Data/e2e-media",
+        Media__SigningKey: key(),
+        Media__WorkerIntervalSeconds: "1",
       },
     },
     {

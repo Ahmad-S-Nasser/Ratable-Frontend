@@ -25,6 +25,9 @@
   --warning-text: #7a5800;
   --logo-light: block;
   --logo-dark: none;
+  /* The dark scrim over photos and video, and the colour of controls on it (the one place a dark overlay is allowed). */
+  --scrim: rgb(0 0 0 / 0.62);
+  --on-scrim: #ffffff;
   /* The footer is ink in both themes (the desktop design has an ink footer). */
   --footer-bg: #15171a;
   --footer-text: #f4f2ec;
@@ -90,6 +93,8 @@
   --color-positive-bg: var(--positive-bg);
   --color-warning-bg: var(--warning-bg);
   --color-warning-text: var(--warning-text);
+  --color-scrim: var(--scrim);
+  --color-on-scrim: var(--on-scrim);
   --color-footer: var(--footer-bg);
   --color-footer-text: var(--footer-text);
   --color-footer-muted: var(--footer-muted);

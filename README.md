@@ -51,3 +51,6 @@ Under `/{lang}/console` (Arabic and English, light by default with a dark switch
 
 ## Hosting on IIS
 `npm run build` produces `.next/standalone` (copy `public` and `.next/static` next to it), run with `node server.js` as a Node site (iisnode or a Windows service) behind IIS URL Rewrite/ARR. The same IIS site routes `/api` to the API.
+
+### Photos and video (P9e)
+Upload step in the review form (and `/{lang}/me/media/{reviewId}`): pieces with progress, resume after a break, background upload, cover choice, delete. Public: video strip and Video/Photos filters on the entity page, photo thumbnails and a photo counter, captions as text under each video, `VideoObject` JSON-LD with the transcript (only for approved videos, never with an author), and the full-screen feed at `/{lang}/feed` (scroll-snap, lazy player, hls.js loaded only where HLS is not native). Console: `/console/media` to watch, approve or reject. The API streams approved files only; a CDN can sit in front of `/api/media/*` (responses are cacheable).

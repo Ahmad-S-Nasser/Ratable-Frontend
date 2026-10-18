@@ -8,6 +8,7 @@ import { ReviewFilters, type ReviewFilter } from "@/components/site/ReviewFilter
 import { buttonClass } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { ScoreTile } from "@/components/ui/ScoreTile";
+import { PhotoIcon } from "@/components/ui/Icons";
 import { Stars } from "@/components/ui/Stars";
 import { isLocale, type Locale } from "@/i18n/config";
 import { fmt, formatDate, formatNumber, formatScore } from "@/i18n/format";
@@ -15,7 +16,7 @@ import { getDictionary } from "@/i18n/get-dictionary";
 import { getCategory, getEntity, getPlaces, getReviews, getScore } from "@/lib/api/server";
 import type { Category, PublicEntity, ScoreResponse } from "@/lib/api/types";
 import { absoluteUrl } from "@/lib/site";
-import { breadcrumbJsonLd, entityJsonLd, faqJsonLd } from "@/lib/seo/jsonld";
+import { breadcrumbJsonLd, entityJsonLd, faqJsonLd, videoJsonLd } from "@/lib/seo/jsonld";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { strengthsAndWeaknesses } from "@/lib/summary";
 import { entityIdFromParam, entityPath } from "@/lib/urls";
@@ -49,7 +50,8 @@ function buildSummary(lang: Locale, dict: Dict, name: string, entity: PublicEnti
 function readFilter(search: Record<string, string | string[] | undefined>): ReviewFilter {
   const one = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v);
   const sort = one(search.sort);
-  return { sort: sort === "highest" || sort === "lowest" ? sort : "newest", verified: one(search.verified) === "1" };
+  const media = one(search.media);
+  return { sort: sort === "highest" || sort === "lowest" ? sort : "newest", verified: one(search.verified) === "1", media: media === "video" || media === "photos" ? media : "all" };
 }
 
 async function load(lang: Locale, categoryId: string, param: string, filter: ReviewFilter) {
@@ -59,9 +61,15 @@ async function load(lang: Locale, categoryId: string, param: string, filter: Rev
   if (!entity.ok || !category.ok) notFound();
   // The category and the slug in the address must be the current ones; otherwise there is one canonical address (a merged place lands here too).
   const current = entityPath(lang, entity.data.categoryId, entity.data);
-  if (decodeURIComponent(`/${lang}/${categoryId}/${param}`) !== decodeURIComponent(current)) permanentRedirect(current);
+  if (decodeURIComponent(`/${lang}/${categoryId}/${param}`) !== decodeURIComponent(current)) permanentRedirect(encodeURI(current)); // a header cannot hold Arabic letters as they are
   const [score, reviews] = await Promise.all([getScore(id), getReviews(id, { sort: filter.sort, verified: filter.verified })]);
-  return { entity: entity.data, category: category.data, score: score.ok ? score.data : null, reviews: reviews.ok ? reviews.data : null };
+  const filtered =
+    reviews.ok && filter.media !== "all"
+      ? reviews.data.filter((r) => r.media.some((m) => (filter.media === "video" ? m.kind === "Video" : m.kind === "Photo")))
+      : reviews.ok
+        ? reviews.data
+        : null;
+  return { entity: entity.data, category: category.data, score: score.ok ? score.data : null, reviews: filtered };
 }
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/[category]/[slug]">): Promise<Metadata> {
@@ -92,7 +100,11 @@ export default async function EntityPage({ params, searchParams }: PageProps<"/[
   const filter = readFilter(await searchParams);
   const { entity, category, score, reviews } = await load(lang, categoryId, slug, filter);
   const others = await getPlaces(entity.categoryId, lang, 20, 0);
-  const x = dict.entityExtra;
+  const x = { ...dict.entityExtra, ...dict.videos, mediaLabel: dict.videos.filterLabel };
+  const mediaLabels = { play: dict.feed.play, pause: dict.feed.pause, mute: dict.feed.mute, unmute: dict.feed.unmute, videoLabel: dict.videos.videoLabel, captions: dict.videos.captions };
+  const allMedia = (reviews ?? []).flatMap((r) => r.media.map((m) => ({ ...m, reviewId: r.id, createdAt: r.createdAt })));
+  const videos = allMedia.filter((m) => m.kind === "Video" && m.playlistUrl);
+  const photoCount = allMedia.filter((m) => m.kind === "Photo").length;
   const basePath = entityPath(lang, entity.categoryId, entity);
   const e = dict.entity;
   const name = entity.name[lang] ?? entity.name.ar ?? "";
@@ -149,6 +161,17 @@ export default async function EntityPage({ params, searchParams }: PageProps<"/[
             })),
           }),
           faqJsonLd(faq),
+          ...videos.map((v) =>
+            videoJsonLd({
+              name: fmt(dict.feed.videoOf, { name }),
+              uploadDate: v.createdAt,
+              durationSeconds: v.durationSeconds,
+              thumbnailUrl: v.posterUrl,
+              playlistUrl: v.playlistUrl,
+              transcript: v.captions?.[lang] ?? v.captions?.ar ?? v.captions?.en ?? null,
+              lang,
+            }),
+          ),
         ]}
       />
 
@@ -171,6 +194,11 @@ export default async function EntityPage({ params, searchParams }: PageProps<"/[
               <Stars value={score.overall as number} label={`${formatScore(lang, score.overall as number)} ${e.outOf}`} />
               <span className="text-sm text-muted">{fmt(e.verifiedReviews, { count: formatNumber(lang, score.verifiedReviews) })}</span>
             </div>
+          ) : null}
+          {photoCount > 0 ? (
+            <p className="inline-flex items-center gap-1 text-sm text-muted">
+              <PhotoIcon width={16} height={16} /> {fmt(dict.videos.photoCount, { count: formatNumber(lang, photoCount) })}
+            </p>
           ) : null}
         </div>
         {hasScore ? (
@@ -236,6 +264,27 @@ export default async function EntityPage({ params, searchParams }: PageProps<"/[
         </table>
       </section>
 
+      {videos.length > 0 ? (
+        <section aria-labelledby="videos" className="space-y-3">
+          <h2 id="videos" className="font-heading text-xl font-semibold">
+            {dict.videos.heading}
+          </h2>
+          <ul className="flex gap-3 overflow-x-auto pb-2">
+            {videos.map((v) => (
+              <li key={v.id} className="shrink-0">
+                <a href={`#r-${v.reviewId}`} className="relative block h-48 w-28 overflow-hidden rounded-card border border-border bg-surface-2">
+                  {v.posterUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element -- streamed from the API, which sets the cache headers
+                    <img src={v.posterUrl} alt={fmt(dict.videos.videoLabel, { duration: Math.round(v.durationSeconds ?? 0) })} width={112} height={192} loading="lazy" decoding="async" className="size-full object-cover" />
+                  ) : null}
+                  <span className="absolute bottom-2 start-2 rounded-full bg-scrim px-2 py-0.5 text-xs text-on-scrim">{Math.round(v.durationSeconds ?? 0)}s</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+
       <section aria-labelledby="reviews" className="space-y-4">
         <h2 id="reviews" className="font-heading text-xl font-semibold">
           {e.reviews}
@@ -250,7 +299,7 @@ export default async function EntityPage({ params, searchParams }: PageProps<"/[
             {reviews.map((r) => (
               <li key={r.id}>
                 <div className="space-y-3">
-                  <ReviewCardView review={r} lang={lang} labels={{ ...e }} />
+                  <ReviewCardView review={r} lang={lang} labels={{ ...e }} media={mediaLabels} />
                   <div className="space-y-3 px-2">
                     <ReviewHistory review={r} lang={lang} labels={x} outOf={e.outOf} />
                     <ReviewComments review={r} lang={lang} labels={dict.comments} anonymousName={e.anonymousName} returnPath={basePath} />

@@ -15,7 +15,7 @@ import { entityPath } from "@/lib/urls";
 type Dict = {
   loading: string; signInNeeded: string; signIn: string; profile: string; displayName: string; displayNameHelp: string; save: string; saved: string;
   phoneVerified: string; phoneNotVerified: string; signOut: string; myReviews: string; noReviews: string; statusPendingModeration: string;
-  statusPublished: string; statusHidden: string; statusDeleted: string; verified: string; unverified: string; editReview: string; addProof: string;
+  statusPublished: string; addMedia: string; statusHidden: string; statusDeleted: string; verified: string; unverified: string; editReview: string; addProof: string;
   reason: string; errors: Record<string, string>;
 };
 
@@ -148,6 +148,11 @@ export function AccountPanel({ lang, dict }: { lang: Locale; dict: Dict }) {
                       {path && review.status !== "Deleted" ? (
                         <Link href={`${path}/review`} className={buttonClass("secondary")}>
                           {dict.editReview}
+                        </Link>
+                      ) : null}
+                      {review.status !== "Deleted" ? (
+                        <Link href={`/${lang}/me/media/${review.id}`} className={buttonClass("secondary")}>
+                          {dict.addMedia}
                         </Link>
                       ) : null}
                       {!review.verified && review.status !== "Deleted" ? (

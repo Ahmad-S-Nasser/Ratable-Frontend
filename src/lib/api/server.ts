@@ -2,7 +2,7 @@ import "server-only";
 import createClient from "openapi-fetch";
 import type { paths } from "./schema";
 import { unwrap, type ApiResult } from "./http";
-import type { PublicComment, ReviewHistory, Category, SitemapPlace, PlaceList, PublicEntity, PublicReview, ScoreResponse } from "./types";
+import type { FeedItem, PublicComment, ReviewHistory, Category, SitemapPlace, PlaceList, PublicEntity, PublicReview, ScoreResponse } from "./types";
 
 /** Public pages are rendered on the server, so they read the API directly. Responses are reused for five minutes (API_REVALIDATE_SECONDS changes that; the browser tests use 0). */
 const revalidate = Number(process.env.API_REVALIDATE_SECONDS ?? 300);
@@ -39,3 +39,5 @@ export const searchEntities = (q: string, category?: string) =>
 
 export const getSitemapPlaces = (skip = 0, limit = 1000) =>
   unwrap<SitemapPlace[]>(serverApi.GET("/api/sitemap/places", { params: { query: { skip, limit } } }));
+
+export const getFeed = (limit = 10, skip = 0) => unwrap<FeedItem[]>(serverApi.GET("/api/media/feed", { params: { query: { limit, skip } } }));

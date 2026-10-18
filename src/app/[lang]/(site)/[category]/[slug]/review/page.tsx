@@ -50,7 +50,7 @@ export default async function ReviewPage({ params }: PageProps<"/[lang]/[categor
           {entity.data.city ? ` · ${entity.data.city}` : ""}
         </p>
       </div>
-      <ReviewForm lang={lang} entityId={entity.data.id} entityPath={path} category={category.data} dict={t} />
+      <ReviewForm lang={lang} entityId={entity.data.id} entityPath={path} category={category.data} dict={{ ...t, media: dict.media }} />
     </div>
   );
 }

@@ -1,13 +1,17 @@
 import Link from "next/link";
 
-export type ReviewFilter = { sort: "newest" | "highest" | "lowest"; verified: boolean };
+export type ReviewFilter = { sort: "newest" | "highest" | "lowest"; verified: boolean; media: "all" | "video" | "photos" };
 
-type Labels = { filterLabel: string; all: string; verifiedOnly: string; sortLabel: string; newest: string; highest: string; lowest: string };
+type Labels = {
+  filterLabel: string; all: string; verifiedOnly: string; sortLabel: string; newest: string; highest: string; lowest: string;
+  withVideo: string; withPhotos: string; mediaLabel: string;
+};
 
 const href = (base: string, f: ReviewFilter) => {
   const q = new URLSearchParams();
   if (f.verified) q.set("verified", "1");
   if (f.sort !== "newest") q.set("sort", f.sort);
+  if (f.media !== "all") q.set("media", f.media);
   const s = q.toString();
   return s ? `${base}?${s}#reviews` : `${base}#reviews`;
 };
@@ -29,6 +33,13 @@ export function ReviewFilters({ base, current, labels }: { base: string; current
         <Link href={href(base, { ...current, verified: true })} aria-current={current.verified ? "true" : undefined} className={pill(current.verified)} scroll={false}>
           {labels.verifiedOnly}
         </Link>
+      </nav>
+      <nav aria-label={labels.mediaLabel} className="flex flex-wrap gap-2">
+        {(["video", "photos"] as const).map((m) => (
+          <Link key={m} href={href(base, { ...current, media: current.media === m ? "all" : m })} aria-current={current.media === m ? "true" : undefined} className={pill(current.media === m)} scroll={false}>
+            {m === "video" ? labels.withVideo : labels.withPhotos}
+          </Link>
+        ))}
       </nav>
       <nav aria-label={labels.sortLabel} className="flex flex-wrap gap-2">
         {sorts.map((s) => (

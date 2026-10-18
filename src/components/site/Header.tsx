@@ -16,6 +16,9 @@ export async function Header({ lang }: { lang: Locale }) {
           <Link href={`/${lang}/categories`} className="inline-flex min-h-11 items-center rounded-full px-3 text-sm font-medium hover:bg-surface-2">
             {t.categories}
           </Link>
+          <Link href={`/${lang}/feed`} className="inline-flex min-h-11 items-center rounded-full px-3 text-sm font-medium hover:bg-surface-2">
+            {dict.feed.heading}
+          </Link>
           <AccountLink lang={lang} signIn={dict.account.signIn} me={dict.account.me} />
           <ThemeSwitch labels={t.theme} />
           <LanguageSwitch lang={lang} label={t.language.label} />
