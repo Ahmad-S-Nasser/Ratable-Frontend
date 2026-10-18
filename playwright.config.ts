@@ -48,7 +48,7 @@ export default defineConfig({
       url: `http://localhost:${webPort}/en/console`,
       timeout: 180_000,
       reuseExistingServer: false,
-      env: { API_URL: `http://localhost:${apiPort}`, API_REVALIDATE_SECONDS: "0" },
+      env: { API_URL: `http://localhost:${apiPort}`, API_REVALIDATE_SECONDS: "0", REVALIDATE_SECRET: "e2e-secret", INDEXNOW_KEY: "e2eindexnowkey123", LLMS_TXT: "1" },
     },
   ],
 });

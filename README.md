@@ -37,6 +37,9 @@ Use `import { api } from "@/lib/api/client"`.
 - Errors: a real 404 page (both languages) and a retry page for failures.
 - Tests: `e2e/entity.spec.ts`, `more.spec.ts`, `account.spec.ts` (sign-in with a known code, anonymity leak checks, proof flow, installable files, axe in both themes and languages).
 
+### SEO and answer engines (P9d)
+Sitemap index (`/sitemap.xml`) with one file per language and category and real lastmod; robots with search and answer crawlers allowed and training crawlers by setting; IndexNow key file; `/internal/revalidate` (called by the API when pages change); AI-crawler visit log; optional `/llms.txt`; best-of guide pages (`/{lang}/{category}/best`); three trust pages (scores, verification, moderation). Launch steps: `docs/seo-checklist.md`.
+
 ## Moderation and admin console
 Under `/{lang}/console` (Arabic and English, light by default with a dark switch, never indexed). It signs in with the phone code and needs the Moderator or Admin role; admin pages are hidden from moderators and refused by the API.
 - Moderator: overview of every queue, reviews and comments (text, why a person is looking, what the AI said, before/after for edits; publish, or hide with a reason the author sees), new places (duplicate candidates, approve, reject, merge), proofs (open the file, accept or reject), reports, disputes.

@@ -62,11 +62,15 @@ test("robots.txt welcomes crawlers and points to the sitemap", async ({ request 
   expect(text).toContain("Disallow: /api/");
 });
 
-test("sitemap lists both languages with alternates", async ({ request }) => {
+test("the sitemap index lists both languages, split by category", async ({ request }) => {
   const xml = await (await request.get(`${WEB}/sitemap.xml`)).text();
-  expect(xml).toContain("/ar/categories");
-  expect(xml).toContain("/en/categories");
-  expect(xml).toContain('hreflang="ar-EG"');
+  expect(xml).toContain("/sitemaps/ar-static.xml");
+  expect(xml).toContain("/sitemaps/en-static.xml");
+  const part = await (await request.get(`${WEB}/sitemaps/en-static.xml`)).text();
+  expect(part).toContain("/en/categories");
+  expect(part).toContain("/en/methodology/verification");
+  expect(part).toContain("/en/compounds/best");
+  expect(part).toContain('hreflang="ar-EG"');
 });
 
 test("the Organization JSON-LD declares the Arabic name", async ({ page }) => {

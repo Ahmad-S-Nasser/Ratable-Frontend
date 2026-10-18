@@ -90,10 +90,16 @@ test.describe("entity page for crawlers (JavaScript off)", () => {
     expect(response.headers().location).toContain(`/en/compounds/${place.id}-${place.slugEn}`);
   });
 
-  test("the sitemap lists the place with a real lastmod", async ({ request }) => {
-    const xml = await (await request.get(`${WEB}/sitemap.xml`)).text();
-    expect(xml).toContain(`/en/compounds/${place.id}-${place.slugEn}`);
-    expect(xml).toMatch(/<lastmod>20\d\d-\d\d-\d\dT/);
+  test("the sitemap index leads to a category sitemap that lists the place with a real lastmod", async ({ request }) => {
+    const index = await (await request.get(`${WEB}/sitemap.xml`)).text();
+    expect(index).toContain("<sitemapindex");
+    expect(index).toContain("/sitemaps/en-compounds.xml");
+    expect(index).toContain("/sitemaps/ar-static.xml");
+    const part = await (await request.get(`${WEB}/sitemaps/en-compounds.xml`)).text();
+    expect(part).toContain(`/en/compounds/${place.id}-${place.slugEn}`);
+    expect(part).toMatch(/<lastmod>20\d\d-\d\d-\d\dT/);
+    expect(part).toContain('hreflang="ar-EG"');
+    expect((await request.get(`${WEB}/sitemaps/en-nothing.xml`)).status()).toBe(404);
   });
 
   test("the category lists the place with its verified score, and search finds it", async ({ page }) => {

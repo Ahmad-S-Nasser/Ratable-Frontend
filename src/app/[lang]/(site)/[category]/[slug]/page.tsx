@@ -186,7 +186,12 @@ export default async function EntityPage({ params, searchParams }: PageProps<"/[
           {e.summaryHeading}
         </h2>
         <p className="leading-7">{summary}</p>
-        <p className="text-sm text-muted">{e.source}</p>
+        <p className="text-sm text-muted">
+          {e.source}{" "}
+          <Link href={`/${lang}/methodology`} className="font-medium text-link underline">
+            {dict.guide.seeMethod}
+          </Link>
+        </p>
         <Link href={`${entityPath(lang, entity.categoryId, entity)}/review`} className={buttonClass("primary")}>
           {e.writeReview}
         </Link>

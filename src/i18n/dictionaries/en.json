@@ -797,5 +797,93 @@
     "name": "Ratable",
     "shortName": "Ratable",
     "description": "Verified reviews from people who tried, in Egypt and the Gulf."
+  },
+  "methodologyNav": {
+    "label": "How we work",
+    "scores": "How scores are calculated",
+    "verification": "How reviews are verified",
+    "moderation": "Moderation and trust rules"
+  },
+  "methodologyVerification": {
+    "title": "How reviews are verified",
+    "description": "How Ratable checks that a reviewer visited the place or bought the product, and what happens to their documents.",
+    "heading": "How reviews are verified",
+    "intro": "A verified review is the only kind that counts toward a score. This is how we check it.",
+    "items": [
+      {
+        "title": "Proof of a visit or purchase",
+        "text": "The reviewer uploads a document that fits the category, such as a lease, an invoice or a booking confirmation. The accepted types differ by category."
+      },
+      {
+        "title": "Automatic check, then a person",
+        "text": "We read the document automatically to confirm its type, the place name and its date, and we detect duplicate files. Anything doubtful goes to a human reviewer, and a random sample of accepted proofs is checked too."
+      },
+      {
+        "title": "Nobody sees the documents",
+        "text": "Documents are kept in private storage and are never shown to any user or business. We only record the proof type, date, result and a one-way fingerprint."
+      },
+      {
+        "title": "Deleted after the decision",
+        "text": "We delete the file after the decision unless the reviewer chose to keep it, with a separate consent and for a limited time. They can delete it at any time."
+      },
+      {
+        "title": "Phone verification does not change the score",
+        "text": "Verifying a phone number speeds up publishing, but it does not make a review verified. Only proof does."
+      },
+      {
+        "title": "Unverified is clearly labelled",
+        "text": "An unverified review is shown with a clear label and never counts toward a score or a ranking."
+      }
+    ]
+  },
+  "methodologyModeration": {
+    "title": "Moderation and trust rules",
+    "description": "How Ratable moderates reviews and comments, how identity is protected, and why nobody can buy the removal of a review.",
+    "heading": "Moderation and trust rules",
+    "intro": "We check what is posted before it appears. These are the rules.",
+    "items": [
+      {
+        "title": "Every review is checked before it appears",
+        "text": "Our tools check the text automatically. A review that passes and has proof, or comes from an account with a verified phone, is published; anything doubtful goes to a human reviewer."
+      },
+      {
+        "title": "Reviews of people are always read by a person",
+        "text": "Reviews about individuals, such as teachers or service providers, are always read by a human reviewer before publishing."
+      },
+      {
+        "title": "A clear reason when something is hidden",
+        "text": "If a review is hidden, its author sees why and can edit it so that it is checked again."
+      },
+      {
+        "title": "Reports and disputes",
+        "text": "Any reader can report content that breaks the rules, and a business owner can dispute a review. A human reviewer decides and the decision is logged."
+      },
+      {
+        "title": "No buying removal or rank",
+        "text": "Payment never changes a score or a ranking and never removes a review. Subscriptions buy tools and analytics only."
+      },
+      {
+        "title": "Anonymous reviewers are protected",
+        "text": "Moderators cannot see who wrote an anonymous review, and the name never appears in pages, logs or search results. It can be looked up only by an administrator, with a written reason, and every look-up is logged."
+      }
+    ]
+  },
+  "guide": {
+    "title": "Best {name} by verified reviews",
+    "description": "The best {name} in Egypt and the Gulf, ranked by the score from verified reviews only, with the method explained.",
+    "heading": "Best {name}",
+    "intro": "The highest scoring places in \"{name}\", ranked by the score from verified reviews only.",
+    "methodHeading": "How the ranking works",
+    "method": "Places are ranked by overall score from verified reviews, then by the number of verified reviews. A place appears only after its first verified review. Nobody pays to appear here or to rank higher.",
+    "updated": "List last updated: {date}.",
+    "rank": "Rank {n}",
+    "empty": "No places have verified reviews yet.",
+    "all": "All {name}",
+    "tableLabel": "Best {name}",
+    "place": "Place",
+    "score": "Score",
+    "reviews": "Verified reviews",
+    "bestOf": "Best {name}",
+    "seeMethod": "How we calculate and verify"
   }
 }

@@ -2516,6 +2516,8 @@ export interface components {
             overall: null | number;
             /** Format: int32 */
             verifiedReviews: number;
+            /** Format: date-time */
+            lastModified: string;
         };
         PlaceList: {
             places: components["schemas"]["PlaceCard"][];
