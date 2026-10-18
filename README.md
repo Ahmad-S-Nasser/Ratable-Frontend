@@ -40,6 +40,12 @@ Use `import { api } from "@/lib/api/client"`.
 ### SEO and answer engines (P9d)
 Sitemap index (`/sitemap.xml`) with one file per language and category and real lastmod; robots with search and answer crawlers allowed and training crawlers by setting; IndexNow key file; `/internal/revalidate` (called by the API when pages change); AI-crawler visit log; optional `/llms.txt`; best-of guide pages (`/{lang}/{category}/best`); three trust pages (scores, verification, moderation). Launch steps: `docs/seo-checklist.md`.
 
+### Themes, verdicts, lists, rewards, nearby, onboarding and Verify via WhatsApp (P9f to P9h)
+- Consumer tokens are dark-first (a device that asks for light gets light); the switch is in the header and on the account page.
+- Pages: `/{lang}/lists` and `/{lang}/lists/{id}-{slug}`, `/{lang}/nearby`, `/{lang}/points`, `/{lang}/me/level`, `/{lang}/me/verify`, `/{lang}/welcome` (splash and four steps; the home page sends first-time visitors there with a flag in this browser).
+- The e2e suite starts each test as a returning visitor (the onboarding flag is preset); onboarding tests use a fresh context.
+- Names are shown with `pick()` (src/lib/pick.ts): a place saved in one language has an empty string in the other, so never use `??` on a name.
+
 ## Moderation and admin console
 Under `/{lang}/console` (Arabic and English, light by default with a dark switch, never indexed). It signs in with the phone code and needs the Moderator or Admin role; admin pages are hidden from moderators and refused by the API.
 - Moderator: overview of every queue, reviews and comments (text, why a person is looking, what the AI said, before/after for edits; publish, or hide with a reason the author sees), new places (duplicate candidates, approve, reject, merge), proofs (open the file, accept or reject), reports, disputes.
