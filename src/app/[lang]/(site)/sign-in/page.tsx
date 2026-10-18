@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { ExternalSignIn } from "@/components/site/ExternalSignIn";
 import { SignInForm } from "@/components/site/SignInForm";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
@@ -16,7 +17,8 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/sign-in">)
 export default async function SignInPage({ params, searchParams }: PageProps<"/[lang]/sign-in">) {
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
-  const t = (await getDictionary(lang)).signIn;
+  const dict = await getDictionary(lang);
+  const t = dict.signIn;
   const raw = (await searchParams).next;
   const next = safeNext(Array.isArray(raw) ? raw[0] : raw, lang);
 
@@ -26,6 +28,7 @@ export default async function SignInPage({ params, searchParams }: PageProps<"/[
       <noscript>
         <p className="rounded-xl bg-warning-bg p-3 text-sm text-warning-text">{t.noscript}</p>
       </noscript>
+      <ExternalSignIn next={next} dict={dict.signInMethods} />
       <SignInForm next={next} dict={t} />
     </div>
   );

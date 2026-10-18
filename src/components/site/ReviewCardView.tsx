@@ -1,3 +1,4 @@
+import { ShieldCheckIcon } from "@/components/ui/Icons";
 import { Stars } from "@/components/ui/Stars";
 import { VideoPlayer } from "@/components/site/VideoPlayer";
 import { VerifiedBadge } from "@/components/ui/VerifiedBadge";
@@ -7,7 +8,7 @@ import type { PublicReview } from "@/lib/api/types";
 import { pick } from "@/lib/pick";
 
 type MediaLabels = { play: string; pause: string; mute: string; unmute: string; videoLabel: string; captions: string };
-type Labels = { verified: string; unverifiedNote: string; anonymousName: string; edited: string; outOf: string };
+type Labels = { verified: string; unverifiedNote: string; anonymousName: string; edited: string; outOf: string; accountVerified: string };
 
 /**
  * One public review. The author is whatever the API sent (null for anonymous reviews): this component never has an id to show,
@@ -25,7 +26,14 @@ export function ReviewCardView({ review, lang, labels, media }: { review: Public
           {initial}
         </span>
         <div className="min-w-0 flex-1">
-          <p className="truncate font-semibold">{name}</p>
+          <p className="flex items-center gap-1 truncate font-semibold">
+            <span className="truncate">{name}</span>
+            {review.author?.accountVerified && !review.anonymous ? (
+              <span title={labels.accountVerified} role="img" aria-label={labels.accountVerified} data-testid="account-verified" className="inline-flex shrink-0 text-verified">
+                <ShieldCheckIcon width={16} height={16} />
+              </span>
+            ) : null}
+          </p>
           <p className="text-xs text-muted">
             <time dateTime={review.createdAt}>{formatDate(lang, review.createdAt)}</time>
             {review.editedOn ? <> · {fmt(labels.edited, { date: formatDate(lang, review.editedOn) })}</> : null}

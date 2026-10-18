@@ -51,3 +51,6 @@ export type RewardsConfigView = S["RewardsConfigView"];
 export type AreaDto = S["AreaDto"];
 export type NearbyList = S["NearbyList"];
 export type HelpfulState = S["HelpfulState"];
+export type SignInProviders = S["SignInProviders"];
+export type StartVerifyResponse = S["StartVerifyResponse"];
+export type VerifyStatusResponse = S["VerifyStatusResponse"];

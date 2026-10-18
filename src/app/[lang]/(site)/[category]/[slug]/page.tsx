@@ -310,7 +310,7 @@ export default async function EntityPage({ params, searchParams }: PageProps<"/[
             {reviews.map((r) => (
               <li key={r.id}>
                 <div className="space-y-3">
-                  <ReviewCardView review={r} lang={lang} labels={{ ...e }} media={mediaLabels} />
+                  <ReviewCardView review={r} lang={lang} labels={{ ...e, accountVerified: dict.verifyPhone.verifiedMark }} media={mediaLabels} />
                   <div className="space-y-3 px-2">
                     <HelpfulButton lang={lang} reviewId={r.id} signInNext={basePath} labels={dict.helpful} />
                     <ReviewHistory review={r} lang={lang} labels={x} outOf={e.outOf} />

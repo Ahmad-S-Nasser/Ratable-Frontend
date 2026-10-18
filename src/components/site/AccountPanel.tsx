@@ -19,7 +19,7 @@ type Dict = {
   phoneVerified: string; phoneNotVerified: string; signOut: string; myReviews: string; noReviews: string; statusPendingModeration: string;
   statusPublished: string; addMedia: string; statusHidden: string; statusDeleted: string; verified: string; unverified: string; editReview: string; addProof: string;
   reason: string; errors: Record<string, string>;
-  level: string;
+  level: string; verify: string; verifiedMark: string;
   theme: { heading: string; intro: string; label: string; system: string; light: string; dark: string };
 };
 
@@ -113,7 +113,16 @@ export function AccountPanel({ lang, dict }: { lang: Locale; dict: Dict }) {
             <Button type="submit" variant="secondary">
               {dict.save}
             </Button>
-            {me.phoneVerified ? <VerifiedBadge label={dict.phoneVerified} /> : <span className="text-sm text-muted">{dict.phoneNotVerified}</span>}
+            {me.phoneVerified ? (
+              <VerifiedBadge label={dict.verifiedMark} />
+            ) : (
+              <span className="flex flex-wrap items-center gap-3">
+                <span className="text-sm text-muted">{dict.phoneNotVerified}</span>
+                <Link href={`/${lang}/me/verify`} className="text-sm font-medium text-link underline">
+                  {dict.verify}
+                </Link>
+              </span>
+            )}
           </div>
         </form>
         <Button type="button" variant="ghost" onClick={() => void signOut()}>
